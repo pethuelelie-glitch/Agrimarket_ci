@@ -1,0 +1,74 @@
+<section class="hero">
+  <div class="hero__texte">
+    <h1>Le marché agricole ivoirien, en ligne</h1>
+    <p>
+      AgriMarket CI met en relation les <strong>producteurs</strong>, les <strong>acheteurs</strong>
+      et les <strong>livreurs</strong> de Côte d'Ivoire. Les producteurs publient leurs récoltes,
+      les acheteurs commandent en quelques clics, et les livreurs assurent la livraison
+      jusqu'au client.
+    </p>
+
+    @if (utilisateurCourant()) {
+      <div class="hero__actions">
+        <a class="bouton" [routerLink]="chemins.catalogue">Parcourir le catalogue</a>
+        <a class="bouton bouton--discret" [routerLink]="cheminTableauDeBordCourant">
+          Mon tableau de bord
+        </a>
+      </div>
+    } @else {
+      <div class="hero__actions">
+        <a class="bouton" [routerLink]="chemins.catalogue">Catalogue</a>
+        <a class="bouton bouton--discret" [routerLink]="chemins.connexion">Connexion</a>
+        <a class="bouton bouton--discret" [routerLink]="chemins.inscription">Inscription</a>
+      </div>
+    }
+  </div>
+
+  <ul class="hero__ronds" aria-label="Les trois métiers d'AgriMarket CI">
+    <li><span aria-hidden="true">🌱</span> Producteurs</li>
+    <li><span aria-hidden="true">🧺</span> Acheteurs</li>
+    <li><span aria-hidden="true">🚚</span> Livreurs</li>
+  </ul>
+</section>
+
+<section class="mise-en-avant" aria-labelledby="titre-mise-en-avant">
+  <h2 id="titre-mise-en-avant">Produits récemment ajoutés</h2>
+
+  @if (erreurChargement(); as erreur) {
+    <div class="panneau etat">
+      <app-etat-vide
+        titre="Chargement impossible"
+        [message]="erreur"
+        libelleBouton="Réessayer"
+        (action)="reessayer()"
+      />
+      <p class="etat__aide">
+        Si le problème persiste, vous pouvez réinitialiser les données de démonstration.
+      </p>
+      <button type="button" class="bouton bouton--discret" (click)="reinitialiser()">
+        Réinitialiser les données de démonstration
+      </button>
+    </div>
+  } @else if (produitsEnAvant().length === 0) {
+    <div class="panneau etat">
+      <app-etat-vide
+        titre="Aucun produit à la une"
+        message="Aucun produit actif n'est publié pour le moment. Consultez le catalogue pour découvrir l'ensemble des offres."
+        libelleBouton="Voir le catalogue"
+        (action)="voirCatalogue()"
+      />
+    </div>
+  } @else {
+    <ul class="grille produits">
+      @for (produit of produitsEnAvant(); track produit.id) {
+        <li>
+          <app-produit-carte [produit]="produit" />
+        </li>
+      }
+    </ul>
+    <p class="mentions">
+      Jusqu'à {{ nombreMiseEnAvant }} produits actifs les plus récents, du plus récent au plus
+      ancien.
+    </p>
+  }
+</section>

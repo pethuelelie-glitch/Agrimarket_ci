@@ -1,0 +1,195 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ----------------------------------------------------------------- En-tête */
+
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--blanc);
+  border-bottom: 1px solid var(--bord);
+}
+
+.entete__marque {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-end: auto;
+  color: var(--vert-fonce);
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.entete__logo {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+/* Bouton de repli : visible uniquement sous 768 px. */
+.entete__bascule {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  color: var(--texte);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------- Navigation */
+
+.navigation {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  width: 100%;
+}
+
+.navigation__liste {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navigation__lien {
+  display: inline-block;
+  padding: 0.4rem 0.55rem;
+  border-radius: var(--rayon);
+  color: var(--texte);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navigation__lien:hover {
+  background: var(--vert-pale);
+}
+
+.navigation__lien.actif {
+  color: var(--vert);
+  background: var(--vert-pale);
+  font-weight: 700;
+}
+
+.navigation__compte {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+.navigation__lien-action {
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+}
+
+.navigation__identite {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.navigation__nom {
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------- Bannière d'info */
+
+.annonce {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  background: #fff8e1;
+  border-bottom: 1px solid #ffe0b2;
+  color: #7a4a00;
+}
+
+.annonce__texte {
+  margin: 0;
+  flex: 1;
+}
+
+.annonce__fermer {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--rayon);
+}
+
+/* ------------------------------------------------------------------- Contenu */
+
+.contenu {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* --------------------------------------------------- Menu repliable (mobile) */
+
+@media screen and (max-width: 767px) {
+  .entete__bascule {
+    display: inline-flex;
+  }
+
+  .navigation {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--bord);
+  }
+
+  .navigation--ouverte {
+    display: flex;
+  }
+
+  .navigation__liste {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+  }
+
+  .navigation__lien {
+    display: block;
+    padding: 0.6rem 0.55rem;
+  }
+
+  .navigation__compte {
+    margin-inline-start: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--bord);
+  }
+
+  .navigation__lien-action {
+    flex: 1;
+    text-align: center;
+  }
+}

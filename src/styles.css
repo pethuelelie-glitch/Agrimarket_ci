@@ -1,1 +1,256 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Styles globaux d'AgriMarket CI.
+ * Thème sobre « marché agricole ivoirien » : vert, sable, typographie système.
+ * Règle responsive : jamais de défilement horizontal, en-tête repliable sous 768 px.
+ */
+
+:root {
+  --vert-fonce: #1b3a1f;
+  --vert: #2e7d32;
+  --vert-clair: #4caf50;
+  --vert-pale: #e8f5e9;
+  --sable: #f4f7f1;
+  --bord: #d7ddcd;
+  --texte: #22301d;
+  --texte-doux: #55604d;
+  --blanc: #ffffff;
+  --rouge: #c62828;
+  --orange: #ef6c00;
+  --rayon: 0.75rem;
+  --ombre: 0 1px 3px rgb(27 58 31 / 0.08), 0 1px 2px rgb(27 58 31 / 0.1);
+  --max: 72rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Empêche tout défilement horizontal global. */
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--sable);
+  color: var(--texte);
+  font-family:
+    system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a {
+  color: var(--vert);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  color: var(--vert-fonce);
+}
+
+h1 {
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+  margin: 0 0 0.75rem;
+}
+
+h2 {
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.6rem);
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+/* ---------------------------------------------------------------- Boutons */
+
+.bouton,
+button.bouton,
+input.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: var(--rayon);
+  background: var(--vert);
+  color: var(--blanc);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bouton:hover:not(:disabled) {
+  background: var(--vert-fonce);
+}
+
+.bouton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bouton--discret {
+  background: transparent;
+  border-color: var(--bord);
+  color: var(--texte);
+}
+
+.bouton--discret:hover:not(:disabled) {
+  background: var(--vert-pale);
+}
+
+.bouton--danger {
+  background: var(--rouge);
+}
+
+.bouton--danger:hover:not(:disabled) {
+  background: #8e0000;
+}
+
+/* --------------------------------------------------------------- Formulaires */
+
+.champ {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.champ label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.champ input,
+.champ select,
+.champ textarea {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  font: inherit;
+  color: inherit;
+}
+
+.champ input:focus-visible,
+.champ select:focus-visible,
+.champ textarea:focus-visible {
+  outline: 3px solid var(--vert-clair);
+  outline-offset: 1px;
+  border-color: var(--vert);
+}
+
+.champ--erreur input,
+.champ--erreur select,
+.champ--erreur textarea {
+  border-color: var(--rouge);
+}
+
+.champ__erreur,
+.message-erreur {
+  color: var(--rouge);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------- Dispositions */
+
+.grille {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.panneau {
+  background: var(--blanc);
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  padding: 1.25rem;
+}
+
+/* ----------------------------------------------------------------- Badges */
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--vert-pale);
+  color: var(--vert-fonce);
+  white-space: nowrap;
+}
+
+.badge--alerte {
+  background: #fff3e0;
+  color: var(--orange);
+}
+
+.badge--danger {
+  background: #ffebee;
+  color: var(--rouge);
+}
+
+/* ------------------------------------------------------------------ Tables */
+
+.tableau {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.tableau th,
+.tableau td {
+  border-bottom: 1px solid var(--bord);
+  padding: 0.6rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Sur mobile, la table défile dans son conteneur, pas la page. */
+.tableau-conteneur {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* ------------------------------------------------------------- Utilitaires */
+
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid var(--vert-clair);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

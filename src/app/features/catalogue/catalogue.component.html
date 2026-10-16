@@ -1,0 +1,23 @@
+<section class="catalogue">
+  <header class="catalogue__entete">
+    <h1>Catalogue des produits agricoles</h1>
+    <p>Découvrez les récoltes proposées par les producteurs ivoiriens.</p>
+  </header>
+
+  @if (aucunProduit()) {
+    <app-etat-vide
+      titre="Aucun produit disponible"
+      message="Aucun produit n'est disponible pour le moment. Revenez plus tard ou explorez la page d'accueil."
+      libelleBouton="Retour à l'accueil"
+      (action)="retourAccueil()"
+    />
+  } @else {
+    <ul class="grille produits">
+      @for (produit of produits(); track produit.id) {
+        <li>
+          <app-produit-carte [produit]="produit" />
+        </li>
+      }
+    </ul>
+  }
+</section>
