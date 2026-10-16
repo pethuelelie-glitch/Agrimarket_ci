@@ -1,0 +1,86 @@
+.gestion {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.gestion__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.gestion__entete p {
+  margin: 0;
+  color: var(--texte-doux);
+}
+
+.formulaire {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.formulaire h2 {
+  margin-top: 0;
+}
+
+.formulaire__grille {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+.formulaire__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.actions .bouton {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.confirmation {
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  border: 1px solid var(--rouge);
+  border-radius: var(--rayon);
+  background: #ffebee;
+}
+
+.confirmation p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.stock {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 10rem;
+}
+
+.stock input {
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+}
+
+.stock__min {
+  font-size: 0.78rem;
+  color: var(--texte-doux);
+}
+
+.stock .bouton {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+}

@@ -1,19 +1,22 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IMAGE_SECOURS } from '../core/data/seed';
 import { LIBELLES_CATEGORIE, LIBELLES_UNITE, Produit } from '../core/models';
+import { cheminProduit } from '../core/navigation';
+import { BoutonAjoutPanierComponent } from './bouton-ajout-panier.component';
 import { MontantFcfaPipe } from './montant-fcfa.pipe';
 
 /**
- * Carte produit partagée (accueil, catalogue) : image avec secours, nom,
- * prix, unité, localisation et lien vers la fiche détaillée.
+ * Carte produit partagée (accueil, catalogue) : image avec secours, nom, prix,
+ * unité, localisation, lien vers la fiche détaillée et action d'ajout au panier
+ * neutralisée lorsqu'un produit est inactif ou épuisé (task 5.9).
  */
 @Component({
   selector: 'app-produit-carte',
-  imports: [RouterLink, MontantFcfaPipe],
+  imports: [RouterLink, MontantFcfaPipe, BoutonAjoutPanierComponent],
   template: `
     <article class="carte">
-      <a class="carte__lien" [routerLink]="cheminProduit">
+      <a class="carte__lien" [routerLink]="chemin">
         <img
           class="carte__image"
           [src]="imageAffichee()"
@@ -25,7 +28,8 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
           <span class="carte__categorie">{{ libelleCategorie }}</span>
           <h3 class="carte__nom">{{ produit().nom }}</h3>
           <p class="carte__prix">
-            {{ produit().prix | montantFcfa }}<span class="carte__unite"> / {{ libelleUnite }}</span>
+            {{ produit().prix | montantFcfa
+            }}<span class="carte__unite"> / {{ libelleUnite }}</span>
           </p>
           <p class="carte__meta">
             <span>{{ produit().localisation }}</span>
@@ -34,20 +38,31 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
           </p>
         </div>
       </a>
+
+      <div class="carte__pied">
+        @if (!produit().actif) {
+          <span class="badge badge--danger">Inactif</span>
+        } @else if (produit().quantiteDisponible <= 0) {
+          <span class="badge badge--alerte">Rupture de stock</span>
+        }
+        <app-bouton-ajout-panier [produit]="produit()" (ajouter)="ajouter.emit()" />
+      </div>
     </article>
   `,
   styles: [
     `
       .carte {
-        border: 1px solid #d7ddcd;
-        border-radius: 0.75rem;
-        background: #ffffff;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
         block-size: 100%;
+        border: 1px solid var(--bord);
+        border-radius: var(--rayon);
+        background: var(--blanc);
+        overflow: hidden;
       }
       .carte__lien {
         display: block;
-        block-size: 100%;
+        flex: 1;
         color: inherit;
         text-decoration: none;
       }
@@ -56,7 +71,7 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
         width: 100%;
         aspect-ratio: 16 / 10;
         object-fit: cover;
-        background: #eef3ea;
+        background: var(--vert-pale);
       }
       .carte__corps {
         display: grid;
@@ -67,7 +82,7 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
         font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        color: #5c6b52;
+        color: var(--texte-doux);
       }
       .carte__nom {
         margin: 0;
@@ -76,11 +91,11 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
       .carte__prix {
         margin: 0;
         font-weight: 700;
-        color: #2e7d32;
+        color: var(--vert);
       }
       .carte__unite {
         font-weight: 400;
-        color: #4a5743;
+        color: var(--texte-doux);
       }
       .carte__meta {
         margin: 0.25rem 0 0;
@@ -88,19 +103,26 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
         flex-wrap: wrap;
         gap: 0.35rem;
         font-size: 0.8rem;
-        color: #5c6b52;
+        color: var(--texte-doux);
+      }
+      .carte__pied {
+        display: grid;
+        gap: 0.4rem;
+        padding: 0 0.75rem 0.75rem;
       }
     `,
   ],
 })
 export class ProduitCarteComponent {
   readonly produit = input.required<Produit>();
+  /** Relaye la demande d'ajout au panier vers le parent. */
+  readonly ajouter = output<void>();
 
   private readonly imageSecours = IMAGE_SECOURS;
   private secoursAffiche = false;
 
-  get cheminProduit(): string {
-    return `/catalogue/${this.produit().id}`;
+  get chemin(): string {
+    return cheminProduit(this.produit().id);
   }
 
   get libelleCategorie(): string {
@@ -111,7 +133,7 @@ export class ProduitCarteComponent {
     return LIBELLES_UNITE[this.produit().unite];
   }
 
-  /** Image du produit, ou image de secours si l'URL est absente ou invalide. */
+  /** Image du produit, ou image générique de secours si l'URL est absente ou invalide. */
   imageAffichee(): string {
     if (this.secoursAffiche) {
       return this.imageSecours;
@@ -119,7 +141,6 @@ export class ProduitCarteComponent {
     return this.produit().imageUrl || this.imageSecours;
   }
 
-  /** Bascule sur l'image de secours après un chargement en échec. */
   basculerSurSecours(): void {
     this.secoursAffiche = true;
   }

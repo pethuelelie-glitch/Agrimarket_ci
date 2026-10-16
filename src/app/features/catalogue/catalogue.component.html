@@ -4,19 +4,119 @@
     <p>Découvrez les récoltes proposées par les producteurs ivoiriens.</p>
   </header>
 
-  @if (aucunProduit()) {
+  <form class="filtres panneau" role="search" (submit)="$event.preventDefault()">
+    <div class="champ">
+      <label for="catalogue-recherche">Rechercher un produit</label>
+      <input
+        id="catalogue-recherche"
+        type="search"
+        placeholder="Riz, tomate, igname…"
+        [value]="recherche()"
+        (input)="recherche.set($any($event.target).value)"
+      />
+    </div>
+
+    <div class="filtres__grille">
+      <div class="champ">
+        <label for="catalogue-categorie">Catégorie</label>
+        <select
+          id="catalogue-categorie"
+          [value]="categorie()"
+          (change)="categorie.set($any($event.target).value)"
+        >
+          <option value="TOUTES">Toutes les catégories</option>
+          @for (option of categories; track option) {
+            <option [value]="option">{{ libellesCategorie[option] }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="champ">
+        <label for="catalogue-prix-min">Prix minimum (FCFA)</label>
+        <input
+          id="catalogue-prix-min"
+          type="number"
+          min="0"
+          inputmode="numeric"
+          [value]="prixMin() ?? ''"
+          (input)="prixMin.set(nombreOuNull($event))"
+        />
+      </div>
+
+      <div class="champ">
+        <label for="catalogue-prix-max">Prix maximum (FCFA)</label>
+        <input
+          id="catalogue-prix-max"
+          type="number"
+          min="0"
+          inputmode="numeric"
+          [value]="prixMax() ?? ''"
+          (input)="prixMax.set(nombreOuNull($event))"
+        />
+      </div>
+
+      <div class="champ">
+        <label for="catalogue-disponibilite">Disponibilité</label>
+        <select
+          id="catalogue-disponibilite"
+          [value]="disponibilite()"
+          (change)="disponibilite.set($any($event.target).value)"
+        >
+          <option value="TOUS">Tous les produits</option>
+          <option value="EN_STOCK">En stock uniquement</option>
+          <option value="EPUISE">Épuisés uniquement</option>
+        </select>
+      </div>
+
+      <div class="champ">
+        <label for="catalogue-localisation">Localisation</label>
+        <input
+          id="catalogue-localisation"
+          type="text"
+          placeholder="Abidjan, Bouaké…"
+          [value]="localisation()"
+          (input)="localisation.set($any($event.target).value)"
+        />
+      </div>
+
+      <div class="champ">
+        <label for="catalogue-tri">Trier par</label>
+        <select id="catalogue-tri" [value]="tri()" (change)="tri.set($any($event.target).value)">
+          @for (option of tris; track option) {
+            <option [value]="option">{{ libellesTri[option] }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    @if (aDesFiltresActifs()) {
+      <button type="button" class="bouton bouton--discret" (click)="reinitialiser()">
+        Réinitialiser les filtres
+      </button>
+    }
+  </form>
+
+  @if (catalogueVide()) {
     <app-etat-vide
-      titre="Aucun produit disponible"
-      message="Aucun produit n'est disponible pour le moment. Revenez plus tard ou explorez la page d'accueil."
-      libelleBouton="Retour à l'accueil"
-      (action)="retourAccueil()"
+      titre="Le catalogue est vide"
+      message="Aucun produit n'est publié pour le moment. Revenez plus tard."
+    />
+  } @else if (aucunResultat()) {
+    <app-etat-vide
+      titre="Aucun produit ne correspond"
+      message="Aucun produit ne correspond à votre recherche ou à vos filtres. Essayez d'élargir vos critères."
+      libelleBouton="Réinitialiser les filtres"
+      (action)="reinitialiser()"
     />
   } @else {
+    <p class="catalogue__compte" role="status">
+      {{ resultats().length }} produit{{ resultats().length > 1 ? 's' : '' }} affiché{{
+        resultats().length > 1 ? 's' : ''
+      }}
+    </p>
     <ul class="grille produits">
-      @for (produit of produits(); track produit.id) {
-        <li>
-          <app-produit-carte [produit]="produit" />
-        </li>
+      @for (produit of resultats(); track produit.id) {
+        <li><app-produit-carte [produit]="produit" (ajouter)="ajouterAuPanier(produit)" /></li>
       }
     </ul>
   }

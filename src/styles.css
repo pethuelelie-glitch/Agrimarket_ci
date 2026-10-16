@@ -206,6 +206,113 @@ input.bouton {
   color: var(--rouge);
 }
 
+/* Cartes d'indicateurs des tableaux de bord (Module H). */
+.kpi {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.kpi__valeur {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--vert-fonce);
+  line-height: 1.1;
+}
+
+.kpi__libelle {
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+/* Badges de statut de commande et de livraison (Modules F et G). */
+.badge-statut {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--vert-pale);
+  color: var(--vert-fonce);
+}
+
+.badge-statut[data-statut='EN_ATTENTE'] {
+  background: #fff3e0;
+  color: var(--orange);
+}
+
+.badge-statut[data-statut='CONFIRMEE'],
+.badge-statut[data-statut='ASSIGNEE'] {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.badge-statut[data-statut='EN_PREPARATION'],
+.badge-statut[data-statut='EN_COURS'] {
+  background: #ede7f6;
+  color: #5e35b1;
+}
+
+.badge-statut[data-statut='PRETE'] {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.badge-statut[data-statut='EN_LIVRAISON'] {
+  background: #e8eaf6;
+  color: #283593;
+}
+
+.badge-statut[data-statut='LIVREE'] {
+  background: #e8f5e9;
+  color: var(--vert);
+}
+
+.badge-statut[data-statut='ANNULEE'],
+.badge-statut[data-statut='ECHEC'] {
+  background: #ffebee;
+  color: var(--rouge);
+}
+
+/* --------------------------------------------------- Commandes et livraisons */
+
+.commande-carte {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.commande-carte__entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.commande-carte__reference {
+  font-weight: 700;
+  color: var(--vert-fonce);
+  text-decoration: none;
+}
+
+.commande-carte__reference:hover {
+  text-decoration: underline;
+}
+
+.commande-carte__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.commande-carte__montant {
+  margin: 0;
+  font-weight: 700;
+}
+
 /* ------------------------------------------------------------------ Tables */
 
 .tableau {

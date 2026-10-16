@@ -1,0 +1,132 @@
+<section class="supervision">
+  <header class="supervision__entete">
+    <h1>Livraisons</h1>
+    <p class="supervision__sous-titre">
+      Créez une livraison pour une commande éligible, puis attribuez-la à un livreur actif.
+    </p>
+  </header>
+
+  <section class="panneau supervision__bloc">
+    <h2>Commandes à livrer</h2>
+    @if (eligibles().length === 0) {
+      <p class="supervision__vide">
+        Aucune commande éligible : confirmez une commande et préparez-la avant d’organiser sa livraison.
+      </p>
+    } @else {
+      <div class="tableau-conteneur">
+        <table class="tableau">
+          <thead>
+            <tr>
+              <th scope="col">Commande</th>
+              <th scope="col">Statut</th>
+              <th scope="col">Adresse</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (commande of eligibles(); track commande.id) {
+              <tr>
+                <td>{{ commande.reference }}</td>
+                <td>{{ commande.statut }}</td>
+                <td>{{ commande.adresseLivraison }}</td>
+                <td>
+                  <button type="button" class="bouton" (click)="creer(commande)">
+                    Créer une livraison
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <section class="panneau supervision__bloc">
+    <h2>En attente d’attribution ({{ enAttente().length }})</h2>
+    @if (enAttente().length === 0) {
+      <p class="supervision__vide">Aucune livraison en attente d’attribution.</p>
+    } @else if (livreurs().length === 0) {
+      <p class="supervision__message">Aucun livreur disponible.</p>
+    } @else {
+      <ul class="supervision__attributions">
+        @for (livraison of enAttente(); track livraison.id) {
+          <li class="attribution">
+            <div class="attribution__infos">
+              <strong>{{ livraison.reference }}</strong>
+              <span class="attribution__commande">{{ referenceCommande(livraison.commandeId) }}</span>
+              <span class="attribution__adresse">{{ livraison.adresseDestination }}</span>
+            </div>
+            <div class="attribution__action">
+              <label>
+                <span class="visuellement-cache">Livreur à attribuer</span>
+                <select #livreur>
+                  @for (candidat of livreurs(); track candidat.id) {
+                    <option [value]="candidat.id">{{ candidat.nom }}</option>
+                  }
+                </select>
+              </label>
+              <button type="button" class="bouton" (click)="attribuer(livraison, livreur.value)">
+                Attribuer
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+
+  <section class="panneau supervision__bloc">
+    <header class="supervision__bloc-entete">
+      <h2>Toutes les livraisons</h2>
+      <label class="supervision__filtre">
+        <span>Filtrer par statut</span>
+        <select [value]="filtreStatut()" (change)="majFiltre($event)">
+          <option value="TOUS">Tous les statuts</option>
+          @for (statut of statuts; track statut) {
+            <option [value]="statut">{{ libellesStatut[statut] }}</option>
+          }
+        </select>
+      </label>
+    </header>
+
+    @if (livraisons().length === 0) {
+      <app-etat-vide titre="Aucune livraison" message="Aucune livraison n’existe pour le moment." />
+    } @else if (filtrees().length === 0) {
+      <p class="supervision__vide">Aucune livraison pour ce statut.</p>
+    } @else {
+      <div class="tableau-conteneur">
+        <table class="tableau">
+          <thead>
+            <tr>
+              <th scope="col">Référence</th>
+              <th scope="col">Commande</th>
+              <th scope="col">Livreur</th>
+              <th scope="col">Adresse</th>
+              <th scope="col">Statut</th>
+              <th scope="col">Affectée le</th>
+              <th scope="col">Livrée le</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (livraison of filtrees(); track livraison.id) {
+              <tr>
+                <td>{{ livraison.reference }}</td>
+                <td>{{ referenceCommande(livraison.commandeId) }}</td>
+                <td>{{ nomLivreur(livraison.livreurId) }}</td>
+                <td>{{ livraison.adresseDestination }}</td>
+                <td>
+                  <span class="badge-statut" [attr.data-statut]="livraison.statut">
+                    {{ libellesStatut[livraison.statut] }}
+                  </span>
+                </td>
+                <td>{{ dateHeure(livraison.dateAffectation) }}</td>
+                <td>{{ dateHeure(livraison.dateLivraison) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</section>

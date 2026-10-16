@@ -1,0 +1,135 @@
+@if (commande(); as commande) {
+  @if (!accessible()) {
+    <app-etat-vide
+      titre="Commande inaccessible"
+      message="Cette commande n’existe pas ou ne vous appartient pas."
+      libelleBouton="Retour à mes commandes"
+      [lienBouton]="chemins.commandes"
+    />
+  } @else {
+    <section class="detail">
+      <header class="detail__entete">
+        <div>
+          <p class="detail__retour">
+            <a [routerLink]="chemins.commandes">← Mes commandes</a>
+          </p>
+          <h1>Commande {{ commande.reference }}</h1>
+          <p class="detail__date">Créée le {{ dateHeure(commande.dateCreation) }}</p>
+        </div>
+        <span class="badge-statut" [attr.data-statut]="commande.statut">
+          {{ libellesStatut[commande.statut] }}
+        </span>
+      </header>
+
+      <div class="detail__grille">
+        <section class="panneau detail__bloc">
+          <h2>Parties</h2>
+          <dl class="detail__definitions">
+            <dt>Acheteur</dt>
+            <dd>{{ nomUtilisateur(commande.acheteurId) }}</dd>
+            <dt>Producteur</dt>
+            <dd>{{ nomUtilisateur(commande.producteurId) }}</dd>
+            <dt>Adresse de livraison</dt>
+            <dd>{{ commande.adresseLivraison }}</dd>
+          </dl>
+
+          @if (peutModifierAdresse()) {
+            <div class="detail__adresse">
+              <label>
+                <span>Modifier l’adresse de livraison</span>
+                <input #adresse type="text" [value]="commande.adresseLivraison" />
+              </label>
+              <button type="button" class="bouton bouton--discret" (click)="enregistrerAdresse(adresse.value)">
+                Enregistrer
+              </button>
+            </div>
+          }
+        </section>
+
+        <section class="panneau detail__bloc">
+          <h2>Montants</h2>
+          <p class="detail__montant"><span>Produits</span><span>{{ commande.montantProduits | montantFcfa }}</span></p>
+          <p class="detail__montant"><span>Livraison</span><span>{{ commande.fraisLivraison | montantFcfa }}</span></p>
+          <p class="detail__montant detail__montant--total">
+            <span>Total</span><span>{{ commande.montantTotal | montantFcfa }}</span>
+          </p>
+        </section>
+      </div>
+
+      <section class="panneau detail__bloc">
+        <h2>Articles</h2>
+        <div class="tableau-conteneur">
+          <table class="tableau">
+            <thead>
+              <tr>
+                <th scope="col">Produit</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix unitaire</th>
+                <th scope="col">Sous-total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (ligne of commande.lignes; track ligne.produitId) {
+                <tr>
+                  <td>
+                    <a [routerLink]="cheminProduit(ligne.produitId)">{{ ligne.nomProduit }}</a>
+                  </td>
+                  <td>{{ ligne.quantite }} {{ libellesUnite[ligne.unite] }}</td>
+                  <td>{{ ligne.prixUnitaire | montantFcfa }}</td>
+                  <td>{{ ligne.sousTotal | montantFcfa }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panneau detail__bloc">
+        <h2>Historique</h2>
+        <ol class="detail__historique">
+          @for (evenement of commande.historique; track evenement.le) {
+            <li>
+              <time [attr.datetime]="evenement.le">{{ dateHeure(evenement.le) }}</time>
+              <span>
+                {{ libelleEvenement(evenement) }}
+                — {{ nomUtilisateur(evenement.acteurId) }}
+              </span>
+              @if (evenement.commentaire) {
+                <span class="detail__commentaire">{{ evenement.commentaire }}</span>
+              }
+            </li>
+          }
+        </ol>
+      </section>
+
+      <section class="panneau detail__bloc">
+        <app-suivi-livraison [commandeId]="commande.id" />
+      </section>
+
+      @if (progressions().length > 0 || peutAnnuler()) {
+        <section class="panneau detail__bloc detail__actions">
+          <h2>Actions</h2>
+          <div class="detail__boutons">
+            @for (cible of progressions(); track cible) {
+              <button type="button" class="bouton" (click)="avancer(cible)">
+                Passer à « {{ libellesStatut[cible] }} »
+              </button>
+            }
+            @if (peutAnnuler()) {
+              <button type="button" class="bouton bouton--danger" (click)="annuler()">
+                Annuler la commande
+              </button>
+            }
+          </div>
+        </section>
+      }
+    </section>
+  }
+} @else {
+  <app-etat-vide
+    titre="Commande introuvable"
+    message="La commande demandée n’existe pas dans les données locales."
+    libelleBouton="Retour à mes commandes"
+    [lienBouton]="chemins.commandes"
+  />
+}

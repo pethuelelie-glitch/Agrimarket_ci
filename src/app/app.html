@@ -51,6 +51,12 @@
           <li>
             <a class="navigation__lien" [routerLink]="lien.chemin" routerLinkActive="actif" (click)="fermerMenu()">
               {{ lien.libelle }}
+              @if (lien.chemin === chemins.panier && nombreArticles() > 0) {
+                <span class="navigation__badge" aria-hidden="true">{{ nombreArticles() }}</span>
+                <span class="visuellement-cache">
+                  ({{ nombreArticles() }} article{{ nombreArticles() > 1 ? 's' : '' }})
+                </span>
+              }
             </a>
           </li>
         }

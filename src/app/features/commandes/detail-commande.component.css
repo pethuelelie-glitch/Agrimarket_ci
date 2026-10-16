@@ -1,0 +1,138 @@
+:host {
+  display: block;
+}
+
+.detail {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.detail__entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail__entete h1 {
+  margin: 0.15rem 0 0;
+  font-size: 1.4rem;
+  color: var(--vert-fonce);
+}
+
+.detail__retour {
+  margin: 0;
+}
+
+.detail__retour a {
+  color: var(--texte-doux);
+  text-decoration: none;
+}
+
+.detail__retour a:hover {
+  text-decoration: underline;
+}
+
+.detail__date {
+  margin: 0.2rem 0 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.detail__grille {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.detail__bloc {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.detail__bloc h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--vert-fonce);
+}
+
+.detail__definitions {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.detail__definitions dt {
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.detail__definitions dd {
+  margin: 0;
+}
+
+.detail__adresse {
+  display: grid;
+  gap: 0.5rem;
+  border-top: 1px solid var(--bord);
+  padding-top: 0.75rem;
+}
+
+.detail__adresse label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+.detail__adresse input {
+  padding: 0.5rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+}
+
+.detail__montant {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  color: var(--texte-doux);
+}
+
+.detail__montant--total {
+  font-weight: 700;
+  color: var(--texte);
+  font-size: 1.05rem;
+}
+
+.detail__historique {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.detail__historique li {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.detail__historique time {
+  color: var(--texte-doux);
+  font-size: 0.85rem;
+}
+
+.detail__commentaire {
+  color: var(--texte-doux);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.detail__boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}

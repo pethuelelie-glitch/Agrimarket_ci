@@ -5,6 +5,24 @@
 
 .catalogue__entete p {
   color: var(--texte-doux);
+  margin: 0;
+}
+
+.filtres {
+  display: grid;
+  gap: 1rem;
+}
+
+.filtres__grille {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+.catalogue__compte {
+  margin: 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
 }
 
 .produits {

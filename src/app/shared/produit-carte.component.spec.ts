@@ -74,4 +74,20 @@ describe('ProduitCarteComponent', () => {
 
     expect(image?.getAttribute('src')).toBe(IMAGE_SECOURS);
   });
+
+  it('neutralise l’ajout au panier pour un produit épuisé (task 5.9)', () => {
+    const fixture = rendre({ ...PRODUIT, quantiteDisponible: 0 });
+    const racine = fixture.nativeElement as HTMLElement;
+
+    expect(racine.querySelector<HTMLButtonElement>('button')?.disabled).toBe(true);
+    expect(racine.textContent).toContain('Rupture de stock');
+  });
+
+  it('affiche un badge « Inactif » et neutralise l’ajout (task 5.9)', () => {
+    const fixture = rendre({ ...PRODUIT, actif: false });
+    const racine = fixture.nativeElement as HTMLElement;
+
+    expect(racine.textContent).toContain('Inactif');
+    expect(racine.querySelector<HTMLButtonElement>('button')?.disabled).toBe(true);
+  });
 });

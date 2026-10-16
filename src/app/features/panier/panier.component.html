@@ -1,0 +1,158 @@
+<section class="panier">
+  <header class="panier__entete">
+    <div>
+      <h1>Mon panier</h1>
+      <p class="panier__sous-titre">
+        {{ resume().nombreArticles }} article(s) dans votre panier
+      </p>
+    </div>
+    @if (!estVide()) {
+      <button type="button" class="bouton bouton--discret" (click)="viderPanier()">
+        Vider le panier
+      </button>
+    }
+  </header>
+
+  @if (estVide()) {
+    <app-etat-vide
+      titre="Votre panier est vide"
+      message="Parcourez le catalogue et ajoutez des produits pour passer commande."
+      libelleBouton="Parcourir le catalogue"
+      [lienBouton]="chemins.catalogue"
+    />
+  } @else {
+    @if (problemes().length > 0) {
+      <div class="panier__alerte" role="alert">
+        <p>
+          {{ problemes().length }} article(s) ne sont plus commandables (stock insuffisant,
+          produit désactivé ou supprimé). Ajustez les quantités ou retirez-les pour continuer.
+        </p>
+      </div>
+    }
+
+    @for (groupe of resume().groupes; track groupe.producteurId) {
+      <article class="panier__groupe panneau">
+        <header class="panier__groupe-entete">
+          <div>
+            <h2>{{ groupe.producteurNom }}</h2>
+            <p class="panier__localisation">
+              {{ groupe.localisation || 'Localisation inconnue' }}
+            </p>
+          </div>
+          @if (nombreProblemesGroupe(groupe); as nombre) {
+            @if (nombre > 0) {
+              <span class="badge badge--alerte">{{ nombre }} à vérifier</span>
+            }
+          }
+        </header>
+
+        <ul class="panier__lignes">
+          @for (ligne of groupe.lignes; track ligne.produitId) {
+            <li class="panier__ligne" [class.panier__ligne--probleme]="ligne.etat !== 'DISPONIBLE'">
+              <div class="panier__ligne-infos">
+                <a class="panier__ligne-nom" [routerLink]="['/catalogue', ligne.produitId]">
+                  {{ ligne.nom }}
+                </a>
+                <p class="panier__ligne-prix">
+                  {{ ligne.prixUnitaire | montantFcfa }} / {{ libellesUnite[ligne.unite] }}
+                </p>
+                @if (ligne.probleme; as message) {
+                  <p class="panier__ligne-probleme">{{ message }}</p>
+                }
+              </div>
+
+              <div class="panier__ligne-quantite">
+                <button
+                  type="button"
+                  class="panier__pas"
+                  (click)="diminuer(ligne)"
+                  [attr.aria-label]="'Diminuer la quantité de ' + ligne.nom"
+                >
+                  −
+                </button>
+                <input
+                  class="panier__champ-quantite"
+                  type="number"
+                  min="1"
+                  [value]="ligne.quantite"
+                  (change)="majQuantite(ligne, $event)"
+                  [attr.aria-label]="'Quantité de ' + ligne.nom"
+                />
+                <button
+                  type="button"
+                  class="panier__pas"
+                  (click)="augmenter(ligne)"
+                  [attr.aria-label]="'Augmenter la quantité de ' + ligne.nom"
+                >
+                  +
+                </button>
+              </div>
+
+              <div class="panier__ligne-total">
+                <strong>{{ ligne.sousTotal | montantFcfa }}</strong>
+                <button type="button" class="panier__retirer" (click)="retirer(ligne)">
+                  Retirer
+                </button>
+              </div>
+            </li>
+          }
+        </ul>
+
+        <footer class="panier__groupe-totaux">
+          <p><span>Sous-total produits</span><span>{{ groupe.montantProduits | montantFcfa }}</span></p>
+          <p><span>Frais de livraison</span><span>{{ groupe.fraisLivraison | montantFcfa }}</span></p>
+          <p class="panier__groupe-total">
+            <span>Total {{ groupe.producteurNom }}</span>
+            <span>{{ groupe.total | montantFcfa }}</span>
+          </p>
+        </footer>
+      </article>
+    }
+
+    <aside class="panier__recapitulatif panneau">
+      <h2>Récapitulatif</h2>
+      <p>
+        <span>Montant des produits</span>
+        <span>{{ resume().montantProduits | montantFcfa }}</span>
+      </p>
+      <p>
+        <span>Frais de livraison</span>
+        <span>{{ resume().fraisLivraison | montantFcfa }}</span>
+      </p>
+      <p class="panier__total">
+        <span>Montant total</span>
+        <span>{{ resume().total | montantFcfa }}</span>
+      </p>
+      <p class="panier__note">
+        Un panier contenant des produits de plusieurs producteurs génère une commande par
+        producteur, chacune avec ses propres frais de livraison.
+      </p>
+
+      <div class="panier__validation">
+        <label class="panier__adresse">
+          <span>Adresse de livraison</span>
+          <input
+            type="text"
+            [value]="adresse()"
+            (input)="majAdresse($event)"
+            placeholder="Ex. Cocody, Abidjan"
+            autocomplete="street-address"
+          />
+        </label>
+        <button
+          type="button"
+          class="bouton panier__valider"
+          [disabled]="!peutValider()"
+          (click)="valider()"
+        >
+          Valider la commande
+        </button>
+        @if (problemes().length > 0) {
+          <p class="panier__blocage">
+            Réglez les articles signalés pour pouvoir valider votre commande.
+          </p>
+        }
+      </div>
+    </aside>
+  }
+</section>

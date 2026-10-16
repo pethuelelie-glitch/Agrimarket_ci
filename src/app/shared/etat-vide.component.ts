@@ -1,30 +1,38 @@
 import { Component, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 /**
  * Composant partagé d'état vide et d'erreur de chargement (task 4.4).
  *
- * Affiche un message en français et, si demandé, un bouton d'action
- * (réessai, retour au catalogue…) : aucun écran ne doit rester blanc.
+ * Affiche un message en français et, si demandé, une action :
+ * - `libelleBouton` + `action` → un bouton (réessai, réinitialisation…) ;
+ * - `libelleBouton` + `lienBouton` → un lien de navigation.
+ * Aucun écran ne doit rester blanc.
  */
 @Component({
   selector: 'app-etat-vide',
+  imports: [RouterLink],
   template: `
     <div class="etat-vide" role="status">
       <h3>{{ titre() }}</h3>
       <p>{{ message() }}</p>
-      @if (libelleBouton()) {
-        <button type="button" class="etat-vide__action" (click)="action.emit()">
-          {{ libelleBouton() }}
-        </button>
+      @if (libelleBouton(); as libelle) {
+        @if (lienBouton(); as lien) {
+          <a class="etat-vide__action" [routerLink]="lien">{{ libelle }}</a>
+        } @else {
+          <button type="button" class="etat-vide__action" (click)="action.emit()">
+            {{ libelle }}
+          </button>
+        }
       }
     </div>
   `,
   styles: [
     `
       .etat-vide {
-        border: 1px dashed #b6c2ac;
-        border-radius: 0.75rem;
-        background: #f6f9f4;
+        border: 1px dashed var(--bord);
+        border-radius: var(--rayon);
+        background: var(--vert-pale);
         padding: 1.5rem;
         display: grid;
         gap: 0.5rem;
@@ -33,26 +41,28 @@ import { Component, input, output } from '@angular/core';
       .etat-vide h3 {
         margin: 0;
         font-size: 1.05rem;
-        color: #2c3a26;
+        color: var(--vert-fonce);
       }
       .etat-vide p {
         margin: 0;
-        color: #4a5743;
+        color: var(--texte-doux);
         max-width: 55ch;
       }
       .etat-vide__action {
+        display: inline-block;
         margin-top: 0.35rem;
         padding: 0.5rem 1rem;
         border: 0;
-        border-radius: 0.5rem;
-        background: #2e7d32;
-        color: #ffffff;
+        border-radius: var(--rayon);
+        background: var(--vert);
+        color: var(--blanc);
         font: inherit;
+        font-weight: 600;
+        text-decoration: none;
         cursor: pointer;
       }
-      .etat-vide__action:focus-visible {
-        outline: 3px solid #a5d6a7;
-        outline-offset: 2px;
+      .etat-vide__action:hover {
+        background: var(--vert-fonce);
       }
     `,
   ],
@@ -60,8 +70,10 @@ import { Component, input, output } from '@angular/core';
 export class EtatVideComponent {
   readonly titre = input('Rien à afficher');
   readonly message = input.required<string>();
-  /** Libellé du bouton d'action ; null/undefined pour ne pas afficher de bouton. */
+  /** Libellé de l'action ; `null` pour ne rien afficher. */
   readonly libelleBouton = input<string | null>(null);
-  /** Émet lorsque l'utilisateur demande l'action (réessai, navigation…). */
+  /** Chemin de navigation ; si renseigné, l'action devient un lien. */
+  readonly lienBouton = input<string | null>(null);
+  /** Émet lorsque l'utilisateur demande l'action (mode bouton uniquement). */
   readonly action = output<void>();
 }

@@ -1,0 +1,268 @@
+<section class="gestion">
+  <header class="gestion__entete">
+    <div>
+      <h1>Mes produits</h1>
+      <p>Publiez et gérez les produits que vous proposez à la vente.</p>
+    </div>
+    @if (!formulaireOuvert()) {
+      <button type="button" class="bouton" (click)="nouveauProduit()">Nouveau produit</button>
+    }
+  </header>
+
+  @if (formulaireOuvert()) {
+    <form class="panneau formulaire" novalidate (submit)="enregistrer(); $event.preventDefault()">
+      <h2>{{ titreFormulaire() }}</h2>
+
+      <div class="champ" [class.champ--erreur]="erreurDe('nom')">
+        <label for="produit-nom">Nom du produit</label>
+        <input
+          id="produit-nom"
+          type="text"
+          [value]="formulaire().nom"
+          (input)="majTexte('nom', $event)"
+        />
+        @if (erreurDe('nom'); as message) {
+          <p class="champ__erreur">{{ message }}</p>
+        }
+      </div>
+
+      <div class="champ" [class.champ--erreur]="erreurDe('description')">
+        <label for="produit-description">Description</label>
+        <textarea
+          id="produit-description"
+          rows="3"
+          [value]="formulaire().description"
+          (input)="majTexte('description', $event)"
+        ></textarea>
+        @if (erreurDe('description'); as message) {
+          <p class="champ__erreur">{{ message }}</p>
+        }
+      </div>
+
+      <div class="formulaire__grille">
+        <div class="champ" [class.champ--erreur]="erreurDe('categorie')">
+          <label for="produit-categorie">Catégorie</label>
+          <select
+            id="produit-categorie"
+            [value]="formulaire().categorie"
+            (change)="majTexte('categorie', $event)"
+          >
+            <option value="">— Choisir —</option>
+            @for (option of categories; track option) {
+              <option [value]="option">{{ libellesCategorie[option] }}</option>
+            }
+          </select>
+          @if (erreurDe('categorie'); as message) {
+            <p class="champ__erreur">{{ message }}</p>
+          }
+        </div>
+
+        <div class="champ" [class.champ--erreur]="erreurDe('unite')">
+          <label for="produit-unite">Unité de vente</label>
+          <select
+            id="produit-unite"
+            [value]="formulaire().unite"
+            (change)="majTexte('unite', $event)"
+          >
+            <option value="">— Choisir —</option>
+            @for (option of unites; track option) {
+              <option [value]="option">{{ libellesUnite[option] }}</option>
+            }
+          </select>
+          @if (erreurDe('unite'); as message) {
+            <p class="champ__erreur">{{ message }}</p>
+          }
+        </div>
+
+        <div class="champ" [class.champ--erreur]="erreurDe('prix')">
+          <label for="produit-prix">Prix unitaire (FCFA)</label>
+          <input
+            id="produit-prix"
+            type="number"
+            min="1"
+            inputmode="numeric"
+            [value]="formulaire().prix"
+            (input)="majNombre('prix', $event)"
+          />
+          @if (erreurDe('prix'); as message) {
+            <p class="champ__erreur">{{ message }}</p>
+          }
+        </div>
+
+        <div class="champ" [class.champ--erreur]="erreurDe('quantiteDisponible')">
+          <label for="produit-quantite">Quantité disponible</label>
+          <input
+            id="produit-quantite"
+            type="number"
+            min="0"
+            inputmode="numeric"
+            [value]="formulaire().quantiteDisponible"
+            (input)="majNombre('quantiteDisponible', $event)"
+          />
+          @if (erreurDe('quantiteDisponible'); as message) {
+            <p class="champ__erreur">{{ message }}</p>
+          }
+        </div>
+
+        <div class="champ" [class.champ--erreur]="erreurDe('localisation')">
+          <label for="produit-localisation">Localisation</label>
+          <input
+            id="produit-localisation"
+            type="text"
+            placeholder="Abidjan, Bouaké…"
+            [value]="formulaire().localisation"
+            (input)="majTexte('localisation', $event)"
+          />
+          @if (erreurDe('localisation'); as message) {
+            <p class="champ__erreur">{{ message }}</p>
+          }
+        </div>
+
+        <div class="champ" [class.champ--erreur]="erreurDe('imageUrl')">
+          <label for="produit-image">Image (URL)</label>
+          <input
+            id="produit-image"
+            type="url"
+            placeholder="https://…"
+            [value]="formulaire().imageUrl"
+            (input)="majTexte('imageUrl', $event)"
+          />
+          @if (erreurDe('imageUrl'); as message) {
+            <p class="champ__erreur">{{ message }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="formulaire__actions">
+        <button type="submit" class="bouton">
+          {{ produitEnEdition() ? 'Enregistrer les modifications' : 'Publier le produit' }}
+        </button>
+        <button type="button" class="bouton bouton--discret" (click)="annulerFormulaire()">
+          Annuler
+        </button>
+      </div>
+    </form>
+  }
+
+  @if (estVide()) {
+    <app-etat-vide
+      titre="Aucun produit publié"
+      message="Vous n'avez pas encore publié de produit. Créez votre premier produit pour le rendre visible au catalogue."
+      libelleBouton="Créer mon premier produit"
+      (action)="nouveauProduit()"
+    />
+  } @else {
+    <div class="tableau-conteneur panneau">
+      <table class="tableau">
+        <caption class="visuellement-cache">Liste de vos produits</caption>
+        <thead>
+          <tr>
+            <th scope="col">Produit</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Créé le</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (produit of produits(); track produit.id) {
+            <tr>
+              <td>{{ produit.nom }}</td>
+              <td>{{ libellesCategorie[produit.categorie] }}</td>
+              <td>{{ produit.prix | montantFcfa }} / {{ libellesUnite[produit.unite] }}</td>
+              <td>
+                @if (stockEnEdition() === produit.id) {
+                  <div class="stock">
+                    <label class="visuellement-cache" [attr.for]="'stock-' + produit.id">
+                      Nouvelle quantité
+                    </label>
+                    <input
+                      [id]="'stock-' + produit.id"
+                      type="number"
+                      min="0"
+                      [value]="stockSaisi()"
+                      (input)="majStockSaisi($event)"
+                    />
+                    <span class="stock__min">
+                      Minimum autorisé : {{ minimumStock(produit.id) }}
+                    </span>
+                    <button
+                      type="button"
+                      class="bouton"
+                      (click)="confirmerStock(produit.id)"
+                    >
+                      Valider
+                    </button>
+                    <button type="button" class="bouton bouton--discret" (click)="annulerStock()">
+                      Annuler
+                    </button>
+                  </div>
+                } @else {
+                  {{ produit.quantiteDisponible }} {{ libellesUnite[produit.unite] }}
+                }
+              </td>
+              <td>
+                <span class="badge" [class.badge--danger]="!produit.actif">
+                  {{ produit.actif ? 'Actif' : 'Inactif' }}
+                </span>
+              </td>
+              <td>{{ dateCourte(produit.dateCreation) }}</td>
+              <td>
+                <div class="actions">
+                  <button type="button" class="bouton bouton--discret" (click)="modifier(produit)">
+                    Modifier
+                  </button>
+                  <button
+                    type="button"
+                    class="bouton bouton--discret"
+                    (click)="ouvrirStock(produit)"
+                  >
+                    Gérer le stock
+                  </button>
+                  <button
+                    type="button"
+                    class="bouton bouton--discret"
+                    (click)="basculerActivation(produit.id)"
+                  >
+                    {{ produit.actif ? 'Désactiver' : 'Activer' }}
+                  </button>
+                  <button
+                    type="button"
+                    class="bouton bouton--danger"
+                    (click)="demanderSuppression(produit.id)"
+                  >
+                    Supprimer
+                  </button>
+                </div>
+
+                @if (suppressionEnAttente() === produit.id) {
+                  <div class="confirmation" role="alertdialog">
+                    <p>Supprimer définitivement « {{ produit.nom }} » ?</p>
+                    <div class="actions">
+                      <button
+                        type="button"
+                        class="bouton bouton--danger"
+                        (click)="confirmerSuppression(produit.id)"
+                      >
+                        Confirmer la suppression
+                      </button>
+                      <button
+                        type="button"
+                        class="bouton bouton--discret"
+                        (click)="annulerSuppression()"
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  </div>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

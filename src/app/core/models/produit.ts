@@ -62,6 +62,38 @@ export interface ModerationProduit {
 }
 
 /**
+ * Données d'un formulaire produit (tasks 5.1, 5.6, 5.8).
+ *
+ * La catégorie et l'unité sont représentées par `''` tant que l'utilisateur n'a
+ * rien choisi dans la liste déroulante : elles sont alors refusées par la
+ * validation, qui signale chaque champ fautif séparément.
+ */
+export interface DonneesFormulaireProduit {
+  nom: string;
+  description: string;
+  categorie: Categorie | '';
+  prix: number;
+  unite: Unite | '';
+  quantiteDisponible: number;
+  localisation: string;
+  imageUrl: string;
+}
+
+/** Formulaire produit vide, valeur de départ d'un formulaire de création. */
+export function formulaireProduitVide(): DonneesFormulaireProduit {
+  return {
+    nom: '',
+    description: '',
+    categorie: '',
+    prix: 0,
+    unite: '',
+    quantiteDisponible: 0,
+    localisation: '',
+    imageUrl: '',
+  };
+}
+
+/**
  * Produit agricole publié par un producteur (Module D).
  */
 export interface Produit {

@@ -14,6 +14,9 @@ export const SCHEMA_VERSION = 1;
 /** Version du jeu de données de démonstration. */
 export const SEED_VERSION = 1;
 
+/** Fenêtre glissante (en jours) de l'évolution des commandes (décision D13). */
+export const FENETRE_EVOLUTION_JOURS = 14;
+
 /** Forfait de base appliqué aux frais de livraison (FCFA). */
 export const FORFAIT_BASE = 1000;
 

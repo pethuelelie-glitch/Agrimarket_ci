@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { AuthService } from './core/services/auth.service';
+import { CartService } from './core/services/cart.service';
 import { NotificationsService } from './core/services/notifications.service';
 import { configurerTestBedAmorce } from './testing/environnement';
 
@@ -119,5 +120,16 @@ describe('App — coquille et navigation (tasks 4.1 / 4.2)', () => {
     (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.annonce__fermer')?.click();
     fixture.detectChanges();
     expect(texte(fixture)).not.toContain('Accès refusé');
+  });
+
+  it('affiche le nombre d’articles du panier dans la navigation (task 6.7)', async () => {
+    const fixture = await preparer('koffi.yao@agrimarket.ci', 'Achete1234');
+    const racine = fixture.nativeElement as HTMLElement;
+    expect(racine.querySelector('.navigation__badge')).toBeNull();
+
+    TestBed.inject(CartService).ajouter('prd_riz', 2);
+    fixture.detectChanges();
+
+    expect(racine.querySelector('.navigation__badge')?.textContent?.trim()).toBe('2');
   });
 });

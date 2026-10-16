@@ -1,0 +1,53 @@
+@if (produit(); as article) {
+  <article class="fiche">
+    <div class="fiche__media">
+      <img [src]="imageAffichee()" [alt]="article.nom" (error)="basculerSurSecours()" />
+    </div>
+
+    <div class="fiche__corps">
+      <a class="fiche__retour" [routerLink]="chemins.catalogue">← Retour au catalogue</a>
+
+      <span class="badge">{{ libelleCategorie() }}</span>
+      <h1>{{ article.nom }}</h1>
+      <p class="fiche__description">{{ article.description }}</p>
+
+      <p class="fiche__prix">
+        {{ article.prix | montantFcfa }}<span class="fiche__unite"> / {{ libelleUnite() }}</span>
+      </p>
+
+      @if (!article.actif) {
+        <p class="badge badge--danger">Produit inactif</p>
+      }
+
+      <dl class="fiche__infos">
+        <div>
+          <dt>Quantité disponible</dt>
+          <dd>{{ article.quantiteDisponible }} {{ libelleUnite() }}</dd>
+        </div>
+        <div>
+          <dt>Localisation</dt>
+          <dd>{{ article.localisation }}</dd>
+        </div>
+        <div>
+          <dt>Mise en ligne</dt>
+          <dd>{{ dateMiseEnLigne() }}</dd>
+        </div>
+        <div>
+          <dt>Producteur</dt>
+          <dd>{{ producteur()?.nom ?? 'Producteur inconnu' }}</dd>
+        </div>
+      </dl>
+
+      <div class="fiche__action">
+        <app-bouton-ajout-panier [produit]="article" (ajouter)="ajouterAuPanier()" />
+      </div>
+    </div>
+  </article>
+} @else {
+  <app-etat-vide
+    titre="Produit introuvable"
+    message="Ce produit n'existe pas ou a été retiré du catalogue."
+    libelleBouton="Revenir au catalogue"
+    [lienBouton]="chemins.catalogue"
+  />
+}

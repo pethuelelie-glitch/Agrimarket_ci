@@ -147,6 +147,18 @@ export function peutSupprimerProduit(utilisateur: Utilisateur | null, produit: P
   return utilisateur.role === 'PRODUCTEUR' && produit.producteurId === utilisateur.id;
 }
 
+/**
+ * L'utilisateur peut-il modérer (activer/désactiver) ce produit ?
+ * Droit réservé à l'administrateur (`product:moderate`), quel que soit le
+ * producteur propriétaire (spéc. « l'administrateur peut modérer un produit »).
+ */
+export function peutModerer(utilisateur: Utilisateur | null): boolean {
+  if (!utilisateur || !utilisateur.actif) {
+    return false;
+  }
+  return peut(utilisateur.role, 'product:moderate');
+}
+
 /** Produits visibles pour l'utilisateur (filtrage des listes publiques). */
 export function produitsVisibles(
   utilisateur: Utilisateur | null,

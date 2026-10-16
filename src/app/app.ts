@@ -3,6 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LIBELLES_ROLE } from './core/models';
 import { CHEMINS, cheminTableauDeBord } from './core/navigation';
 import { AuthService } from './core/services/auth.service';
+import { CartService } from './core/services/cart.service';
 import { NotificationsService } from './core/services/notifications.service';
 import { DeconnexionBoutonComponent } from './shared/deconnexion-bouton.component';
 import { PiedDePageComponent } from './shared/pied-de-page.component';
@@ -28,10 +29,14 @@ export class App {
 
   private readonly auth = inject(AuthService);
   private readonly notifications = inject(NotificationsService);
+  private readonly cart = inject(CartService);
 
   readonly utilisateurCourant = this.auth.utilisateurCourant;
   readonly message = this.notifications.message;
   readonly menuOuvert = signal(false);
+
+  /** Nombre d'articles du panier affiché dans la navigation (task 6.7). */
+  readonly nombreArticles = this.cart.nombreArticles;
 
   /** Liens accessibles à tous les rôles, visiteur compris. */
   readonly liensCommuns: LienNavigation[] = [

@@ -49,6 +49,22 @@ export function roleGuard(rolesAutorises: readonly Role[]): CanActivateFn {
 }
 
 /**
+ * Redirige `/tableau-de-bord` vers le tableau de bord du rôle courant
+ * (task 9.5). Le composant cible n'est jamais rendu : une redirection est
+ * toujours renvoyée.
+ */
+export const redirectionTableauDeBord: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+
+  const utilisateur = auth.utilisateurCourant();
+  if (!utilisateur) {
+    return router.createUrlTree([CHEMINS.connexion]);
+  }
+  return router.createUrlTree([cheminTableauDeBord(utilisateur.role)]);
+};
+
+/**
  * Réévalue l'état du compte à chaque navigation (Module C).
  * Un compte désactivé après connexion est déconnecté et redirigé vers la
  * connexion avec un message expliquant la désactivation.

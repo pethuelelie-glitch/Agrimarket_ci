@@ -1,0 +1,64 @@
+:host {
+  display: block;
+}
+
+.commandes {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.commandes__entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.commandes__entete h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--vert-fonce);
+}
+
+.commandes__sous-titre {
+  margin: 0.25rem 0 0;
+  color: var(--texte-doux);
+}
+
+.commandes__filtre {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.commandes__filtre select {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+  background: var(--blanc);
+}
+
+.commandes__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+
+.commande-carte__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid var(--bord);
+  padding-top: 0.75rem;
+}
+
+.commande-carte__actions .bouton {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+}

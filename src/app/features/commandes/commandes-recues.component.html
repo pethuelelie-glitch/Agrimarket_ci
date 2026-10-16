@@ -1,0 +1,66 @@
+<section class="commandes">
+  <header class="commandes__entete">
+    <div>
+      <h1>Commandes reçues</h1>
+      <p class="commandes__sous-titre">Une commande par acheteur et par transaction.</p>
+    </div>
+    @if (!estVide()) {
+      <label class="commandes__filtre">
+        <span>Filtrer par statut</span>
+        <select [value]="filtreStatut()" (change)="majFiltre($event)">
+          <option value="TOUS">Tous les statuts</option>
+          @for (statut of statuts; track statut) {
+            <option [value]="statut">{{ libellesStatut[statut] }}</option>
+          }
+        </select>
+      </label>
+    }
+  </header>
+
+  @if (estVide()) {
+    <app-etat-vide
+      titre="Aucune commande reçue"
+      message="Vos acheteurs n’ont pas encore commandé de produits."
+    />
+  } @else if (filtrees().length === 0) {
+    <app-etat-vide
+      titre="Aucune commande pour ce statut"
+      message="Aucune commande reçue ne correspond au statut sélectionné."
+    />
+  } @else {
+    <ul class="commandes__liste">
+      @for (commande of filtrees(); track commande.id) {
+        <li class="commande-carte panneau">
+          <div class="commande-carte__entete">
+            <a class="commande-carte__reference" [routerLink]="cheminCommande(commande.id)">
+              {{ commande.reference }}
+            </a>
+            <span class="badge-statut" [attr.data-statut]="commande.statut">
+              {{ libellesStatut[commande.statut] }}
+            </span>
+          </div>
+          <p class="commande-carte__meta">
+            <span>{{ dateCourte(commande.dateCreation) }}</span>
+            <span>{{ nomAcheteur(commande) }}</span>
+          </p>
+          <p class="commande-carte__montant">{{ commande.montantTotal | montantFcfa }}</p>
+
+          @if (progressions(commande).length > 0 || peutRefuser(commande)) {
+            <div class="commande-carte__actions">
+              @for (cible of progressions(commande); track cible) {
+                <button type="button" class="bouton" (click)="avancer(commande, cible)">
+                  {{ libellesStatut[cible] }}
+                </button>
+              }
+              @if (peutRefuser(commande)) {
+                <button type="button" class="bouton bouton--danger" (click)="refuser(commande)">
+                  Refuser
+                </button>
+              }
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+</section>

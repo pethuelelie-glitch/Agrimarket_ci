@@ -90,6 +90,21 @@
   font-weight: 700;
 }
 
+.navigation__badge {
+  display: inline-block;
+  min-width: 1.25rem;
+  margin-inline-start: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  background: var(--vert);
+  color: var(--blanc);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  vertical-align: middle;
+}
+
 .navigation__compte {
   display: flex;
   align-items: center;

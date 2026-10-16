@@ -2,6 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NOMBRE_PRODUITS_MISE_EN_AVANT, selectionnerMiseEnAvant } from '../../core/catalogue/selection';
 import { CHEMINS, cheminTableauDeBord } from '../../core/navigation';
+import { Produit } from '../../core/models';
+import { AjoutPanierService } from '../../core/panier/ajout-panier.service';
 import { PersistenceService } from '../../core/persistence/persistence.service';
 import { AuthService } from '../../core/services/auth.service';
 import { EtatVideComponent } from '../../shared/etat-vide.component';
@@ -25,6 +27,7 @@ export class AccueilComponent {
   private readonly persistence = inject(PersistenceService);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
+  private readonly ajoutPanier = inject(AjoutPanierService);
 
   readonly utilisateurCourant = this.auth.utilisateurCourant;
 
@@ -63,6 +66,11 @@ export class AccueilComponent {
 
   voirCatalogue(): void {
     void this.router.navigate([CHEMINS.catalogue]);
+  }
+
+  /** Ajoute un produit mis en avant au panier. */
+  ajouterAuPanier(produit: Produit): void {
+    this.ajoutPanier.ajouter(produit.id);
   }
 
   private async amorcer(): Promise<void> {

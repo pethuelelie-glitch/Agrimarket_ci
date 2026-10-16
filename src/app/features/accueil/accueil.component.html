@@ -62,7 +62,7 @@
     <ul class="grille produits">
       @for (produit of produitsEnAvant(); track produit.id) {
         <li>
-          <app-produit-carte [produit]="produit" />
+          <app-produit-carte [produit]="produit" (ajouter)="ajouterAuPanier(produit)" />
         </li>
       }
     </ul>

@@ -1,0 +1,98 @@
+<section class="missions">
+  <header class="missions__entete">
+    <h1>Mes missions</h1>
+    @if (!estVide()) {
+      <p class="missions__resume">
+        {{ missions().length }} mission(s) attribuée(s) à {{ nomLivreur() || 'vous' }}.
+      </p>
+    }
+  </header>
+
+  @if (estVide()) {
+    <app-etat-vide
+      titre="Aucune mission"
+      message="Aucune livraison ne vous est attribuée pour le moment."
+    />
+  } @else {
+    @for (groupe of groupes(); track groupe.cle) {
+      <section class="missions__groupe">
+        <h2>{{ groupe.libelle }} ({{ groupe.missions.length }})</h2>
+        @if (groupe.missions.length === 0) {
+          <p class="missions__groupe-vide">Aucune mission dans cette catégorie.</p>
+        } @else {
+          <ul class="missions__liste">
+            @for (mission of groupe.missions; track mission.id) {
+              <li class="mission-carte panneau">
+                <div class="mission-carte__entete">
+                  <span class="mission-carte__reference">{{ mission.commandeReference }}</span>
+                  <span class="badge-statut" [attr.data-statut]="mission.statut">
+                    {{ libellesStatut[mission.statut] }}
+                  </span>
+                </div>
+                <p class="mission-carte__adresse">{{ mission.adresseDestination }}</p>
+                <dl class="mission-carte__dates">
+                  <div>
+                    <dt>Affectée le</dt>
+                    <dd>{{ dateHeure(mission.dateAffectation) }}</dd>
+                  </div>
+                  <div>
+                    <dt>Livrée le</dt>
+                    <dd>{{ dateHeure(mission.dateLivraison) }}</dd>
+                  </div>
+                </dl>
+                @if (mission.commentaire) {
+                  <p class="mission-carte__commentaire">{{ mission.commentaire }}</p>
+                }
+
+                @if (!estFinale(mission.statut)) {
+                  @if (echecPour() === mission.id) {
+                    <div class="mission-carte__echec">
+                      <label>
+                        <span>Motif de l’échec (obligatoire)</span>
+                        <input #motif type="text" placeholder="Ex. client injoignable" />
+                      </label>
+                      <div class="mission-carte__actions">
+                        <button
+                          type="button"
+                          class="bouton bouton--danger"
+                          (click)="confirmerEchec(mission, motif.value)"
+                        >
+                          Confirmer l’échec
+                        </button>
+                        <button type="button" class="bouton bouton--discret" (click)="annulerEchec()">
+                          Annuler
+                        </button>
+                      </div>
+                    </div>
+                  } @else {
+                    <div class="mission-carte__actions">
+                      @if (peutPrendreEnCharge(mission)) {
+                        <button type="button" class="bouton" (click)="prendreEnCharge(mission)">
+                          Prendre en charge
+                        </button>
+                      }
+                      @if (peutLivrer(mission)) {
+                        <button type="button" class="bouton" (click)="marquerLivree(mission)">
+                          Marquer livrée
+                        </button>
+                      }
+                      @if (peutEchouer(mission)) {
+                        <button
+                          type="button"
+                          class="bouton bouton--discret"
+                          (click)="ouvrirEchec(mission)"
+                        >
+                          Signaler un échec
+                        </button>
+                      }
+                    </div>
+                  }
+                }
+              </li>
+            }
+          </ul>
+        }
+      </section>
+    }
+  }
+</section>

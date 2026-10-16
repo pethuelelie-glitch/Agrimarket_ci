@@ -1,0 +1,126 @@
+:host {
+  display: block;
+}
+
+.missions {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.missions__entete h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--vert-fonce);
+}
+
+.missions__resume {
+  margin: 0.25rem 0 0;
+  color: var(--texte-doux);
+}
+
+.missions__groupe {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.missions__groupe h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--vert-fonce);
+}
+
+.missions__groupe-vide {
+  margin: 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.missions__liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+
+.mission-carte {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.mission-carte__entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mission-carte__reference {
+  font-weight: 700;
+  color: var(--vert-fonce);
+}
+
+.mission-carte__adresse {
+  margin: 0;
+  color: var(--texte);
+}
+
+.mission-carte__dates {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.mission-carte__dates div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.mission-carte__dates dt {
+  color: var(--texte-doux);
+  font-size: 0.85rem;
+}
+
+.mission-carte__dates dd {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.mission-carte__commentaire {
+  margin: 0;
+  color: var(--texte-doux);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.mission-carte__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid var(--bord);
+  padding-top: 0.75rem;
+}
+
+.mission-carte__echec {
+  display: grid;
+  gap: 0.5rem;
+  border-top: 1px solid var(--bord);
+  padding-top: 0.75rem;
+}
+
+.mission-carte__echec label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.mission-carte__echec input {
+  padding: 0.5rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+}

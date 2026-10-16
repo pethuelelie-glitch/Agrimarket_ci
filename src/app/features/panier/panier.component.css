@@ -1,0 +1,260 @@
+:host {
+  display: block;
+}
+
+.panier {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.panier__entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panier__entete h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--vert-fonce);
+}
+
+.panier__sous-titre {
+  margin: 0.25rem 0 0;
+  color: var(--texte-doux);
+}
+
+.panier__alerte {
+  border: 1px solid #e2b93b;
+  border-left: 4px solid #e2b93b;
+  background: #fdf6e3;
+  border-radius: var(--rayon);
+  padding: 0.85rem 1rem;
+}
+
+.panier__alerte p {
+  margin: 0;
+  color: #7a5b00;
+}
+
+.panier__groupe {
+  display: grid;
+  gap: 1rem;
+}
+
+.panier__groupe-entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--bord);
+  padding-bottom: 0.75rem;
+}
+
+.panier__groupe-entete h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--texte);
+}
+
+.panier__localisation {
+  margin: 0.15rem 0 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.badge--alerte {
+  background: #fdf6e3;
+  color: #7a5b00;
+  border: 1px solid #e2b93b;
+}
+
+.panier__lignes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.panier__ligne {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+}
+
+.panier__ligne--probleme {
+  border-color: #e2b93b;
+  background: #fffdf6;
+}
+
+.panier__ligne-nom {
+  font-weight: 600;
+  color: var(--vert-fonce);
+  text-decoration: none;
+}
+
+.panier__ligne-nom:hover {
+  text-decoration: underline;
+}
+
+.panier__ligne-prix {
+  margin: 0.2rem 0 0;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.panier__ligne-probleme {
+  margin: 0.35rem 0 0;
+  color: #b3261e;
+  font-size: 0.88rem;
+}
+
+.panier__ligne-quantite {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.panier__pas {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.panier__pas:hover {
+  border-color: var(--vert);
+  color: var(--vert-fonce);
+}
+
+.panier__champ-quantite {
+  width: 4rem;
+  padding: 0.4rem;
+  text-align: center;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+}
+
+.panier__ligne-total {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: end;
+  min-width: 8rem;
+}
+
+.panier__ligne-total strong {
+  color: var(--texte);
+}
+
+.panier__retirer {
+  border: 0;
+  background: none;
+  color: var(--rouge);
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.panier__groupe-totaux {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: stretch;
+  border-top: 1px solid var(--bord);
+  padding-top: 0.75rem;
+}
+
+.panier__groupe-totaux p,
+.panier__recapitulatif p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  color: var(--texte-doux);
+}
+
+.panier__groupe-total,
+.panier__total {
+  font-weight: 700;
+  color: var(--texte) !important;
+  font-size: 1.05rem;
+}
+
+.panier__recapitulatif {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.panier__recapitulatif h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  color: var(--vert-fonce);
+}
+
+.panier__note {
+  margin-top: 0.5rem;
+  color: var(--texte-doux);
+  font-size: 0.85rem;
+  display: block !important;
+}
+
+.panier__validation {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--bord);
+  padding-top: 0.85rem;
+}
+
+.panier__adresse {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.panier__adresse input {
+  padding: 0.5rem;
+  border: 1px solid var(--bord);
+  border-radius: var(--rayon);
+  font: inherit;
+}
+
+.panier__valider {
+  width: 100%;
+}
+
+.panier__valider:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.panier__blocage {
+  margin: 0;
+  color: #b3261e;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .panier__ligne {
+    grid-template-columns: 1fr;
+  }
+
+  .panier__ligne-total {
+    justify-items: start;
+  }
+}
