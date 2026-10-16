@@ -2,12 +2,7 @@
  * Catégories de produits agricoles (Module D — catalogue).
  */
 export type Categorie =
-  | 'CEREALES'
-  | 'LEGUMES'
-  | 'FRUITS'
-  | 'TUBERCULES'
-  | 'LEGUMINEUSES'
-  | 'TRANSFORMES';
+  'CEREALES' | 'LEGUMES' | 'FRUITS' | 'TUBERCULES' | 'LEGUMINEUSES' | 'TRANSFORMES';
 
 /** Les six catégories autorisées. */
 export const CATEGORIES: readonly Categorie[] = [

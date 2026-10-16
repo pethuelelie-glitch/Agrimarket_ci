@@ -12,12 +12,7 @@ import { estDisponible } from '../catalogue/disponibilite';
  */
 
 /** État de disponibilité d'une ligne au moment du calcul. */
-export type EtatLigne =
-  | 'DISPONIBLE'
-  | 'PRODUIT_SUPPRIME'
-  | 'INACTIF'
-  | 'EPUISE'
-  | 'INSUFFISANT';
+export type EtatLigne = 'DISPONIBLE' | 'PRODUIT_SUPPRIME' | 'INACTIF' | 'EPUISE' | 'INSUFFISANT';
 
 /** Une ligne de panier enrichie de son produit et de son état. */
 export interface LignePanier {

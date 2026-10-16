@@ -77,9 +77,9 @@ describe('filtres du catalogue (task 5.5)', () => {
 
   describe('filtres combinables', () => {
     it('filtre par catégorie', () => {
-      expect(appliquerCriteres(CATALOGUE, criteres({ categorie: 'LEGUMES' })).map((p) => p.id)).toEqual(
-        expect.arrayContaining(['b', 'c']),
-      );
+      expect(
+        appliquerCriteres(CATALOGUE, criteres({ categorie: 'LEGUMES' })).map((p) => p.id),
+      ).toEqual(expect.arrayContaining(['b', 'c']));
     });
 
     it('filtre par prix minimum et maximum', () => {
@@ -87,7 +87,9 @@ describe('filtres du catalogue (task 5.5)', () => {
         'c',
         'b',
       ]);
-      expect(appliquerCriteres(CATALOGUE, criteres({ prixMax: 500 })).map((p) => p.id)).toEqual(['a']);
+      expect(appliquerCriteres(CATALOGUE, criteres({ prixMax: 500 })).map((p) => p.id)).toEqual([
+        'a',
+      ]);
     });
 
     it('filtre par disponibilité « en stock » et « épuisé »', () => {
@@ -100,9 +102,9 @@ describe('filtres du catalogue (task 5.5)', () => {
     });
 
     it('filtre par localisation sans tenir compte de la casse ni des accents', () => {
-      expect(appliquerCriteres(CATALOGUE, criteres({ localisation: 'bouake' })).map((p) => p.id)).toEqual(
-        expect.arrayContaining(['b', 'c']),
-      );
+      expect(
+        appliquerCriteres(CATALOGUE, criteres({ localisation: 'bouake' })).map((p) => p.id),
+      ).toEqual(expect.arrayContaining(['b', 'c']));
       expect(
         appliquerCriteres(CATALOGUE, criteres({ localisation: 'BOUAKÉ' })).map((p) => p.id),
       ).toEqual(expect.arrayContaining(['b', 'c']));
@@ -117,10 +119,7 @@ describe('filtres du catalogue (task 5.5)', () => {
     });
 
     it('retourne une liste vide quand aucun produit ne satisfait les filtres', () => {
-      const resultat = appliquerCriteres(
-        CATALOGUE,
-        criteres({ categorie: 'FRUITS', prixMax: 10 }),
-      );
+      const resultat = appliquerCriteres(CATALOGUE, criteres({ categorie: 'FRUITS', prixMax: 10 }));
       expect(resultat).toEqual([]);
     });
 

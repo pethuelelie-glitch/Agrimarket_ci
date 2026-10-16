@@ -57,7 +57,9 @@ export class SupervisionLivraisonsComponent {
   );
 
   majFiltre(evenement: Event): void {
-    this.filtreStatut.set((evenement.target as HTMLSelectElement).value as StatutLivraison | 'TOUS');
+    this.filtreStatut.set(
+      (evenement.target as HTMLSelectElement).value as StatutLivraison | 'TOUS',
+    );
   }
 
   referenceCommande(commandeId: string): string {

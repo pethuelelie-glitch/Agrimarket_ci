@@ -126,7 +126,8 @@ export function indicateursAdmin(etat: EtatApplication, maintenant: Date): Indic
     commandesParStatut,
     commandesTotal: etat.orders.length,
     livraisonsEnCours: etat.deliveries.filter(estActive).length,
-    livraisonsTerminees: etat.deliveries.filter((livraison) => livraison.statut === 'LIVREE').length,
+    livraisonsTerminees: etat.deliveries.filter((livraison) => livraison.statut === 'LIVREE')
+      .length,
     evolution: serieEvolution(etat.orders, maintenant),
   };
 }
@@ -165,10 +166,7 @@ export function indicateursProducteur(
         total + commande.lignes.reduce((sousTotal, ligne) => sousTotal + ligne.quantite, 0),
       0,
     ),
-    montantVentes: commandesRetenues.reduce(
-      (total, commande) => total + commande.montantTotal,
-      0,
-    ),
+    montantVentes: commandesRetenues.reduce((total, commande) => total + commande.montantTotal, 0),
   };
 }
 

@@ -40,11 +40,7 @@ describe('selectionnerMiseEnAvant (task 4.3)', () => {
 
   it('ne dépasse jamais la limite de six éléments par défaut', () => {
     const produits = Array.from({ length: 12 }, (_, index) =>
-      produit(
-        `p${index}`,
-        true,
-        new Date(Date.UTC(2026, 0, 1 + index)).toISOString(),
-      ),
+      produit(`p${index}`, true, new Date(Date.UTC(2026, 0, 1 + index)).toISOString()),
     );
 
     const selection = selectionnerMiseEnAvant(produits);
@@ -75,9 +71,7 @@ describe('selectionnerMiseEnAvant (task 4.3)', () => {
   });
 
   it('retourne une sélection vide sans produit actif', () => {
-    expect(
-      selectionnerMiseEnAvant([produit('p1', false, '2026-01-05T00:00:00.000Z')]),
-    ).toEqual([]);
+    expect(selectionnerMiseEnAvant([produit('p1', false, '2026-01-05T00:00:00.000Z')])).toEqual([]);
     expect(selectionnerMiseEnAvant([])).toEqual([]);
   });
 });

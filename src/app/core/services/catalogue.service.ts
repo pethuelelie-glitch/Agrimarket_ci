@@ -34,9 +34,7 @@ export class CatalogueService {
   private readonly auth = inject(AuthService);
 
   /** Catalogue courant, en lecture seule. */
-  readonly produits: Signal<readonly Produit[]> = computed(
-    () => this.persistence.etat().products,
-  );
+  readonly produits: Signal<readonly Produit[]> = computed(() => this.persistence.etat().products);
 
   /** Les six catégories autorisées, exposées pour les listes déroulantes. */
   readonly categories = CATEGORIES;
@@ -69,7 +67,10 @@ export class CatalogueService {
     } else if (donnees.prix <= 0) {
       erreurs['prix'] = 'Le prix doit être strictement positif.';
     }
-    if (typeof donnees.quantiteDisponible !== 'number' || Number.isNaN(donnees.quantiteDisponible)) {
+    if (
+      typeof donnees.quantiteDisponible !== 'number' ||
+      Number.isNaN(donnees.quantiteDisponible)
+    ) {
       erreurs['quantiteDisponible'] = 'La quantité doit être un nombre.';
     } else if (donnees.quantiteDisponible < 0) {
       erreurs['quantiteDisponible'] = 'La quantité ne peut pas être négative (0 minimum).';
@@ -78,7 +79,8 @@ export class CatalogueService {
       erreurs['localisation'] = 'La localisation est obligatoire.';
     }
     if ((donnees.imageUrl ?? '').trim().length === 0) {
-      erreurs['imageUrl'] = "L'image est obligatoire : renseignez une URL ou choisissez une image fournie.";
+      erreurs['imageUrl'] =
+        "L'image est obligatoire : renseignez une URL ou choisissez une image fournie.";
     }
 
     return erreurs;
@@ -306,10 +308,12 @@ export class CatalogueService {
 
   /** Ce produit est-il référencé par une commande non livrée ni annulée ? */
   estReferenceParCommandeEnCours(produitId: string): boolean {
-    return this.persistence.etat().orders.some(
-      (commande) =>
-        estCommandeEnCours(commande.statut) &&
-        commande.lignes.some((ligne) => ligne.produitId === produitId),
-    );
+    return this.persistence
+      .etat()
+      .orders.some(
+        (commande) =>
+          estCommandeEnCours(commande.statut) &&
+          commande.lignes.some((ligne) => ligne.produitId === produitId),
+      );
   }
 }

@@ -1,12 +1,5 @@
 import { SEED_VERSION, etatVide } from '../config';
-import {
-  Commande,
-  EtatApplication,
-  Livraison,
-  Produit,
-  Role,
-  Utilisateur,
-} from '../models';
+import { Commande, EtatApplication, Livraison, Produit, Role, Utilisateur } from '../models';
 import { genererSel, hacherMotDePasse } from '../services/hachage';
 
 /**
@@ -184,7 +177,8 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     id: 'prd_riz',
     producteurId: IDS_DEMO.producteur1,
     nom: 'Riz local de Gagnoa',
-    description: 'Riz blanc parfumé produit dans la région du Gôh, idéal pour les plats quotidiens.',
+    description:
+      'Riz blanc parfumé produit dans la région du Gôh, idéal pour les plats quotidiens.',
     categorie: 'CEREALES',
     prix: 450,
     unite: 'SAC',

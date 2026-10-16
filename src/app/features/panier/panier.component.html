@@ -2,9 +2,7 @@
   <header class="panier__entete">
     <div>
       <h1>Mon panier</h1>
-      <p class="panier__sous-titre">
-        {{ resume().nombreArticles }} article(s) dans votre panier
-      </p>
+      <p class="panier__sous-titre">{{ resume().nombreArticles }} article(s) dans votre panier</p>
     </div>
     @if (!estVide()) {
       <button type="button" class="bouton bouton--discret" (click)="viderPanier()">
@@ -24,8 +22,8 @@
     @if (problemes().length > 0) {
       <div class="panier__alerte" role="alert">
         <p>
-          {{ problemes().length }} article(s) ne sont plus commandables (stock insuffisant,
-          produit désactivé ou supprimé). Ajustez les quantités ou retirez-les pour continuer.
+          {{ problemes().length }} article(s) ne sont plus commandables (stock insuffisant, produit
+          désactivé ou supprimé). Ajustez les quantités ou retirez-les pour continuer.
         </p>
       </div>
     }
@@ -99,8 +97,12 @@
         </ul>
 
         <footer class="panier__groupe-totaux">
-          <p><span>Sous-total produits</span><span>{{ groupe.montantProduits | montantFcfa }}</span></p>
-          <p><span>Frais de livraison</span><span>{{ groupe.fraisLivraison | montantFcfa }}</span></p>
+          <p>
+            <span>Sous-total produits</span><span>{{ groupe.montantProduits | montantFcfa }}</span>
+          </p>
+          <p>
+            <span>Frais de livraison</span><span>{{ groupe.fraisLivraison | montantFcfa }}</span>
+          </p>
           <p class="panier__groupe-total">
             <span>Total {{ groupe.producteurNom }}</span>
             <span>{{ groupe.total | montantFcfa }}</span>

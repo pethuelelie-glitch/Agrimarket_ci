@@ -24,8 +24,8 @@ function texte<T>(fixture: ComponentFixture<T>): string {
 }
 
 function valeursKpi<T>(fixture: ComponentFixture<T>): string[] {
-  return Array.from(racine(fixture).querySelectorAll('.kpi__valeur')).map(
-    (element) => (element.textContent ?? '').trim(),
+  return Array.from(racine(fixture).querySelectorAll('.kpi__valeur')).map((element) =>
+    (element.textContent ?? '').trim(),
   );
 }
 

@@ -24,12 +24,12 @@ import { EtatVideComponent } from '../../shared/etat-vide.component';
 
       <div class="grille">
         <app-carte-indicateur libelle="Produits actifs" [valeur]="indicateurs().produitsActifs" />
-        <app-carte-indicateur
-          libelle="Stock disponible"
-          [valeur]="indicateurs().stockDisponible"
-        />
+        <app-carte-indicateur libelle="Stock disponible" [valeur]="indicateurs().stockDisponible" />
         <app-carte-indicateur libelle="Commandes reçues" [valeur]="indicateurs().commandesRecues" />
-        <app-carte-indicateur libelle="Quantités vendues" [valeur]="indicateurs().quantitesVendues" />
+        <app-carte-indicateur
+          libelle="Quantités vendues"
+          [valeur]="indicateurs().quantitesVendues"
+        />
         <app-carte-indicateur
           libelle="Montant des ventes (hors annulées)"
           [valeur]="indicateurs().montantVentes | montantFcfa"

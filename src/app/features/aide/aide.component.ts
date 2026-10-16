@@ -64,8 +64,9 @@ import { LIBELLES_ROLE, Role } from '../../core/models';
             gardes.
           </li>
           <li>
-            Aucune vérification n'a lieu côté serveur, puisqu'<strong>il n'y a pas de serveur</strong>.
-            Une application réelle devrait refaire tous ces contrôles côté back-end.
+            Aucune vérification n'a lieu côté serveur, puisqu'<strong
+              >il n'y a pas de serveur</strong
+            >. Une application réelle devrait refaire tous ces contrôles côté back-end.
           </li>
           <li>
             L'authentification est <strong>simulée</strong> : les mots de passe ne sont jamais

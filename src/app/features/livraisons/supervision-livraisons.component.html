@@ -10,7 +10,8 @@
     <h2>Commandes à livrer</h2>
     @if (eligibles().length === 0) {
       <p class="supervision__vide">
-        Aucune commande éligible : confirmez une commande et préparez-la avant d’organiser sa livraison.
+        Aucune commande éligible : confirmez une commande et préparez-la avant d’organiser sa
+        livraison.
       </p>
     } @else {
       <div class="tableau-conteneur">
@@ -54,7 +55,9 @@
           <li class="attribution">
             <div class="attribution__infos">
               <strong>{{ livraison.reference }}</strong>
-              <span class="attribution__commande">{{ referenceCommande(livraison.commandeId) }}</span>
+              <span class="attribution__commande">{{
+                referenceCommande(livraison.commandeId)
+              }}</span>
               <span class="attribution__adresse">{{ livraison.adresseDestination }}</span>
             </div>
             <div class="attribution__action">

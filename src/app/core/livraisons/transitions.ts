@@ -10,7 +10,9 @@ export interface TransitionLivraison {
   readonly roles: readonly Role[];
 }
 
-export const TRANSITIONS_LIVRAISON: Readonly<Record<StatutLivraison, readonly TransitionLivraison[]>> = {
+export const TRANSITIONS_LIVRAISON: Readonly<
+  Record<StatutLivraison, readonly TransitionLivraison[]>
+> = {
   EN_ATTENTE: [{ cible: 'ASSIGNEE', roles: ['ADMIN'] }],
   ASSIGNEE: [
     { cible: 'EN_COURS', roles: ['LIVREUR'] },

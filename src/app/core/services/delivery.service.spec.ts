@@ -183,7 +183,12 @@ describe('DeliveryService — transitions du livreur (task 8.3)', () => {
     contexte.delivery.affecter(creee.id, IDS_DEMO.livreur1, MAINTENANT);
 
     await contexte.auth.connecter(...LIVREUR_1);
-    const resultat = contexte.delivery.changerStatut(creee.id, 'ECHEC', 'Client injoignable', MAINTENANT);
+    const resultat = contexte.delivery.changerStatut(
+      creee.id,
+      'ECHEC',
+      'Client injoignable',
+      MAINTENANT,
+    );
 
     expect(resultat.succes).toBe(true);
     const echec = livraison(contexte.env, creee.id);
@@ -261,7 +266,9 @@ describe('DeliveryService — cohérence et historique (tasks 8.5, 8.6)', () => 
     const creee = contexte.delivery.creer('cmd_demo_1', MAINTENANT).livraison!;
     contexte.delivery.affecter(creee.id, IDS_DEMO.livreur1, MAINTENANT);
 
-    const deserialise = JSON.parse(JSON.stringify(contexte.env.persistence.etat())) as EtatApplication;
+    const deserialise = JSON.parse(
+      JSON.stringify(contexte.env.persistence.etat()),
+    ) as EtatApplication;
     const livraisonRelue = deserialise.deliveries.find((l) => l.id === creee.id)!;
     const commandeRelue = deserialise.orders.find((c) => c.id === livraisonRelue.commandeId)!;
 

@@ -6,13 +6,13 @@ Le code correspondant se trouve dans `src/app/core/persistence/`.
 
 ## 1. Contrat de la couche
 
-| Élément | Rôle |
-| --- | --- |
-| `StorageAdapter` (`storage-adapter.ts`) | Interface unique `read() / write() / clear()`. Aucun composant n'accède au stockage en dehors de cette interface. |
-| `LocalStorageAdapter` (`local-storage-adapter.ts`) | Implémentation par défaut : `localStorage` du navigateur, sous la clé `agrimarket.v1`. |
-| `InMemoryAdapter` (`in-memory-adapter.ts`) | Implémentation de test : stockage en mémoire, capacité à simuler un échec d'écriture (`echecEcriture`). |
-| `STORAGE_ADAPTER` | Jeton d'injection. Par défaut `LocalStorageAdapter` ; les tests fournissent un `InMemoryAdapter`. |
-| `PersistenceService` (`persistence.service.ts`) | Seule porte d'entrée des données : expose `etat` (signal lecture seule) et `transaction()`. |
+| Élément                                            | Rôle                                                                                                              |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `StorageAdapter` (`storage-adapter.ts`)            | Interface unique `read() / write() / clear()`. Aucun composant n'accède au stockage en dehors de cette interface. |
+| `LocalStorageAdapter` (`local-storage-adapter.ts`) | Implémentation par défaut : `localStorage` du navigateur, sous la clé `agrimarket.v1`.                            |
+| `InMemoryAdapter` (`in-memory-adapter.ts`)         | Implémentation de test : stockage en mémoire, capacité à simuler un échec d'écriture (`echecEcriture`).           |
+| `STORAGE_ADAPTER`                                  | Jeton d'injection. Par défaut `LocalStorageAdapter` ; les tests fournissent un `InMemoryAdapter`.                 |
+| `PersistenceService` (`persistence.service.ts`)    | Seule porte d'entrée des données : expose `etat` (signal lecture seule) et `transaction()`.                       |
 
 Règles :
 
@@ -30,18 +30,18 @@ Format : JSON, une seule valeur par clé.
 
 ```jsonc
 {
-  "schemaVersion": 1,          // version du schéma (SCHEMA_VERSION)
+  "schemaVersion": 1, // version du schéma (SCHEMA_VERSION)
   "meta": {
-    "initialized": true,       // les données de démonstration sont créées
-    "seedVersion": 1,          // version du jeu de démonstration
-    "revision": 12             // compteur d'écritures
+    "initialized": true, // les données de démonstration sont créées
+    "seedVersion": 1, // version du jeu de démonstration
+    "revision": 12, // compteur d'écritures
   },
-  "users": [ /* Utilisateur[] */ ],
-  "products": [ /* Produit[] */ ],
-  "orders": [ /* Commande[] */ ],
-  "deliveries": [ /* Livraison[] */ ],
-  "carts": { /* Record<acheteurId, Panier> */ },
-  "session": null              // { userId, role, ouvertLe } | null
+  "users": [/* Utilisateur[] */],
+  "products": [/* Produit[] */],
+  "orders": [/* Commande[] */],
+  "deliveries": [/* Livraison[] */],
+  "carts": {/* Record<acheteurId, Panier> */},
+  "session": null, // { userId, role, ouvertLe } | null
 }
 ```
 
@@ -51,13 +51,13 @@ ISO 8601. Les noms de champs de cette structure sont ceux des modèles de
 
 ### Gestion de la lecture
 
-| Situation | Comportement |
-| --- | --- |
-| Clé absente ou vide | État vide, aucun avertissement. |
+| Situation                           | Comportement                                                                            |
+| ----------------------------------- | --------------------------------------------------------------------------------------- |
+| Clé absente ou vide                 | État vide, aucun avertissement.                                                         |
 | JSON illisible / structure invalide | Avertissement, stockage nettoyé, état vide, puis amorçage des données de démonstration. |
-| `schemaVersion` inconnue | Les données ne sont **pas** interprétées : avertissement, nettoyage, état vide. |
-| `localStorage` inaccessible | Avertissement, l'application démarre sur un état vide. |
-| Écriture impossible (quota…) | L'état mémoire est conservé pour ne pas perdre la saisie, un avertissement est affiché. |
+| `schemaVersion` inconnue            | Les données ne sont **pas** interprétées : avertissement, nettoyage, état vide.         |
+| `localStorage` inaccessible         | Avertissement, l'application démarre sur un état vide.                                  |
+| Écriture impossible (quota…)        | L'état mémoire est conservé pour ne pas perdre la saisie, un avertissement est affiché. |
 
 ## 3. Stratégie d'atomicité
 
@@ -87,9 +87,15 @@ Pour brancher un vrai backend, il n'y a **qu'une seule interface à changer** :
 
 ```ts
 export class ApiStorageAdapter implements StorageAdapter {
-  async read(): Promise<string | null> { /* GET /api/state  */ }
-  async write(snapshot: string): Promise<void> { /* PUT /api/state */ }
-  async clear(): Promise<void> { /* DELETE /api/state */ }
+  async read(): Promise<string | null> {
+    /* GET /api/state  */
+  }
+  async write(snapshot: string): Promise<void> {
+    /* PUT /api/state */
+  }
+  async clear(): Promise<void> {
+    /* DELETE /api/state */
+  }
 }
 ```
 

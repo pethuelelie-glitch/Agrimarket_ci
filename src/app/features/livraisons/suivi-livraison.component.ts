@@ -14,9 +14,7 @@ import { DeliveryService } from '../../core/services/delivery.service';
     <section class="suivi">
       <h2>Livraison</h2>
       @if (livraisons().length === 0) {
-        <p class="suivi__attente">
-          La livraison sera organisée après préparation de la commande.
-        </p>
+        <p class="suivi__attente">La livraison sera organisée après préparation de la commande.</p>
       } @else {
         @for (livraison of livraisons(); track livraison.id) {
           <article class="suivi__carte">

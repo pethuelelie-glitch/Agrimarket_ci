@@ -62,7 +62,9 @@ export class DetailCommandeComponent {
   /** L'utilisateur courant peut-il annuler cette commande ? */
   readonly peutAnnuler = computed(() => {
     const commande = this.commande();
-    return !!commande && this.accessible() && this.order.actionsPossibles(commande).includes('ANNULEE');
+    return (
+      !!commande && this.accessible() && this.order.actionsPossibles(commande).includes('ANNULEE')
+    );
   });
 
   /** L'acheteur propriétaire peut-il encore modifier l'adresse (task 7.6) ? */
@@ -79,7 +81,9 @@ export class DetailCommandeComponent {
   });
 
   nomUtilisateur(id: string): string {
-    return this.persistence.etat().users.find((utilisateur) => utilisateur.id === id)?.nom ?? 'Inconnu';
+    return (
+      this.persistence.etat().users.find((utilisateur) => utilisateur.id === id)?.nom ?? 'Inconnu'
+    );
   }
 
   dateHeure(iso: string): string {

@@ -20,7 +20,13 @@ export interface LienNavigation {
  */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, DeconnexionBoutonComponent, PiedDePageComponent],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    DeconnexionBoutonComponent,
+    PiedDePageComponent,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

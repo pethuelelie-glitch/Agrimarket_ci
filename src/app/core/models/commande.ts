@@ -4,13 +4,7 @@ import { Unite } from './produit';
  * Statuts d'une commande (Module F).
  */
 export type StatutCommande =
-  | 'EN_ATTENTE'
-  | 'CONFIRMEE'
-  | 'EN_PREPARATION'
-  | 'PRETE'
-  | 'EN_LIVRAISON'
-  | 'LIVREE'
-  | 'ANNULEE';
+  'EN_ATTENTE' | 'CONFIRMEE' | 'EN_PREPARATION' | 'PRETE' | 'EN_LIVRAISON' | 'LIVREE' | 'ANNULEE';
 
 /** Tous les statuts, dans l'ordre du cycle de vie. */
 export const STATUTS_COMMANDE: readonly StatutCommande[] = [

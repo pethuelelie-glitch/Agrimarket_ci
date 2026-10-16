@@ -46,9 +46,9 @@ describe('CommandesRecuesComponent (task 7.8)', () => {
     expect(texte(contexte)).toContain('Commandes reçues');
     // cmd_demo_1 appartient à awa.kone (producteur 1).
     expect(racine(contexte).querySelectorAll('.commande-carte').length).toBe(
-      contexte.env.persistence.etat().orders.filter(
-        (commande) => commande.producteurId === IDS_DEMO.producteur1,
-      ).length,
+      contexte.env.persistence
+        .etat()
+        .orders.filter((commande) => commande.producteurId === IDS_DEMO.producteur1).length,
     );
   });
 

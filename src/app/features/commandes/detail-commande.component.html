@@ -39,7 +39,11 @@
                 <span>Modifier l’adresse de livraison</span>
                 <input #adresse type="text" [value]="commande.adresseLivraison" />
               </label>
-              <button type="button" class="bouton bouton--discret" (click)="enregistrerAdresse(adresse.value)">
+              <button
+                type="button"
+                class="bouton bouton--discret"
+                (click)="enregistrerAdresse(adresse.value)"
+              >
                 Enregistrer
               </button>
             </div>
@@ -48,8 +52,12 @@
 
         <section class="panneau detail__bloc">
           <h2>Montants</h2>
-          <p class="detail__montant"><span>Produits</span><span>{{ commande.montantProduits | montantFcfa }}</span></p>
-          <p class="detail__montant"><span>Livraison</span><span>{{ commande.fraisLivraison | montantFcfa }}</span></p>
+          <p class="detail__montant">
+            <span>Produits</span><span>{{ commande.montantProduits | montantFcfa }}</span>
+          </p>
+          <p class="detail__montant">
+            <span>Livraison</span><span>{{ commande.fraisLivraison | montantFcfa }}</span>
+          </p>
           <p class="detail__montant detail__montant--total">
             <span>Total</span><span>{{ commande.montantTotal | montantFcfa }}</span>
           </p>

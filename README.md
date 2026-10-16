@@ -26,20 +26,20 @@ Le projet met en relation **producteurs agricoles**, **acheteurs** et **livreurs
 
 ## 1. Le projet en bref
 
-| Élément | Détail |
-| --- | --- |
-| **Nom** | AgriMarket CI |
-| **Nature** | Marketplace de produits agricoles (marché ivoirien) |
-| **Framework** | Angular 21.2 (composants standalone, signals, zoneless) |
-| **Langage** | TypeScript 5.9 en mode `strict` (sans `any`) |
-| **Tests** | Vitest 4 + jsdom 28 |
-| **Backend** | Aucun — données locales dans `localStorage` (clé `agrimarket.v1`) |
-| **Persistance** | Couche centralisée `PersistenceService`, transactionnelle et versionnée |
-| **Rôles** | `ADMIN`, `PRODUCTEUR`, `ACHETEUR`, `LIVREUR` |
-| **Catégories** | 6 catégories de produits agricoles |
-| **Statuts commande** | `EN_ATTENTE`, `CONFIRMEE`, `EN_PREPARATION`, `PRETE`, `EN_LIVRAISON`, `LIVREE`, `ANNULEE` |
-| **Statuts livraison** | `EN_ATTENTE`, `ASSIGNEE`, `EN_COURS`, `LIVREE`, `ECHEC` |
-| **Hors périmètre** | Backend/API, paiement réel, déploiement, publication GitHub |
+| Élément               | Détail                                                                                    |
+| --------------------- | ----------------------------------------------------------------------------------------- |
+| **Nom**               | AgriMarket CI                                                                             |
+| **Nature**            | Marketplace de produits agricoles (marché ivoirien)                                       |
+| **Framework**         | Angular 21.2 (composants standalone, signals, zoneless)                                   |
+| **Langage**           | TypeScript 5.9 en mode `strict` (sans `any`)                                              |
+| **Tests**             | Vitest 4 + jsdom 28                                                                       |
+| **Backend**           | Aucun — données locales dans `localStorage` (clé `agrimarket.v1`)                         |
+| **Persistance**       | Couche centralisée `PersistenceService`, transactionnelle et versionnée                   |
+| **Rôles**             | `ADMIN`, `PRODUCTEUR`, `ACHETEUR`, `LIVREUR`                                              |
+| **Catégories**        | 6 catégories de produits agricoles                                                        |
+| **Statuts commande**  | `EN_ATTENTE`, `CONFIRMEE`, `EN_PREPARATION`, `PRETE`, `EN_LIVRAISON`, `LIVREE`, `ANNULEE` |
+| **Statuts livraison** | `EN_ATTENTE`, `ASSIGNEE`, `EN_COURS`, `LIVREE`, `ECHEC`                                   |
+| **Hors périmètre**    | Backend/API, paiement réel, déploiement, publication GitHub                               |
 
 ---
 
@@ -165,19 +165,19 @@ agrimarket-ci/
 
 ### Rôle des dossiers clés
 
-| Dossier / fichier | Contenu |
-| --- | --- |
-| `src/app/core/models/` | Types métier : `Utilisateur`, `Produit`, `LigneCommande`, `Commande`, `Livraison`, `Panier`, enums (`Role`, `Categorie`, `Unite`, `StatutCommande`, `StatutLivraison`) et état global `EtatApplication`. |
-| `src/app/core/persistence/` | **Seule porte d'entrée des données.** `StorageAdapter` (interface), `LocalStorageAdapter`, `InMemoryAdapter` (tests), `PersistenceService` (`etat` en signal lecture seule + `transaction()` atomique). |
-| `src/app/core/services/` | Logique métier : `AuthService`, `CatalogueService`, `CartService`, `OrderService`, `DeliveryService`, `DashboardService`, `AdminService`, `NotificationsService`, helpers de hachage et d'identifiants. |
-| `src/app/core/guards/` + `permissions/` | Protection des routes et matrice de droits par rôle (documentés comme **contrôle côté client uniquement**). |
-| `src/app/core/{commandes,livraisons}/` | **Source unique de vérité** des transitions de statut + opérations pures réutilisées par les services et l'administration. |
-| `src/app/features/` | Composants d'écran, un dossier par domaine fonctionnel. |
-| `src/app/shared/` | Composants/pipes transverses (`produit-carte`, `carte-indicateur`, `repartition-barres`, `etat-vide`, `bouton-ajout-panier`, `deconnexion-bouton`, `pied-de-page`, `montant-fcfa`). |
-| `src/app/testing/` | Helpers de test partagés (exclus du build applicatif). |
-| `src/app/integration/` | Tests de parcours (inscription→livraison, cycle producteur, affectation livreur, multi-producteurs, robustesse). |
-| `docs/` | Documentation de la persistance et des limites. |
-| `openspec/` | Démarche spec-first : proposition, conception, spécifications, tâches, revue. |
+| Dossier / fichier                       | Contenu                                                                                                                                                                                                  |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/app/core/models/`                  | Types métier : `Utilisateur`, `Produit`, `LigneCommande`, `Commande`, `Livraison`, `Panier`, enums (`Role`, `Categorie`, `Unite`, `StatutCommande`, `StatutLivraison`) et état global `EtatApplication`. |
+| `src/app/core/persistence/`             | **Seule porte d'entrée des données.** `StorageAdapter` (interface), `LocalStorageAdapter`, `InMemoryAdapter` (tests), `PersistenceService` (`etat` en signal lecture seule + `transaction()` atomique).  |
+| `src/app/core/services/`                | Logique métier : `AuthService`, `CatalogueService`, `CartService`, `OrderService`, `DeliveryService`, `DashboardService`, `AdminService`, `NotificationsService`, helpers de hachage et d'identifiants.  |
+| `src/app/core/guards/` + `permissions/` | Protection des routes et matrice de droits par rôle (documentés comme **contrôle côté client uniquement**).                                                                                              |
+| `src/app/core/{commandes,livraisons}/`  | **Source unique de vérité** des transitions de statut + opérations pures réutilisées par les services et l'administration.                                                                               |
+| `src/app/features/`                     | Composants d'écran, un dossier par domaine fonctionnel.                                                                                                                                                  |
+| `src/app/shared/`                       | Composants/pipes transverses (`produit-carte`, `carte-indicateur`, `repartition-barres`, `etat-vide`, `bouton-ajout-panier`, `deconnexion-bouton`, `pied-de-page`, `montant-fcfa`).                      |
+| `src/app/testing/`                      | Helpers de test partagés (exclus du build applicatif).                                                                                                                                                   |
+| `src/app/integration/`                  | Tests de parcours (inscription→livraison, cycle producteur, affectation livreur, multi-producteurs, robustesse).                                                                                         |
+| `docs/`                                 | Documentation de la persistance et des limites.                                                                                                                                                          |
+| `openspec/`                             | Démarche spec-first : proposition, conception, spécifications, tâches, revue.                                                                                                                            |
 
 ---
 
@@ -222,15 +222,15 @@ npm test           # ou : npx ng test --watch=false
 
 Les données de démonstration sont amorcées automatiquement au premier lancement. Les mots de passe sont **affichés volontairement** sur la page de connexion (usage pédagogique uniquement).
 
-| Rôle | Nom | E-mail | Mot de passe |
-| --- | --- | --- | --- |
-| Administrateur | Aïcha Diomandé | `admin@agrimarket.ci` | `Admin1234` |
-| Producteur | Awa Koné (Abidjan) | `awa.kone@agrimarket.ci` | `Produ1234` |
-| Producteur | Bakary Traoré (Bouaké) | `bakary.traore@agrimarket.ci` | `Produ1234` |
-| Acheteur | Koffi Yao | `koffi.yao@agrimarket.ci` | `Achete1234` |
-| Acheteur | Adjoua Bamba | `adjoua.bamba@agrimarket.ci` | `Achete1234` |
-| Livreur | Ibrahim Diallo | `ibrahim.diallo@agrimarket.ci` | `Livre1234` |
-| Livreur | Sery Kouassi | `sery.kouassi@agrimarket.ci` | `Livre1234` |
+| Rôle           | Nom                    | E-mail                         | Mot de passe |
+| -------------- | ---------------------- | ------------------------------ | ------------ |
+| Administrateur | Aïcha Diomandé         | `admin@agrimarket.ci`          | `Admin1234`  |
+| Producteur     | Awa Koné (Abidjan)     | `awa.kone@agrimarket.ci`       | `Produ1234`  |
+| Producteur     | Bakary Traoré (Bouaké) | `bakary.traore@agrimarket.ci`  | `Produ1234`  |
+| Acheteur       | Koffi Yao              | `koffi.yao@agrimarket.ci`      | `Achete1234` |
+| Acheteur       | Adjoua Bamba           | `adjoua.bamba@agrimarket.ci`   | `Achete1234` |
+| Livreur        | Ibrahim Diallo         | `ibrahim.diallo@agrimarket.ci` | `Livre1234`  |
+| Livreur        | Sery Kouassi           | `sery.kouassi@agrimarket.ci`   | `Livre1234`  |
 
 Le jeu de démonstration contient **8 produits** répartis sur les **6 catégories**, **3 commandes** à statuts différents et **2 livraisons** (`ASSIGNEE` et `LIVREE`), avec des stocks cohérents.
 
@@ -254,22 +254,22 @@ Le jeu de démonstration contient **8 produits** répartis sur les **6 catégori
 
 ## 8. Routes de l'application
 
-| Chemin | Écran | Accès |
-| --- | --- | --- |
-| `/` | Accueil | Public |
-| `/catalogue` | Catalogue | Public |
-| `/catalogue/:id` | Fiche produit | Public |
-| `/aide` | Aide et limites | Public |
-| `/connexion`, `/inscription` | Authentification | Public |
-| `/panier` | Panier | Acheteur |
-| `/commandes`, `/commandes/:id` | Mes commandes / détail | Acheteur (détail : ayants droit) |
-| `/producteur/produits` | Mes produits | Producteur |
-| `/producteur/commandes` | Commandes reçues | Producteur |
-| `/livreur` | Mes missions | Livreur |
-| `/tableau-de-bord` | Redirection vers le tableau du rôle | Connecté |
-| `/tableau-de-bord/{administrateur,producteur,acheteur,livreur}` | Tableaux de bord | Rôle correspondant |
-| `/admin`, `/admin/{utilisateurs,produits,commandes,livraisons}` | Administration | Administrateur |
-| `**` | Page introuvable | Public |
+| Chemin                                                          | Écran                               | Accès                            |
+| --------------------------------------------------------------- | ----------------------------------- | -------------------------------- |
+| `/`                                                             | Accueil                             | Public                           |
+| `/catalogue`                                                    | Catalogue                           | Public                           |
+| `/catalogue/:id`                                                | Fiche produit                       | Public                           |
+| `/aide`                                                         | Aide et limites                     | Public                           |
+| `/connexion`, `/inscription`                                    | Authentification                    | Public                           |
+| `/panier`                                                       | Panier                              | Acheteur                         |
+| `/commandes`, `/commandes/:id`                                  | Mes commandes / détail              | Acheteur (détail : ayants droit) |
+| `/producteur/produits`                                          | Mes produits                        | Producteur                       |
+| `/producteur/commandes`                                         | Commandes reçues                    | Producteur                       |
+| `/livreur`                                                      | Mes missions                        | Livreur                          |
+| `/tableau-de-bord`                                              | Redirection vers le tableau du rôle | Connecté                         |
+| `/tableau-de-bord/{administrateur,producteur,acheteur,livreur}` | Tableaux de bord                    | Rôle correspondant               |
+| `/admin`, `/admin/{utilisateurs,produits,commandes,livraisons}` | Administration                      | Administrateur                   |
+| `**`                                                            | Page introuvable                    | Public                           |
 
 ---
 

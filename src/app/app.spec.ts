@@ -117,7 +117,9 @@ describe('App — coquille et navigation (tasks 4.1 / 4.2)', () => {
     fixture.detectChanges();
     expect(texte(fixture)).toContain('Accès refusé');
 
-    (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.annonce__fermer')?.click();
+    (fixture.nativeElement as HTMLElement)
+      .querySelector<HTMLButtonElement>('.annonce__fermer')
+      ?.click();
     fixture.detectChanges();
     expect(texte(fixture)).not.toContain('Accès refusé');
   });

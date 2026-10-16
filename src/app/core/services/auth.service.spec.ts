@@ -1,5 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { DATE_TEST, configurerTestBed, configurerTestBedAmorce, EnvironnementTest } from '../../testing/environnement';
+import {
+  DATE_TEST,
+  configurerTestBed,
+  configurerTestBedAmorce,
+  EnvironnementTest,
+} from '../../testing/environnement';
 import { AuthService } from './auth.service';
 import { genererSel, hacherMotDePasse, LONGUEUR_MIN_MOT_DE_PASSE } from './hachage';
 

@@ -41,8 +41,8 @@ import { AdminService } from '../../core/services/admin.service';
       <section class="panneau reinitialisation">
         <h2>Réinitialiser les données de démonstration</h2>
         <p>
-          Remplace les données locales par le jeu de démonstration initial. Toutes les
-          modifications (comptes, produits, commandes, livraisons, paniers) seront perdues.
+          Remplace les données locales par le jeu de démonstration initial. Toutes les modifications
+          (comptes, produits, commandes, livraisons, paniers) seront perdues.
         </p>
 
         @if (message()) {
@@ -50,11 +50,13 @@ import { AdminService } from '../../core/services/admin.service';
         }
 
         @if (!confirmationOuverte()) {
-          <button type="button" (click)="ouvrirConfirmation()">
-            Réinitialiser les données
-          </button>
+          <button type="button" (click)="ouvrirConfirmation()">Réinitialiser les données</button>
         } @else {
-          <div class="confirmation" role="alertdialog" aria-label="Confirmation de réinitialisation">
+          <div
+            class="confirmation"
+            role="alertdialog"
+            aria-label="Confirmation de réinitialisation"
+          >
             <p>Confirmez-vous la réinitialisation des données de démonstration ?</p>
             <div class="actions">
               <button type="button" class="danger" [disabled]="enCours()" (click)="confirmer()">

@@ -48,9 +48,9 @@ describe('MissionsLivreurComponent (task 8.7)', () => {
         .etat()
         .deliveries.filter((livraison) => livraison.livreurId === IDS_DEMO.livreur1).length,
     );
-    expect(racine(contexte).querySelectorAll('.mission-carte__actions button').length).toBeGreaterThan(
-      0,
-    );
+    expect(
+      racine(contexte).querySelectorAll('.mission-carte__actions button').length,
+    ).toBeGreaterThan(0);
   });
 
   it('n’affiche aucune action sur une mission terminée', async () => {

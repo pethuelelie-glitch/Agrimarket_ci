@@ -165,7 +165,7 @@ describe('CatalogueService', () => {
       expect(service.trouver('prd_riz')).not.toBeNull();
     });
 
-    it('autorise la suppression si le produit n\'apparaît que dans une commande livrée', async () => {
+    it("autorise la suppression si le produit n'apparaît que dans une commande livrée", async () => {
       const service = await preparer(...PRODUCTEUR_2);
       expect(service.estReferenceParCommandeEnCours('prd_mais')).toBe(false);
 
@@ -187,7 +187,9 @@ describe('CatalogueService', () => {
 
       const produit = service.trouver('prd_riz');
       expect(produit?.actif).toBe(false);
-      expect(produitsVisibles(null, service.produits()).some((p) => p.id === 'prd_riz')).toBe(false);
+      expect(produitsVisibles(null, service.produits()).some((p) => p.id === 'prd_riz')).toBe(
+        false,
+      );
       expect(produitsGerables(producteur, service.produits()).some((p) => p.id === 'prd_riz')).toBe(
         true,
       );
@@ -235,7 +237,7 @@ describe('CatalogueService', () => {
       expect(service.trouver('prd_riz')?.quantiteDisponible).toBe(500);
     });
 
-    it("ne compte que les commandes en cours dans les quantités engagées", async () => {
+    it('ne compte que les commandes en cours dans les quantités engagées', async () => {
       const service = await preparer(...PRODUCTEUR_2);
       // prd_mais est dans cmd_demo_3 (LIVREE) : rien d'engagé.
       expect(service.quantiteEngagee('prd_mais')).toBe(0);

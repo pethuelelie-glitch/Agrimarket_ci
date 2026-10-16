@@ -25,7 +25,9 @@ export class DeliveryService {
   private readonly auth = inject(AuthService);
 
   /** Toutes les livraisons enregistrées localement. */
-  readonly livraisons: Signal<readonly Livraison[]> = computed(() => this.persistence.etat().deliveries);
+  readonly livraisons: Signal<readonly Livraison[]> = computed(
+    () => this.persistence.etat().deliveries,
+  );
 
   /** Missions du livreur connecté (task 8.3). */
   readonly mesMissions: Signal<readonly Livraison[]> = computed(() => {
@@ -68,12 +70,14 @@ export class DeliveryService {
 
   /** Livraison active d'une commande (ni LIVREE ni ECHEC), ou null. */
   activePourCommande(commandeId: string): Livraison | null {
-    return this.livraisons().find(
-      (livraison) =>
-        livraison.commandeId === commandeId &&
-        livraison.statut !== 'LIVREE' &&
-        livraison.statut !== 'ECHEC',
-    ) ?? null;
+    return (
+      this.livraisons().find(
+        (livraison) =>
+          livraison.commandeId === commandeId &&
+          livraison.statut !== 'LIVREE' &&
+          livraison.statut !== 'ECHEC',
+      ) ?? null
+    );
   }
 
   /** L'utilisateur courant peut-il suivre cette livraison (task 8.7) ? */
@@ -99,7 +103,12 @@ export class DeliveryService {
   creer(commandeId: string, maintenant: Date = new Date()): ResultatLivraison {
     const acteur = this.acteurCourant();
     if (!acteur) {
-      return { succes: false, message: 'Vous devez être connecté.', erreursChamps: {}, livraison: null };
+      return {
+        succes: false,
+        message: 'Vous devez être connecté.',
+        erreursChamps: {},
+        livraison: null,
+      };
     }
     let resultat: ResultatLivraison = {
       succes: false,
@@ -137,7 +146,14 @@ export class DeliveryService {
     }
     let resultat: Resultat = this.refus('Mise à jour impossible.');
     this.persistence.transaction((brouillon) => {
-      resultat = changerStatutLivraison(brouillon, livraisonId, cible, acteur, commentaire, maintenant);
+      resultat = changerStatutLivraison(
+        brouillon,
+        livraisonId,
+        cible,
+        acteur,
+        commentaire,
+        maintenant,
+      );
     });
     return resultat;
   }

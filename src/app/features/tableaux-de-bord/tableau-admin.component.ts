@@ -4,7 +4,10 @@ import { CHEMINS } from '../../core/navigation';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { CarteIndicateurComponent } from '../../shared/carte-indicateur.component';
 import { EtatVideComponent } from '../../shared/etat-vide.component';
-import { ElementBarre, RepartitionBarresComponent } from '../../shared/repartition-barres.component';
+import {
+  ElementBarre,
+  RepartitionBarresComponent,
+} from '../../shared/repartition-barres.component';
 
 /** Tableau de bord administrateur (task 9.5). */
 @Component({

@@ -44,9 +44,9 @@ function saisir(
   valeur: string,
   type: 'input' | 'change' = 'input',
 ): void {
-  const champ = racine(fixture).querySelector<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
-    selecteur,
-  );
+  const champ = racine(fixture).querySelector<
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  >(selecteur);
   if (!champ) {
     throw new Error(`Champ introuvable : ${selecteur}`);
   }
@@ -178,7 +178,9 @@ describe('ProduitsProducteurComponent (task 5.8)', () => {
 
     // prd_riz est référencé par cmd_demo_1 (EN_ATTENTE).
     const lignes = Array.from(racine(fixture).querySelectorAll('tbody tr'));
-    const ligneRiz = lignes.find((ligne) => (ligne.textContent ?? '').includes('Riz local de Gagnoa'));
+    const ligneRiz = lignes.find((ligne) =>
+      (ligne.textContent ?? '').includes('Riz local de Gagnoa'),
+    );
     Array.from(ligneRiz?.querySelectorAll('button') ?? [])
       .find((b) => (b.textContent ?? '').includes('Supprimer'))
       ?.click();

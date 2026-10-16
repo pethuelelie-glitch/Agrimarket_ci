@@ -67,9 +67,7 @@ describe('indicateursAdmin (task 9.1)', () => {
     const indicateurs = indicateursAdmin(etat, MAINTENANT);
 
     expect(indicateurs.utilisateurs).toBe(etat.users.length);
-    expect(indicateurs.producteurs).toBe(
-      etat.users.filter((u) => u.role === 'PRODUCTEUR').length,
-    );
+    expect(indicateurs.producteurs).toBe(etat.users.filter((u) => u.role === 'PRODUCTEUR').length);
     expect(indicateurs.produitsActifs).toBe(etat.products.filter((p) => p.actif).length);
     expect(indicateurs.commandesTotal).toBe(etat.orders.length);
   });

@@ -33,7 +33,8 @@ async function preparer(email?: string, motDePasse?: string): Promise<Contexte> 
 }
 
 function stock(env: EnvironnementTest, produitId: string): number {
-  return env.persistence.etat().products.find((produit) => produit.id === produitId)!.quantiteDisponible;
+  return env.persistence.etat().products.find((produit) => produit.id === produitId)!
+    .quantiteDisponible;
 }
 
 function commande(env: EnvironnementTest, id: string): Commande {
@@ -74,11 +75,15 @@ describe('OrderService — création (tasks 7.2, 7.3)', () => {
     const producteurs = resultat.commandes.map((commande) => commande.producteurId).sort();
     expect(producteurs).toEqual([IDS_DEMO.producteur1, IDS_DEMO.producteur2].sort());
     // Frais distincts par producteur (Abidjan 1500, Bouaké 2000).
-    const parProducteur = new Map(resultat.commandes.map((c) => [c.producteurId, c.fraisLivraison]));
+    const parProducteur = new Map(
+      resultat.commandes.map((c) => [c.producteurId, c.fraisLivraison]),
+    );
     expect(parProducteur.get(IDS_DEMO.producteur1)).toBe(1500);
     expect(parProducteur.get(IDS_DEMO.producteur2)).toBe(2000);
     // Deux commandes existaient déjà pour cet acheteur : deux nouvelles s'ajoutent.
-    expect(contexte.order.commandes().filter((c) => c.acheteurId === IDS_DEMO.acheteur1).length).toBe(4);
+    expect(
+      contexte.order.commandes().filter((c) => c.acheteurId === IDS_DEMO.acheteur1).length,
+    ).toBe(4);
   });
 
   it('refuse de valider un panier vide', async () => {

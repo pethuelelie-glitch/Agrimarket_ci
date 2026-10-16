@@ -53,7 +53,8 @@ export class CommandesRecuesComponent {
 
   nomAcheteur(commande: Commande): string {
     return (
-      this.persistence.etat().users.find((u) => u.id === commande.acheteurId)?.nom ?? 'Acheteur inconnu'
+      this.persistence.etat().users.find((u) => u.id === commande.acheteurId)?.nom ??
+      'Acheteur inconnu'
     );
   }
 

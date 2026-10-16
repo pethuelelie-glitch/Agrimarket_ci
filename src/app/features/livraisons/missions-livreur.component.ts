@@ -1,9 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import {
-  LIBELLES_STATUT_LIVRAISON,
-  Livraison,
-  StatutLivraison,
-} from '../../core/models';
+import { LIBELLES_STATUT_LIVRAISON, Livraison, StatutLivraison } from '../../core/models';
 import { PersistenceService } from '../../core/persistence/persistence.service';
 import { DeliveryService } from '../../core/services/delivery.service';
 import { NotificationsService } from '../../core/services/notifications.service';
@@ -42,15 +38,33 @@ export class MissionsLivreurComponent {
   readonly groupes = computed<readonly GroupeMissions[]>(() => {
     const missions = this.missions();
     return [
-      { cle: 'A_PRENDRE', libelle: 'À prendre en charge', missions: missions.filter((m) => m.statut === 'ASSIGNEE') },
-      { cle: 'EN_COURS', libelle: 'En cours', missions: missions.filter((m) => m.statut === 'EN_COURS') },
-      { cle: 'TERMINEES', libelle: 'Terminées', missions: missions.filter((m) => m.statut === 'LIVREE') },
-      { cle: 'ECHECS', libelle: 'En échec', missions: missions.filter((m) => m.statut === 'ECHEC') },
+      {
+        cle: 'A_PRENDRE',
+        libelle: 'À prendre en charge',
+        missions: missions.filter((m) => m.statut === 'ASSIGNEE'),
+      },
+      {
+        cle: 'EN_COURS',
+        libelle: 'En cours',
+        missions: missions.filter((m) => m.statut === 'EN_COURS'),
+      },
+      {
+        cle: 'TERMINEES',
+        libelle: 'Terminées',
+        missions: missions.filter((m) => m.statut === 'LIVREE'),
+      },
+      {
+        cle: 'ECHECS',
+        libelle: 'En échec',
+        missions: missions.filter((m) => m.statut === 'ECHEC'),
+      },
     ];
   });
 
   nomLivreur(): string {
-    return this.persistence.etat().users.find((u) => u.id === this.missions()[0]?.livreurId)?.nom ?? '';
+    return (
+      this.persistence.etat().users.find((u) => u.id === this.missions()[0]?.livreurId)?.nom ?? ''
+    );
   }
 
   dateHeure(iso: string | null): string {

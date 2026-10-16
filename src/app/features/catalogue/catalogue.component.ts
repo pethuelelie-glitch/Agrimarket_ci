@@ -59,14 +59,10 @@ export class CatalogueComponent {
     this.persistence.etat().products.filter((produit) => produit.actif),
   );
 
-  readonly resultats = computed(() =>
-    appliquerCriteres(this.base(), this.criteres(), this.tri()),
-  );
+  readonly resultats = computed(() => appliquerCriteres(this.base(), this.criteres(), this.tri()));
 
   readonly catalogueVide = computed(() => this.base().length === 0);
-  readonly aucunResultat = computed(
-    () => !this.catalogueVide() && this.resultats().length === 0,
-  );
+  readonly aucunResultat = computed(() => !this.catalogueVide() && this.resultats().length === 0);
   readonly aDesFiltresActifs = computed(() => filtresActifs(this.criteres()));
 
   /** Convertit la saisie d'un champ numérique en nombre, ou `null` si vide. */

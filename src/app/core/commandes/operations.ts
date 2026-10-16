@@ -1,4 +1,11 @@
-import { EtatApplication, Commande, EvenementCommande, LigneCommande, Role, StatutCommande } from '../models';
+import {
+  EtatApplication,
+  Commande,
+  EvenementCommande,
+  LigneCommande,
+  Role,
+  StatutCommande,
+} from '../models';
 import { construireResume } from '../panier/resume';
 import { normaliserPanier } from '../panier/normalisation';
 import { Resultat, succes, echec } from '../resultat';
@@ -63,9 +70,7 @@ export function creerCommandesDepuisPanier(
 ): ResultatCommandes {
   const adresseNettoyee = adresse.trim();
   if (adresseNettoyee === '') {
-    return echecCommandes(
-      'Renseignez une adresse de livraison avant de valider votre commande.',
-    );
+    return echecCommandes('Renseignez une adresse de livraison avant de valider votre commande.');
   }
 
   const panier = normaliserPanier(brouillon.carts[acheteurId]);
@@ -172,15 +177,13 @@ export function avancerCommande(
   }
   if (!statutCibleExiste(commande.statut, cible)) {
     return echec(
-      `Transition impossible depuis « ${commande.statut} ». Transitions possibles : ${listerStatuts(
-        transitionsPossibles(commande.statut),
-      ) || 'aucune (statut final)'}.`,
+      `Transition impossible depuis « ${commande.statut} ». Transitions possibles : ${
+        listerStatuts(transitionsPossibles(commande.statut)) || 'aucune (statut final)'
+      }.`,
     );
   }
   if (!transitionAutorisee(commande.statut, cible, acteur.role)) {
-    return echec(
-      `Votre rôle n’est pas autorisé à faire passer la commande à « ${cible} ».`,
-    );
+    return echec(`Votre rôle n’est pas autorisé à faire passer la commande à « ${cible} ».`);
   }
 
   const precedent = commande.statut;
@@ -229,7 +232,11 @@ export function annulerCommande(
 
   // Clôture de la livraison active, le cas échéant (fin de vie D6).
   for (const livraison of brouillon.deliveries) {
-    if (livraison.commandeId === commande.id && livraison.statut !== 'LIVREE' && livraison.statut !== 'ECHEC') {
+    if (
+      livraison.commandeId === commande.id &&
+      livraison.statut !== 'LIVREE' &&
+      livraison.statut !== 'ECHEC'
+    ) {
       const ancien = livraison.statut;
       livraison.statut = 'ECHEC';
       livraison.commentaire = 'commande annulée';
@@ -253,7 +260,9 @@ export function annulerCommande(
 
   const precedent = commande.statut;
   commande.statut = 'ANNULEE';
-  commande.historique.push(evenement(precedent, 'ANNULEE', acteur.id, maintenant, 'Commande annulée.'));
+  commande.historique.push(
+    evenement(precedent, 'ANNULEE', acteur.id, maintenant, 'Commande annulée.'),
+  );
   return succes(`Commande ${commande.reference} annulée, stock restitué.`);
 }
 
@@ -275,9 +284,7 @@ export function modifierAdresseCommande(
     return echec('Vous ne pouvez modifier que vos propres commandes.');
   }
   if (commande.statut !== 'EN_ATTENTE' && commande.statut !== 'CONFIRMEE') {
-    return echec(
-      'L’adresse de livraison est figée dès que la commande est en préparation.',
-    );
+    return echec('L’adresse de livraison est figée dès que la commande est en préparation.');
   }
   const adresseNettoyee = adresse.trim();
   if (adresseNettoyee === '') {

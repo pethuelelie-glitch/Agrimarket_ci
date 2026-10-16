@@ -41,9 +41,7 @@ export class FicheProduitComponent {
     if (!produit) {
       return null;
     }
-    return (
-      this.persistence.etat().users.find((u) => u.id === produit.producteurId) ?? null
-    );
+    return this.persistence.etat().users.find((u) => u.id === produit.producteurId) ?? null;
   });
 
   readonly libelleCategorie = computed(() => {

@@ -154,7 +154,9 @@
   } @else {
     <div class="tableau-conteneur panneau">
       <table class="tableau">
-        <caption class="visuellement-cache">Liste de vos produits</caption>
+        <caption class="visuellement-cache">
+          Liste de vos produits
+        </caption>
         <thead>
           <tr>
             <th scope="col">Produit</th>
@@ -188,11 +190,7 @@
                     <span class="stock__min">
                       Minimum autorisé : {{ minimumStock(produit.id) }}
                     </span>
-                    <button
-                      type="button"
-                      class="bouton"
-                      (click)="confirmerStock(produit.id)"
-                    >
+                    <button type="button" class="bouton" (click)="confirmerStock(produit.id)">
                       Valider
                     </button>
                     <button type="button" class="bouton bouton--discret" (click)="annulerStock()">

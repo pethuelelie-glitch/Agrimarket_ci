@@ -1,0 +1,5 @@
+# Artefacts générés / dépendances — ne jamais formater
+node_modules
+dist
+.angular
+coverage

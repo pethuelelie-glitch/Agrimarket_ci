@@ -25,7 +25,9 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
         <p class="vide" role="status">Aucun produit sur la plateforme.</p>
       } @else {
         <table class="liste">
-          <caption class="sr-only">Tous les produits</caption>
+          <caption class="sr-only">
+            Tous les produits
+          </caption>
           <thead>
             <tr>
               <th scope="col">Produit</th>
@@ -54,7 +56,9 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
                     {{ produit.actif ? 'Actif' : 'Inactif' }}
                   </span>
                   @if (produit.moderation; as moderation) {
-                    <span class="motif" [title]="moderation.motif">motif : {{ moderation.motif }}</span>
+                    <span class="motif" [title]="moderation.motif"
+                      >motif : {{ moderation.motif }}</span
+                    >
                   }
                 </td>
                 <td class="actions-cellule">
@@ -88,7 +92,9 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
             <p class="erreur-champ" role="alert">Indiquez le motif de la désactivation.</p>
           }
           <div class="actions">
-            <button type="button" (click)="confirmerModeration(produit)">Confirmer la désactivation</button>
+            <button type="button" (click)="confirmerModeration(produit)">
+              Confirmer la désactivation
+            </button>
             <button type="button" class="secondaire" (click)="annuler()">Annuler</button>
           </div>
         </section>

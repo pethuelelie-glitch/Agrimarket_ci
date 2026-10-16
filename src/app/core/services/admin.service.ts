@@ -56,7 +56,9 @@ export class AdminService {
   /* ------------------------------------------------------------------ comptes */
 
   trouverUtilisateur(utilisateurId: string): Utilisateur | null {
-    return this.persistence.etat().users.find((utilisateur) => utilisateur.id === utilisateurId) ?? null;
+    return (
+      this.persistence.etat().users.find((utilisateur) => utilisateur.id === utilisateurId) ?? null
+    );
   }
 
   /**
@@ -114,9 +116,7 @@ export class AdminService {
   }
 
   /** Valide les champs modifiables. L'e-mail n'apparaît jamais ici. */
-  validerModification(
-    donnees: DonneesModificationUtilisateur,
-  ): Readonly<Record<string, string>> {
+  validerModification(donnees: DonneesModificationUtilisateur): Readonly<Record<string, string>> {
     const erreurs: Record<string, string> = {};
 
     if ((donnees.nom ?? '').trim().length === 0) {

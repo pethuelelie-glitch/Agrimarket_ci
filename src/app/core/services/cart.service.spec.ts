@@ -10,7 +10,10 @@ const ACHETEUR_1 = ['koffi.yao@agrimarket.ci', 'Achete1234'] as const;
 const ACHETEUR_2 = ['adjoua.bamba@agrimarket.ci', 'Achete1234'] as const;
 const PRODUCTEUR_1 = ['awa.kone@agrimarket.ci', 'Produ1234'] as const;
 
-async function preparer(email?: string, motDePasse?: string): Promise<{
+async function preparer(
+  email?: string,
+  motDePasse?: string,
+): Promise<{
   cart: CartService;
   env: EnvironnementTest;
 }> {

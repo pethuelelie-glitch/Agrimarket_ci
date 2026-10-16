@@ -16,31 +16,32 @@ export interface TransitionCommande {
   readonly automatique?: boolean;
 }
 
-export const TRANSITIONS_COMMANDE: Readonly<Record<StatutCommande, readonly TransitionCommande[]>> = {
-  EN_ATTENTE: [
-    { cible: 'CONFIRMEE', roles: ['PRODUCTEUR'] },
-    { cible: 'ANNULEE', roles: ['ACHETEUR', 'PRODUCTEUR', 'ADMIN'] },
-  ],
-  CONFIRMEE: [
-    { cible: 'EN_PREPARATION', roles: ['PRODUCTEUR'] },
-    { cible: 'ANNULEE', roles: ['ACHETEUR', 'PRODUCTEUR', 'ADMIN'] },
-  ],
-  EN_PREPARATION: [
-    { cible: 'PRETE', roles: ['PRODUCTEUR'] },
-    { cible: 'ANNULEE', roles: ['ADMIN'] },
-  ],
-  PRETE: [
-    { cible: 'EN_LIVRAISON', roles: [], automatique: true },
-    { cible: 'ANNULEE', roles: ['ADMIN'] },
-  ],
-  EN_LIVRAISON: [
-    { cible: 'LIVREE', roles: [], automatique: true },
-    { cible: 'PRETE', roles: [], automatique: true },
-    { cible: 'ANNULEE', roles: ['ADMIN'] },
-  ],
-  LIVREE: [],
-  ANNULEE: [],
-};
+export const TRANSITIONS_COMMANDE: Readonly<Record<StatutCommande, readonly TransitionCommande[]>> =
+  {
+    EN_ATTENTE: [
+      { cible: 'CONFIRMEE', roles: ['PRODUCTEUR'] },
+      { cible: 'ANNULEE', roles: ['ACHETEUR', 'PRODUCTEUR', 'ADMIN'] },
+    ],
+    CONFIRMEE: [
+      { cible: 'EN_PREPARATION', roles: ['PRODUCTEUR'] },
+      { cible: 'ANNULEE', roles: ['ACHETEUR', 'PRODUCTEUR', 'ADMIN'] },
+    ],
+    EN_PREPARATION: [
+      { cible: 'PRETE', roles: ['PRODUCTEUR'] },
+      { cible: 'ANNULEE', roles: ['ADMIN'] },
+    ],
+    PRETE: [
+      { cible: 'EN_LIVRAISON', roles: [], automatique: true },
+      { cible: 'ANNULEE', roles: ['ADMIN'] },
+    ],
+    EN_LIVRAISON: [
+      { cible: 'LIVREE', roles: [], automatique: true },
+      { cible: 'PRETE', roles: [], automatique: true },
+      { cible: 'ANNULEE', roles: ['ADMIN'] },
+    ],
+    LIVREE: [],
+    ANNULEE: [],
+  };
 
 /** Toutes les transitions prévues depuis un statut, dans l'ordre du cycle de vie. */
 export function transitionsPossibles(statut: StatutCommande): readonly StatutCommande[] {

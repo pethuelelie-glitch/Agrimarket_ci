@@ -214,7 +214,9 @@ export class InscriptionComponent {
       }
 
       const roleCourant = this.auth.roleCourant();
-      await this.router.navigate([roleCourant ? cheminTableauDeBord(roleCourant) : CHEMINS.accueil]);
+      await this.router.navigate([
+        roleCourant ? cheminTableauDeBord(roleCourant) : CHEMINS.accueil,
+      ]);
     } finally {
       this.enCours.set(false);
     }

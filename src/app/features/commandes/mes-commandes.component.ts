@@ -1,6 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Commande, LIBELLES_STATUT_COMMANDE, STATUTS_COMMANDE, StatutCommande } from '../../core/models';
+import {
+  Commande,
+  LIBELLES_STATUT_COMMANDE,
+  STATUTS_COMMANDE,
+  StatutCommande,
+} from '../../core/models';
 import { cheminCommande } from '../../core/navigation';
 import { PersistenceService } from '../../core/persistence/persistence.service';
 import { OrderService } from '../../core/services/order.service';

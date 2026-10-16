@@ -1,6 +1,13 @@
 import { Injectable, Signal, computed, inject } from '@angular/core';
 import { Commande, StatutCommande, Utilisateur } from '../models';
-import { Acteur, ResultatCommandes, annulerCommande, avancerCommande, creerCommandesDepuisPanier, modifierAdresseCommande } from '../commandes/operations';
+import {
+  Acteur,
+  ResultatCommandes,
+  annulerCommande,
+  avancerCommande,
+  creerCommandesDepuisPanier,
+  modifierAdresseCommande,
+} from '../commandes/operations';
 import { ciblesManuelles, transitionsPossibles } from '../commandes/transitions';
 import { peutVoirCommande } from '../permissions/permissions';
 import { PersistenceService } from '../persistence/persistence.service';
@@ -84,7 +91,12 @@ export class OrderService {
       commandes: [],
     };
     this.persistence.transaction((brouillon) => {
-      resultat = creerCommandesDepuisPanier(brouillon, utilisateur.id, adresseLivraison, maintenant);
+      resultat = creerCommandesDepuisPanier(
+        brouillon,
+        utilisateur.id,
+        adresseLivraison,
+        maintenant,
+      );
     });
     return resultat;
   }

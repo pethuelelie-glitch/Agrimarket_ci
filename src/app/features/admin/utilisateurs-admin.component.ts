@@ -35,7 +35,9 @@ import { AdminService } from '../../core/services/admin.service';
         <p class="vide" role="status">Aucun compte ne correspond à cette recherche.</p>
       } @else {
         <table class="liste">
-          <caption class="sr-only">Liste des comptes</caption>
+          <caption class="sr-only">
+            Liste des comptes
+          </caption>
           <thead>
             <tr>
               <th scope="col">Nom</th>
@@ -62,9 +64,7 @@ import { AdminService } from '../../core/services/admin.service';
                 </td>
                 <td>{{ formaterDate(compte.dateCreation) }}</td>
                 <td>
-                  <button type="button" class="secondaire" (click)="ouvrir(compte)">
-                    Détail
-                  </button>
+                  <button type="button" class="secondaire" (click)="ouvrir(compte)">Détail</button>
                 </td>
               </tr>
             }

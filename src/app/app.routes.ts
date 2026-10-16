@@ -55,7 +55,8 @@ export const routes: Routes = [
     path: 'panier',
     title: 'Mon panier — AgriMarket CI',
     canActivate: [compteActifGuard, roleGuard(['ACHETEUR'])],
-    loadComponent: () => import('./features/panier/panier.component').then((m) => m.PanierComponent),
+    loadComponent: () =>
+      import('./features/panier/panier.component').then((m) => m.PanierComponent),
   },
   {
     path: 'commandes',
@@ -119,9 +120,7 @@ export const routes: Routes = [
     title: 'Commandes — AgriMarket CI',
     canActivate: [compteActifGuard, roleGuard(['ADMIN'])],
     loadComponent: () =>
-      import('./features/admin/commandes-admin.component').then(
-        (m) => m.CommandesAdminComponent,
-      ),
+      import('./features/admin/commandes-admin.component').then((m) => m.CommandesAdminComponent),
   },
   {
     path: 'admin/livraisons',

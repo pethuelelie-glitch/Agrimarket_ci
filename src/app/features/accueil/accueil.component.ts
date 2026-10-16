@@ -1,6 +1,9 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { NOMBRE_PRODUITS_MISE_EN_AVANT, selectionnerMiseEnAvant } from '../../core/catalogue/selection';
+import {
+  NOMBRE_PRODUITS_MISE_EN_AVANT,
+  selectionnerMiseEnAvant,
+} from '../../core/catalogue/selection';
 import { CHEMINS, cheminTableauDeBord } from '../../core/navigation';
 import { Produit } from '../../core/models';
 import { AjoutPanierService } from '../../core/panier/ajout-panier.service';

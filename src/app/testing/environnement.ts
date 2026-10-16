@@ -39,7 +39,11 @@ export function creerAdaptateur(etatInitial: EtatApplication | null = null): InM
 export function configurerTestBed(options: OptionsTestBed = {}): EnvironnementTest {
   const adaptateur =
     options.adaptateur ??
-    creerAdaptateur(Object.prototype.hasOwnProperty.call(options, 'etatInitial') ? (options.etatInitial ?? null) : null);
+    creerAdaptateur(
+      Object.prototype.hasOwnProperty.call(options, 'etatInitial')
+        ? (options.etatInitial ?? null)
+        : null,
+    );
   TestBed.configureTestingModule({
     imports: [...(options.imports ?? [])],
     providers: [{ provide: STORAGE_ADAPTER, useValue: adaptateur }, ...(options.providers ?? [])],

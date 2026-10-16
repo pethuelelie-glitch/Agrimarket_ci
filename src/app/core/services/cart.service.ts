@@ -7,7 +7,12 @@ import { echec, Resultat, succes } from '../resultat';
 import { AuthService } from './auth.service';
 import { CatalogueService } from './catalogue.service';
 import { NotificationsService } from './notifications.service';
-import { normaliserPanier, panierCorrompu, avecQuantite, sansProduit } from '../panier/normalisation';
+import {
+  normaliserPanier,
+  panierCorrompu,
+  avecQuantite,
+  sansProduit,
+} from '../panier/normalisation';
 import { construireResume, LignePanier, ResumePanier } from '../panier/resume';
 
 /**
@@ -210,7 +215,10 @@ export class CartService {
     return utilisateur;
   }
 
-  private ecrireItems(acheteurId: string, items: readonly { produitId: string; quantite: number }[]): void {
+  private ecrireItems(
+    acheteurId: string,
+    items: readonly { produitId: string; quantite: number }[],
+  ): void {
     this.persistence.transaction((brouillon) => {
       brouillon.carts[acheteurId] = {
         acheteurId,

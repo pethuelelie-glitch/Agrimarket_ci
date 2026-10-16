@@ -21,7 +21,10 @@ import { DesactiveSiNonAutoriseDirective, SiAutoriseComponent } from './si-autor
 })
 class HoteComponent {}
 
-async function rendre(email: string | null, motDePasse = ''): Promise<ComponentFixture<HoteComponent>> {
+async function rendre(
+  email: string | null,
+  motDePasse = '',
+): Promise<ComponentFixture<HoteComponent>> {
   await configurerTestBedAmorce({ imports: [HoteComponent] });
   if (email) {
     await TestBed.inject(AuthService).connecter(email, motDePasse);

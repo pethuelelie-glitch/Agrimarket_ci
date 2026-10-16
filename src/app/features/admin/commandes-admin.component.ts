@@ -8,7 +8,8 @@ import {
   StatutCommande,
   Utilisateur,
 } from '../../core/models';
-import { cheminCommande } from '../../core/navigation';import { AdminService } from '../../core/services/admin.service';
+import { cheminCommande } from '../../core/navigation';
+import { AdminService } from '../../core/services/admin.service';
 import { DeliveryService } from '../../core/services/delivery.service';
 import { OrderService } from '../../core/services/order.service';
 import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
@@ -64,7 +65,9 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
         <p class="vide" role="status">Aucune commande ne correspond à ces filtres.</p>
       } @else {
         <table class="liste">
-          <caption class="sr-only">Toutes les commandes</caption>
+          <caption class="sr-only">
+            Toutes les commandes
+          </caption>
           <thead>
             <tr>
               <th scope="col">Référence</th>

@@ -10,9 +10,7 @@ import { AuthService } from '../core/services/auth.service';
 @Component({
   selector: 'app-deconnexion-bouton',
   template: `
-    <button type="button" class="bouton-deconnexion" (click)="seDeconnecter()">
-      Déconnexion
-    </button>
+    <button type="button" class="bouton-deconnexion" (click)="seDeconnecter()">Déconnexion</button>
   `,
   styles: [
     `

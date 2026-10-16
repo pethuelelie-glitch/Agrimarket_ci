@@ -23,7 +23,9 @@ export class SiAutoriseComponent {
   readonly action = input.required<Action>();
   private readonly auth = inject(AuthService);
 
-  readonly autorise = computed(() => peutAvecUtilisateur(this.auth.utilisateurCourant(), this.action()));
+  readonly autorise = computed(() =>
+    peutAvecUtilisateur(this.auth.utilisateurCourant(), this.action()),
+  );
 }
 
 /**

@@ -137,9 +137,9 @@ describe('AdminService — changement de rôle (task 10.3)', () => {
 
     const resultat = admin.changerRole(IDS_DEMO.acheteur1, 'LIVREUR');
     expect(resultat.succes).toBe(true);
-    expect(
-      env.persistence.etat().users.find((u) => u.id === IDS_DEMO.acheteur1)!.role,
-    ).toBe('LIVREUR');
+    expect(env.persistence.etat().users.find((u) => u.id === IDS_DEMO.acheteur1)!.role).toBe(
+      'LIVREUR',
+    );
   });
 
   it('refuse un rôle inconnu', async () => {
@@ -158,9 +158,9 @@ describe('AdminService — activation/désactivation (task 10.4)', () => {
     const { env, admin } = await preparer(...ADMIN);
 
     expect(admin.basculerActivation(IDS_DEMO.producteur1).succes).toBe(true);
-    expect(
-      env.persistence.etat().users.find((u) => u.id === IDS_DEMO.producteur1)!.actif,
-    ).toBe(false);
+    expect(env.persistence.etat().users.find((u) => u.id === IDS_DEMO.producteur1)!.actif).toBe(
+      false,
+    );
 
     // Le producteur désactivé ne peut plus se connecter.
     const refus = await TestBed.inject(AuthService).connecter(...PRODUCTEUR_1);

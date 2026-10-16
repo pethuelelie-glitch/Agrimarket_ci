@@ -13,7 +13,11 @@ interface Contexte {
   env: EnvironnementTest;
 }
 
-async function preparer(commandeId: string, email?: string, motDePasse?: string): Promise<Contexte> {
+async function preparer(
+  commandeId: string,
+  email?: string,
+  motDePasse?: string,
+): Promise<Contexte> {
   const env = await configurerTestBedAmorce({
     imports: [DetailCommandeComponent],
     providers: [provideRouter([])],

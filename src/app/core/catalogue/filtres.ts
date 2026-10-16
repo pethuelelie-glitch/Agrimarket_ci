@@ -117,9 +117,13 @@ export function trierProduits(produits: readonly Produit[], tri: TriCatalogue): 
     case 'prix-desc':
       return copies.sort((gauche, droite) => droite.prix - gauche.prix);
     case 'date-asc':
-      return copies.sort((gauche, droite) => gauche.dateCreation.localeCompare(droite.dateCreation));
+      return copies.sort((gauche, droite) =>
+        gauche.dateCreation.localeCompare(droite.dateCreation),
+      );
     case 'date-desc':
-      return copies.sort((gauche, droite) => droite.dateCreation.localeCompare(gauche.dateCreation));
+      return copies.sort((gauche, droite) =>
+        droite.dateCreation.localeCompare(gauche.dateCreation),
+      );
   }
 }
 

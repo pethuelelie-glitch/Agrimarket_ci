@@ -49,7 +49,12 @@
         </li>
         @for (lien of liensDuRole(); track lien.chemin) {
           <li>
-            <a class="navigation__lien" [routerLink]="lien.chemin" routerLinkActive="actif" (click)="fermerMenu()">
+            <a
+              class="navigation__lien"
+              [routerLink]="lien.chemin"
+              routerLinkActive="actif"
+              (click)="fermerMenu()"
+            >
               {{ lien.libelle }}
               @if (lien.chemin === chemins.panier && nombreArticles() > 0) {
                 <span class="navigation__badge" aria-hidden="true">{{ nombreArticles() }}</span>
@@ -71,10 +76,18 @@
         </span>
         <app-deconnexion-bouton />
       } @else {
-        <a class="bouton bouton--discret navigation__lien-action" [routerLink]="chemins.connexion" (click)="fermerMenu()">
+        <a
+          class="bouton bouton--discret navigation__lien-action"
+          [routerLink]="chemins.connexion"
+          (click)="fermerMenu()"
+        >
           Connexion
         </a>
-        <a class="bouton navigation__lien-action" [routerLink]="chemins.inscription" (click)="fermerMenu()">
+        <a
+          class="bouton navigation__lien-action"
+          [routerLink]="chemins.inscription"
+          (click)="fermerMenu()"
+        >
           Inscription
         </a>
       }

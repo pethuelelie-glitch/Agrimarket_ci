@@ -21,7 +21,10 @@ import { EtatVideComponent } from '../../shared/etat-vide.component';
       }
 
       <div class="grille">
-        <app-carte-indicateur libelle="Missions attribuées" [valeur]="indicateurs().missionsAttribuees" />
+        <app-carte-indicateur
+          libelle="Missions attribuées"
+          [valeur]="indicateurs().missionsAttribuees"
+        />
         <app-carte-indicateur libelle="En cours" [valeur]="indicateurs().enCours" />
         <app-carte-indicateur libelle="Terminées" [valeur]="indicateurs().terminees" />
         <app-carte-indicateur libelle="En échec" [valeur]="indicateurs().enEchec" />

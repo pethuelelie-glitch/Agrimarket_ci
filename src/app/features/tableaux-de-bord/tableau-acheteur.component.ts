@@ -23,9 +23,18 @@ import { EtatVideComponent } from '../../shared/etat-vide.component';
       }
 
       <div class="grille">
-        <app-carte-indicateur libelle="Commandes en cours" [valeur]="indicateurs().commandesEnCours" />
-        <app-carte-indicateur libelle="Commandes livrées" [valeur]="indicateurs().commandesLivrees" />
-        <app-carte-indicateur libelle="Commandes au total" [valeur]="indicateurs().commandesTotal" />
+        <app-carte-indicateur
+          libelle="Commandes en cours"
+          [valeur]="indicateurs().commandesEnCours"
+        />
+        <app-carte-indicateur
+          libelle="Commandes livrées"
+          [valeur]="indicateurs().commandesLivrees"
+        />
+        <app-carte-indicateur
+          libelle="Commandes au total"
+          [valeur]="indicateurs().commandesTotal"
+        />
       </div>
 
       <section class="panneau tableau__acces">

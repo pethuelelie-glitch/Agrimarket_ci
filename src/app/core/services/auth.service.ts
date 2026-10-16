@@ -2,7 +2,12 @@ import { Injectable, Signal, computed, inject } from '@angular/core';
 import { Role, ROLES_INSCRIPTION, Utilisateur, estRole } from '../models';
 import { echec, succes, Resultat } from '../resultat';
 import { PersistenceService } from '../persistence/persistence.service';
-import { LONGUEUR_MIN_MOT_DE_PASSE, genererSel, hacherMotDePasse, verifierMotDePasse } from './hachage';
+import {
+  LONGUEUR_MIN_MOT_DE_PASSE,
+  genererSel,
+  hacherMotDePasse,
+  verifierMotDePasse,
+} from './hachage';
 import { genererIdentifiant } from './identifiants';
 
 export interface DonneesInscription {
@@ -45,7 +50,9 @@ export class AuthService {
   readonly estConnecte: Signal<boolean> = computed(() => this.utilisateurCourant() !== null);
 
   /** Rôle de l'utilisateur connecté, ou null. */
-  readonly roleCourant: Signal<Role | null> = computed(() => this.utilisateurCourant()?.role ?? null);
+  readonly roleCourant: Signal<Role | null> = computed(
+    () => this.utilisateurCourant()?.role ?? null,
+  );
 
   constructor() {
     this.purgerSessionInvalide();
@@ -72,7 +79,8 @@ export class AuthService {
 
     const motDePasse = donnees.motDePasse ?? '';
     if (motDePasse.length < LONGUEUR_MIN_MOT_DE_PASSE) {
-      erreurs['motDePasse'] = `Le mot de passe doit contenir au moins ${LONGUEUR_MIN_MOT_DE_PASSE} caractères.`;
+      erreurs['motDePasse'] =
+        `Le mot de passe doit contenir au moins ${LONGUEUR_MIN_MOT_DE_PASSE} caractères.`;
     }
 
     const role = donnees.role;

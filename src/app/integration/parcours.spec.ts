@@ -12,7 +12,11 @@ import { CatalogueService } from '../core/services/catalogue.service';
 import { DashboardService } from '../core/services/dashboard.service';
 import { DeliveryService } from '../core/services/delivery.service';
 import { OrderService } from '../core/services/order.service';
-import { configurerTestBed, configurerTestBedAmorce, EnvironnementTest } from '../testing/environnement';
+import {
+  configurerTestBed,
+  configurerTestBedAmorce,
+  EnvironnementTest,
+} from '../testing/environnement';
 
 @Component({ selector: 'app-page-vide', template: '' })
 class PageVideComponent {}
@@ -182,9 +186,9 @@ describe('Parcours multi-producteurs (task 11.2)', () => {
 
     // Le producteur 2 voit sa commande dans ses commandes reçues.
     await auth.connecter(...PRODUCTEUR_2);
-    expect(orders.mesCommandes().some((commande) => commande.producteurId === IDS_DEMO.producteur2)).toBe(
-      true,
-    );
+    expect(
+      orders.mesCommandes().some((commande) => commande.producteurId === IDS_DEMO.producteur2),
+    ).toBe(true);
   });
 });
 
@@ -239,7 +243,11 @@ describe('Robustesse de bout en bout (task 11.3)', () => {
   it('traite une session illisible comme une déconnexion', () => {
     const etat: EtatApplication = etatVide();
     etat.users = [utilisateurDeTest()];
-    etat.session = { userId: 'usr_fantome', role: 'ROLE_INCONNU' as never, ouvertLe: '2026-01-01T00:00:00.000Z' };
+    etat.session = {
+      userId: 'usr_fantome',
+      role: 'ROLE_INCONNU' as never,
+      ouvertLe: '2026-01-01T00:00:00.000Z',
+    };
     const adaptateur = new InMemoryAdapter(JSON.stringify(etat));
 
     const env = configurerTestBed({ adaptateur });

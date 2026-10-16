@@ -120,9 +120,9 @@ describe('AccueilComponent (tasks 4.3 / 4.4)', () => {
       const fixture = await rendre();
 
       expect(texte(fixture)).toContain('Mon tableau de bord');
-      expect(
-        racine(fixture).querySelectorAll<HTMLAnchorElement>('.hero__actions a').length,
-      ).toBe(2);
+      expect(racine(fixture).querySelectorAll<HTMLAnchorElement>('.hero__actions a').length).toBe(
+        2,
+      );
     });
   });
 });

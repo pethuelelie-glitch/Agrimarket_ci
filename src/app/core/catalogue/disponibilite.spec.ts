@@ -19,19 +19,19 @@ function produit(partiel: Partial<Produit>): Produit {
   };
 }
 
-describe('disponibilité d\'un produit (tasks 5.9 / 6.1)', () => {
+describe("disponibilité d'un produit (tasks 5.9 / 6.1)", () => {
   it('un produit actif et en stock est disponible', () => {
     expect(estDisponible(produit({}))).toBe(true);
     expect(messageIndisponibilite(produit({}))).toBeNull();
   });
 
-  it('un produit épuisé n\'est pas disponible et affiche « rupture de stock »', () => {
+  it("un produit épuisé n'est pas disponible et affiche « rupture de stock »", () => {
     const epuise = produit({ quantiteDisponible: 0 });
     expect(estDisponible(epuise)).toBe(false);
     expect(messageIndisponibilite(epuise)).toContain('Rupture de stock');
   });
 
-  it('un produit inactif n\'est pas disponible même s\'il reste du stock', () => {
+  it("un produit inactif n'est pas disponible même s'il reste du stock", () => {
     const inactif = produit({ actif: false, quantiteDisponible: 12 });
     expect(estDisponible(inactif)).toBe(false);
     expect(messageIndisponibilite(inactif)).toContain('indisponible');
