@@ -32,11 +32,13 @@ import { Produit } from '../core/models';
       }
       .bouton--panier {
         width: 100%;
+        padding-block: 0.7rem;
       }
       .rupture {
         margin: 0;
         color: var(--rouge);
-        font-size: 0.85rem;
+        font-size: 0.875rem;
+        font-weight: 500;
       }
     `,
   ],

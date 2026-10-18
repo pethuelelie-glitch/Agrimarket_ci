@@ -1,0 +1,154 @@
+.page-auth {
+  max-width: 38rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.page-auth h1 {
+  margin: 0;
+}
+
+form {
+  display: grid;
+  gap: 0.95rem;
+  background: var(--blanc);
+  border: 1px solid var(--bord-doux);
+  border-radius: var(--rayon-xl);
+  box-shadow: var(--ombre);
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.champ {
+  display: grid;
+  gap: 0.4rem;
+}
+
+label {
+  font-weight: 600;
+  color: var(--vert-fonce);
+}
+
+input,
+select {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--bord);
+  border-radius: calc(var(--rayon) - 2px);
+  font: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  background: var(--blanc);
+  width: 100%;
+}
+
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--vert-clair) 35%, transparent);
+  outline-offset: 1px;
+  border-color: var(--vert);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vert-clair) 12%, transparent);
+}
+
+button[type='submit'] {
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--rayon);
+  border: none;
+  background: linear-gradient(180deg, var(--vert-clair) 0%, var(--vert) 100%);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--ombre);
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+}
+
+button[type='submit']:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--vert) 0%, var(--vert-fonce) 100%);
+  box-shadow: var(--ombre-md);
+  transform: translateY(-1px);
+}
+
+button[type='submit']:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+button.secondaire {
+  background: transparent;
+  color: var(--vert);
+  border: 1px solid var(--vert);
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--rayon);
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+}
+
+button.secondaire:hover {
+  background: var(--vert-pale);
+  color: var(--vert-fonce);
+}
+
+.erreur-champ,
+.erreur-globale {
+  color: var(--rouge);
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.mention-simulation {
+  background: var(--jaune-fond);
+  border-left: 4px solid #f9a825;
+  border-radius: 0 calc(var(--rayon) - 2px) calc(var(--rayon) - 2px) 0;
+  padding: 0.8rem 1rem;
+  margin: 0;
+  font-weight: 500;
+  color: #7a4a00;
+}
+
+.comptes-demo {
+  background: var(--blanc);
+  border: 1px solid var(--bord-doux);
+  border-radius: var(--rayon-xl);
+  box-shadow: var(--ombre);
+  padding: clamp(1rem, 2vw, 1.25rem);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.comptes-demo h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.comptes-demo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.comptes-demo li {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--bord-doux);
+  border-radius: var(--rayon);
+  background: color-mix(in srgb, var(--blanc) 98%, var(--vert-pale));
+}
+
+.details-compte {
+  font-size: 0.875rem;
+  color: var(--texte-doux);
+  line-height: 1.5;
+}
+
+.lien-aide {
+  font-size: 0.875rem;
+  margin: 0;
+}

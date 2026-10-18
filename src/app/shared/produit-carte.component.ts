@@ -55,16 +55,29 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
         display: flex;
         flex-direction: column;
         block-size: 100%;
-        border: 1px solid var(--bord);
-        border-radius: var(--rayon);
-        background: var(--blanc);
+        border: 1px solid var(--bord-doux);
+        border-radius: var(--rayon-xl);
+        background: linear-gradient(180deg, var(--blanc) 0%, color-mix(in srgb, var(--blanc) 98%, var(--vert-pale)) 100%);
         overflow: hidden;
+        box-shadow: var(--ombre);
+        transition: transform var(--transition-lente), box-shadow var(--transition-lente), border-color var(--transition);
+      }
+      .carte:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--ombre-lift);
+        border-color: color-mix(in srgb, var(--vert) 20%, var(--bord-doux));
       }
       .carte__lien {
         display: block;
         flex: 1;
         color: inherit;
         text-decoration: none;
+        outline: none;
+      }
+      .carte__lien:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--vert-clair) 40%, transparent);
+        outline-offset: 2px;
+        border-radius: var(--rayon-xl) var(--rayon-xl) 0 0;
       }
       .carte__image {
         display: block;
@@ -75,40 +88,43 @@ import { MontantFcfaPipe } from './montant-fcfa.pipe';
       }
       .carte__corps {
         display: grid;
-        gap: 0.2rem;
-        padding: 0.75rem;
+        gap: 0.3rem;
+        padding: 0.9rem 1rem 0.7rem;
       }
       .carte__categorie {
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: var(--texte-doux);
+        letter-spacing: 0.06em;
+        color: var(--texte-tres-doux);
+        font-weight: 600;
       }
       .carte__nom {
         margin: 0;
-        font-size: 1rem;
+        font-size: 1.05rem;
       }
       .carte__prix {
-        margin: 0;
+        margin: 0.15rem 0 0;
         font-weight: 700;
+        font-size: 1.05rem;
         color: var(--vert);
       }
       .carte__unite {
-        font-weight: 400;
+        font-weight: 500;
         color: var(--texte-doux);
+        font-size: 0.9rem;
       }
       .carte__meta {
         margin: 0.25rem 0 0;
         display: flex;
         flex-wrap: wrap;
-        gap: 0.35rem;
-        font-size: 0.8rem;
+        gap: 0.4rem;
+        font-size: 0.875rem;
         color: var(--texte-doux);
       }
       .carte__pied {
         display: grid;
-        gap: 0.4rem;
-        padding: 0 0.75rem 0.75rem;
+        gap: 0.5rem;
+        padding: 0 1rem 1rem;
       }
     `,
   ],

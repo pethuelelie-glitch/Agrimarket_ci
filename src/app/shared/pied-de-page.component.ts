@@ -28,17 +28,23 @@ import { CHEMINS } from '../core/navigation';
   styles: [
     `
       .pied-de-page {
-        border-top: 1px solid #d7ddcd;
-        margin-top: 2rem;
-        padding: 1rem 1.25rem 2rem;
-        font-size: 0.85rem;
-        color: #44513c;
+        border-top: 1px solid var(--bord-doux);
+        margin-top: clamp(2rem, 4vw, 3rem);
+        padding: clamp(1rem, 2vw, 1.25rem) clamp(1rem, 2vw, 1.5rem) clamp(2rem, 4vw, 2.5rem);
+        font-size: 0.875rem;
+        color: var(--texte-doux);
         display: grid;
-        gap: 0.35rem;
+        gap: 0.45rem;
+        background: color-mix(in srgb, var(--blanc) 60%, transparent);
       }
       .pied-de-page p {
         margin: 0;
-        max-width: 70ch;
+        max-width: 78ch;
+        line-height: 1.6;
+      }
+      .pied-de-page a {
+        color: var(--vert);
+        font-weight: 500;
       }
     `,
   ],

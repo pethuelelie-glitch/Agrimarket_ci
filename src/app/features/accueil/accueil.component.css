@@ -1,48 +1,71 @@
 .hero {
   display: grid;
-  gap: 1.5rem;
-  padding: 1.75rem;
-  border-radius: calc(var(--rayon) + 0.25rem);
-  background: linear-gradient(135deg, var(--vert-pale), var(--blanc) 70%);
-  border: 1px solid var(--bord);
-  margin-bottom: 2rem;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--rayon-2xl);
+  background: radial-gradient(1200px 600px at 0% 0%, color-mix(in srgb, var(--vert-clair) 10%, var(--blanc)) 0%, var(--blanc) 60%),
+    linear-gradient(135deg, color-mix(in srgb, var(--vert-pale) 70%, var(--blanc)) 0%, var(--blanc) 100%);
+  border: 1px solid var(--bord-doux);
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  box-shadow: var(--ombre);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--vert-clair) 8%, transparent) 0, transparent 60%);
+  pointer-events: none;
+}
+
+.hero > * {
+  position: relative;
 }
 
 .hero__texte {
-  max-width: 60ch;
+  max-width: 62ch;
+}
+
+.hero__texte p {
+  font-size: clamp(0.98rem, 0.9rem + 0.3vw, 1.05rem);
+  color: var(--texte-doux);
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1rem;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
 }
 
 .hero__ronds {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.7rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  align-self: start;
 }
 
 .hero__ronds li {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.9rem;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
   background: var(--blanc);
-  border: 1px solid var(--bord);
+  border: 1px solid var(--bord-doux);
   border-radius: 999px;
   font-weight: 600;
   color: var(--vert-fonce);
+  box-shadow: 0 1px 1px rgb(27 58 31 / 0.01);
 }
 
 .mise-en-avant {
   display: grid;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .produits {
@@ -53,7 +76,7 @@
 
 .etat {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
   justify-items: start;
 }
 
@@ -65,7 +88,7 @@
 
 .mentions {
   color: var(--texte-doux);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   margin: 0;
 }
 

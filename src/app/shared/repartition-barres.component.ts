@@ -37,48 +37,59 @@ export interface ElementBarre {
     `
       .barres {
         display: grid;
-        gap: 0.6rem;
+        gap: 0.7rem;
       }
       .barres h2 {
         margin: 0;
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         color: var(--vert-fonce);
       }
       .barres__vide {
         margin: 0;
         color: var(--texte-doux);
-        font-size: 0.92rem;
+        font-size: 0.9rem;
       }
       .barres__liste {
         list-style: none;
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 0.4rem;
+        gap: 0.55rem;
       }
       .barres__ligne {
         display: grid;
-        grid-template-columns: minmax(6rem, 10rem) 1fr auto;
-        gap: 0.6rem;
+        grid-template-columns: minmax(7rem, 12rem) 1fr auto;
+        gap: 0.7rem;
         align-items: center;
-        font-size: 0.88rem;
+        font-size: 0.9rem;
       }
       .barres__piste {
         background: var(--vert-pale);
         border-radius: 999px;
-        height: 0.7rem;
+        height: 0.6rem;
         overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--vert) 12%, transparent);
       }
       .barres__barre {
         display: block;
         height: 100%;
-        background: var(--vert);
+        background: linear-gradient(90deg, var(--vert-clair) 0%, var(--vert) 100%);
         border-radius: 999px;
       }
       .barres__valeur {
         min-width: 2rem;
         text-align: right;
         font-weight: 600;
+        color: var(--vert-fonce);
+      }
+      @media (max-width: 520px) {
+        .barres__ligne {
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
+        }
+        .barres__valeur {
+          text-align: left;
+        }
       }
     `,
   ],

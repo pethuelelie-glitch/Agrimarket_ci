@@ -94,57 +94,7 @@ type ChampInscription = 'nom' | 'email' | 'motDePasse' | 'role' | 'localisation'
   `,
   styles: [
     `
-      .page-auth {
-        max-width: 34rem;
-        margin: 0 auto;
-        display: grid;
-        gap: 1rem;
-      }
-      form {
-        display: grid;
-        gap: 0.85rem;
-      }
-      .champ {
-        display: grid;
-        gap: 0.25rem;
-      }
-      label {
-        font-weight: 600;
-      }
-      input,
-      select {
-        padding: 0.5rem;
-        border: 1px solid #b9c2ae;
-        border-radius: 0.4rem;
-        font: inherit;
-      }
-      button {
-        padding: 0.6rem 1rem;
-        border-radius: 0.4rem;
-        border: none;
-        background: #2e7d32;
-        color: #fff;
-        font: inherit;
-        cursor: pointer;
-      }
-      button:disabled {
-        opacity: 0.6;
-        cursor: progress;
-      }
-      .erreur-champ,
-      .erreur-globale {
-        color: #b3261e;
-        margin: 0;
-      }
-      .mention-simulation {
-        background: #fff8e1;
-        border-left: 4px solid #f9a825;
-        padding: 0.6rem 0.8rem;
-        margin: 0;
-      }
-      .lien-aide {
-        font-size: 0.9rem;
-      }
+      @import './auth.component.css';
     `,
   ],
 })

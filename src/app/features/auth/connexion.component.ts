@@ -73,78 +73,7 @@ import { AuthService } from '../../core/services/auth.service';
   `,
   styles: [
     `
-      .page-auth {
-        max-width: 34rem;
-        margin: 0 auto;
-        display: grid;
-        gap: 1rem;
-      }
-      form {
-        display: grid;
-        gap: 0.85rem;
-      }
-      .champ {
-        display: grid;
-        gap: 0.25rem;
-      }
-      label {
-        font-weight: 600;
-      }
-      input {
-        padding: 0.5rem;
-        border: 1px solid #b9c2ae;
-        border-radius: 0.4rem;
-        font: inherit;
-      }
-      button {
-        padding: 0.6rem 1rem;
-        border-radius: 0.4rem;
-        border: none;
-        background: #2e7d32;
-        color: #fff;
-        font: inherit;
-        cursor: pointer;
-      }
-      button:disabled {
-        opacity: 0.6;
-        cursor: progress;
-      }
-      button.secondaire {
-        background: transparent;
-        color: #2e7d32;
-        border: 1px solid #2e7d32;
-        padding: 0.3rem 0.6rem;
-      }
-      .erreur-champ,
-      .erreur-globale {
-        color: #b3261e;
-        margin: 0;
-      }
-      .mention-simulation {
-        background: #fff8e1;
-        border-left: 4px solid #f9a825;
-        padding: 0.6rem 0.8rem;
-        margin: 0;
-      }
-      .comptes-demo ul {
-        list-style: none;
-        padding: 0;
-        display: grid;
-        gap: 0.5rem;
-      }
-      .comptes-demo li {
-        display: flex;
-        gap: 0.75rem;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-      .details-compte {
-        font-size: 0.9rem;
-      }
-      .lien-aide {
-        font-size: 0.9rem;
-      }
+      @import './auth.component.css';
     `,
   ],
 })

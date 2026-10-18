@@ -6,6 +6,7 @@ const FORMAT_MONTANT = new Intl.NumberFormat('fr-CI', {
   style: 'currency',
   currency: 'XOF',
   maximumFractionDigits: 0,
+  currencyDisplay: 'narrowSymbol',
 });
 
 /** Formate un entier de FCFA pour l'affichage (ex. 1500 → « 1 500 F CFA »). */

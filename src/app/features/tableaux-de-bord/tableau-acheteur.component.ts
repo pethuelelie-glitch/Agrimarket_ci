@@ -48,21 +48,21 @@ import { EtatVideComponent } from '../../shared/etat-vide.component';
     `
       .tableau {
         display: grid;
-        gap: 1.5rem;
+        gap: clamp(1.25rem, 2.5vw, 1.75rem);
       }
       .tableau h1 {
         margin: 0;
-        font-size: 1.5rem;
+        font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.7rem);
         color: var(--vert-fonce);
       }
       .tableau__acces {
         display: grid;
-        gap: 0.5rem;
+        gap: 0.6rem;
         justify-items: start;
       }
       .tableau__acces h2 {
         margin: 0;
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         color: var(--vert-fonce);
       }
       .tableau__acces p {

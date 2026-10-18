@@ -30,39 +30,47 @@ import { RouterLink } from '@angular/router';
   styles: [
     `
       .etat-vide {
-        border: 1px dashed var(--bord);
-        border-radius: var(--rayon);
-        background: var(--vert-pale);
-        padding: 1.5rem;
+        border: 1px dashed color-mix(in srgb, var(--vert) 25%, var(--bord));
+        border-radius: var(--rayon-xl);
+        background: linear-gradient(180deg, color-mix(in srgb, var(--blanc) 60%, var(--vert-pale)) 0%, var(--blanc) 100%);
+        padding: clamp(1.25rem, 2vw, 1.75rem);
         display: grid;
-        gap: 0.5rem;
+        gap: 0.6rem;
         justify-items: start;
+        box-shadow: var(--ombre);
       }
       .etat-vide h3 {
         margin: 0;
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         color: var(--vert-fonce);
       }
       .etat-vide p {
         margin: 0;
         color: var(--texte-doux);
-        max-width: 55ch;
+        max-width: 58ch;
+        line-height: 1.6;
       }
       .etat-vide__action {
-        display: inline-block;
-        margin-top: 0.35rem;
-        padding: 0.5rem 1rem;
-        border: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.4rem;
+        padding: 0.65rem 1.15rem;
+        border: 1px solid transparent;
         border-radius: var(--rayon);
-        background: var(--vert);
+        background: linear-gradient(180deg, var(--vert-clair) 0%, var(--vert) 100%);
         color: var(--blanc);
         font: inherit;
         font-weight: 600;
         text-decoration: none;
         cursor: pointer;
+        box-shadow: var(--ombre);
+        transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
       }
       .etat-vide__action:hover {
-        background: var(--vert-fonce);
+        background: linear-gradient(180deg, var(--vert) 0%, var(--vert-fonce) 100%);
+        box-shadow: var(--ombre-md);
+        transform: translateY(-1px);
       }
     `,
   ],

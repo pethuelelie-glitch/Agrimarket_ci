@@ -1,24 +1,47 @@
 /*
  * Styles globaux d'AgriMarket CI.
- * Thème sobre « marché agricole ivoirien » : vert, sable, typographie système.
- * Règle responsive : jamais de défilement horizontal, en-tête repliable sous 768 px.
+ * Thème sobre « marché agricole ivoirien » : verts doux, sable, typographie moderne.
+ * Règle responsive : jamais de défilement horizontal.
  */
 
 :root {
+  /* Couleurs principales */
   --vert-fonce: #1b3a1f;
   --vert: #2e7d32;
   --vert-clair: #4caf50;
-  --vert-pale: #e8f5e9;
-  --sable: #f4f7f1;
-  --bord: #d7ddcd;
-  --texte: #22301d;
-  --texte-doux: #55604d;
+  --vert-pale: #f1f8f4;
+  --vert-tres-pale: #f8fcf9;
+  --sable: #f7f9f4;
+  --fond: #f9fbf6;
   --blanc: #ffffff;
-  --rouge: #c62828;
+
+  /* Textes & bordures */
+  --texte: #1f2a18;
+  --texte-doux: #4f5d42;
+  --texte-tres-doux: #6b7a59;
+  --bord: #e2e7d9;
+  --bord-doux: #f0f3ea;
+
+  /* États */
+  --rouge: #b3261e;
+  --rouge-fond: #fef2f1;
   --orange: #ef6c00;
-  --rayon: 0.75rem;
-  --ombre: 0 1px 3px rgb(27 58 31 / 0.08), 0 1px 2px rgb(27 58 31 / 0.1);
-  --max: 72rem;
+  --orange-fond: #fff3e6;
+  --jaune-fond: #fff8e1;
+
+  /* Effets */
+  --rayon: 0.875rem;
+  --rayon-xl: 1.25rem;
+  --rayon-2xl: 1.5rem;
+  --ombre: 0 1px 2px rgb(27 58 31 / 0.02), 0 4px 10px rgb(27 58 31 / 0.05);
+  --ombre-md: 0 8px 30px rgb(27 58 31 / 0.08);
+  --ombre-lift: 0 10px 40px -12px rgb(27 58 31 / 0.25);
+  --transition: 150ms ease;
+  --transition-lente: 200ms ease;
+
+  /* Mise en page */
+  --max: 76rem;
+  --gutter: clamp(1rem, 2vw, 1.5rem);
 }
 
 *,
@@ -28,15 +51,18 @@
 }
 
 html {
-  /* Empêche tout défilement horizontal global. */
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
-  background: var(--sable);
+  background: radial-gradient(1200px 800px at 50% 0, var(--vert-tres-pale) 0%, var(--fond) 55%, var(--sable) 100%);
   color: var(--texte);
   font-family:
+    'Inter',
     system-ui,
     -apple-system,
     'Segoe UI',
@@ -45,37 +71,68 @@ body {
     Arial,
     sans-serif;
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.7;
   overflow-x: hidden;
+  font-feature-settings: 'ss02', 'ss01', 'cv05';
 }
 
 img,
-svg {
+svg,
+picture,
+video {
   max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 a {
   color: var(--vert);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition), text-decoration-color var(--transition);
+}
+
+a:hover {
+  color: var(--vert-fonce);
 }
 
 h1,
 h2,
-h3 {
-  line-height: 1.25;
+h3,
+h4 {
+  line-height: 1.15;
   color: var(--vert-fonce);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
-  margin: 0 0 0.75rem;
+  font-size: clamp(1.8rem, 1.2rem + 2.2vw, 2.8rem);
+  margin-bottom: 1rem;
 }
 
 h2 {
-  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.6rem);
+  font-size: clamp(1.35rem, 1.05rem + 1.1vw, 1.8rem);
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 0.95rem + 0.5vw, 1.35rem);
+  margin-bottom: 0.5rem;
 }
 
 p {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.9rem;
+  color: var(--texte);
+}
+
+strong {
+  font-weight: 600;
+}
+
+small {
+  font-size: 0.875rem;
+  color: var(--texte-doux);
 }
 
 /* ---------------------------------------------------------------- Boutons */
@@ -86,107 +143,187 @@ input.bouton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1.1rem;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
   border: 1px solid transparent;
   border-radius: var(--rayon);
-  background: var(--vert);
+  background: linear-gradient(180deg, var(--vert-clair) 0%, var(--vert) 100%);
   color: var(--blanc);
   font: inherit;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: var(--ombre);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), opacity var(--transition);
+  white-space: nowrap;
 }
 
 .bouton:hover:not(:disabled) {
-  background: var(--vert-fonce);
+  background: linear-gradient(180deg, var(--vert) 0%, var(--vert-fonce) 100%);
+  box-shadow: var(--ombre-md);
+  transform: translateY(-1px);
+}
+
+.bouton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--ombre);
+}
+
+.bouton:focus-visible,
+button.bouton:focus-visible,
+input.bouton:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--vert-clair) 40%, transparent);
+  outline-offset: 2px;
 }
 
 .bouton:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .bouton--discret {
-  background: transparent;
+  background: var(--blanc);
   border-color: var(--bord);
   color: var(--texte);
+  box-shadow: none;
 }
 
 .bouton--discret:hover:not(:disabled) {
   background: var(--vert-pale);
+  box-shadow: var(--ombre);
+  transform: translateY(-1px);
+}
+
+.bouton--ghost {
+  background: transparent;
+  color: var(--texte);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.bouton--ghost:hover:not(:disabled) {
+  background: var(--vert-pale);
 }
 
 .bouton--danger {
-  background: var(--rouge);
+  background: linear-gradient(180deg, #d32f2f 0%, var(--rouge) 100%);
 }
 
 .bouton--danger:hover:not(:disabled) {
-  background: #8e0000;
+  background: linear-gradient(180deg, var(--rouge) 0%, #8e0000 100%);
 }
 
 /* --------------------------------------------------------------- Formulaires */
 
+form,
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .champ {
   display: grid;
-  gap: 0.3rem;
+  gap: 0.4rem;
   margin-bottom: 1rem;
 }
 
 .champ label {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  color: var(--vert-fonce);
 }
 
 .champ input,
 .champ select,
 .champ textarea {
-  padding: 0.55rem 0.7rem;
+  padding: 0.65rem 0.8rem;
   border: 1px solid var(--bord);
-  border-radius: var(--rayon);
+  border-radius: calc(var(--rayon) - 2px);
   background: var(--blanc);
   font: inherit;
   color: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  width: 100%;
+}
+
+.champ textarea {
+  resize: vertical;
+  min-height: 6rem;
+  line-height: 1.6;
+}
+
+.champ input::placeholder,
+.champ textarea::placeholder {
+  color: var(--texte-tres-doux);
+}
+
+.champ input:hover,
+.champ select:hover,
+.champ textarea:hover {
+  border-color: color-mix(in srgb, var(--vert) 25%, var(--bord));
 }
 
 .champ input:focus-visible,
 .champ select:focus-visible,
 .champ textarea:focus-visible {
-  outline: 3px solid var(--vert-clair);
+  outline: 3px solid color-mix(in srgb, var(--vert-clair) 35%, transparent);
   outline-offset: 1px;
   border-color: var(--vert);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vert-clair) 12%, transparent);
 }
 
 .champ--erreur input,
 .champ--erreur select,
 .champ--erreur textarea {
   border-color: var(--rouge);
+  background: var(--rouge-fond);
 }
 
 .champ__erreur,
-.message-erreur {
+.message-erreur,
+.erreur-champ,
+.erreur-globale {
   color: var(--rouge);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   margin: 0;
+  font-weight: 500;
 }
 
 /* ------------------------------------------------------------- Dispositions */
 
 .grille {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.grille--compact {
+  gap: 0.875rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+}
+
 .panneau {
-  background: var(--blanc);
-  border: 1px solid var(--bord);
-  border-radius: var(--rayon);
+  background: linear-gradient(180deg, var(--blanc) 0%, color-mix(in srgb, var(--blanc) 98%, var(--vert-pale)) 100%);
+  border: 1px solid var(--bord-doux);
+  border-radius: var(--rayon-xl);
   box-shadow: var(--ombre);
-  padding: 1.25rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.panneau--clair {
+  background: var(--blanc);
+}
+
+.panneau--dense {
+  padding: 1rem 1.25rem;
 }
 
 /* ----------------------------------------------------------------- Badges */
@@ -203,13 +340,15 @@ input.bouton {
 }
 
 .badge--alerte {
-  background: #fff3e0;
-  color: var(--orange);
+  background: var(--orange-fond);
+  color: #8a4a00;
+  border-color: color-mix(in srgb, var(--orange) 20%, transparent);
 }
 
 .badge--danger {
-  background: #ffebee;
+  background: var(--rouge-fond);
   color: var(--rouge);
+  border-color: color-mix(in srgb, var(--rouge) 15%, transparent);
 }
 
 /* Cartes d'indicateurs des tableaux de bord (Module H). */

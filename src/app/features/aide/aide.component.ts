@@ -92,43 +92,66 @@ import { LIBELLES_ROLE, Role } from '../../core/models';
   styles: [
     `
       .aide {
-        max-width: 60rem;
+        max-width: 62rem;
         margin: 0 auto;
         display: grid;
-        gap: 1.25rem;
+        gap: clamp(1.1rem, 2vw, 1.5rem);
       }
       section {
         display: grid;
-        gap: 0.5rem;
+        gap: 0.6rem;
+        background: var(--blanc);
+        border: 1px solid var(--bord-doux);
+        border-radius: var(--rayon-xl);
+        box-shadow: var(--ombre);
+        padding: clamp(1rem, 2vw, 1.25rem);
+      }
+      section h2 {
+        margin: 0;
       }
       ul {
         margin: 0;
         padding-left: 1.2rem;
         display: grid;
-        gap: 0.35rem;
+        gap: 0.45rem;
+      }
+      li {
+        line-height: 1.6;
+        color: var(--texte-doux);
       }
       .matrice {
         border-collapse: collapse;
         width: 100%;
-        font-size: 0.9rem;
+        font-size: 0.875rem;
+        margin-top: 0.4rem;
       }
       .matrice th,
       .matrice td {
-        border: 1px solid #d7ddcd;
-        padding: 0.3rem 0.5rem;
+        border: 1px solid var(--bord);
+        padding: 0.4rem 0.5rem;
         text-align: center;
+        background: var(--blanc);
+      }
+      .matrice thead th {
+        background: color-mix(in srgb, var(--vert-pale) 60%, var(--blanc));
+        color: var(--vert-fonce);
+        font-weight: 600;
       }
       .matrice th[scope='row'] {
         text-align: left;
+        background: color-mix(in srgb, var(--vert-pale) 40%, var(--blanc));
+        color: var(--vert-fonce);
+        font-weight: 500;
       }
       .matrice td.oui {
-        color: #2e7d32;
+        color: var(--vert);
         font-weight: 700;
       }
       caption {
         text-align: left;
         font-weight: 600;
-        padding-bottom: 0.35rem;
+        padding-bottom: 0.5rem;
+        color: var(--texte-doux);
       }
     `,
   ],
