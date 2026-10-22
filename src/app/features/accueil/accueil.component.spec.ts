@@ -125,4 +125,33 @@ describe('AccueilComponent (tasks 4.3 / 4.4)', () => {
       );
     });
   });
+
+  describe('chiffres clés et rayons', () => {
+    it('calcule les chiffres à partir des données locales', async () => {
+      await configurerTestBedAmorce({
+        imports: [AccueilComponent],
+        providers: [provideRouter(ROUTES_TEST)],
+      });
+
+      const fixture = await rendre();
+      const chiffres = fixture.componentInstance.statistiques();
+
+      expect(chiffres).toEqual({ produits: 7, producteurs: 2, villes: 2, categories: 6 });
+    });
+
+    it('propose les six rayons avec le nombre de produits actifs', async () => {
+      await configurerTestBedAmorce({
+        imports: [AccueilComponent],
+        providers: [provideRouter(ROUTES_TEST)],
+      });
+
+      const fixture = await rendre();
+      const rayons = fixture.componentInstance.rayons();
+
+      expect(rayons).toHaveLength(6);
+      // Le seul produit légumineux (haricot) est inactif.
+      expect(rayons.find((rayon) => rayon.categorie === 'LEGUMINEUSES')?.nombre).toBe(0);
+      expect(racine(fixture).querySelectorAll('.categorie').length).toBe(6);
+    });
+  });
 });

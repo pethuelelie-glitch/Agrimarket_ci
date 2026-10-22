@@ -115,9 +115,19 @@ export const COMPTES_DEMO_PRINCIPAUX: readonly CompteDemo[] = [
 export const IMAGE_SECOURS =
   'data:image/svg+xml;utf8,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200">' +
-      '<rect width="320" height="200" fill="#e8f5e9"/>' +
-      '<text x="160" y="110" font-size="18" text-anchor="middle" fill="#2e7d32">AgriMarket CI</text>' +
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">' +
+      '<defs><linearGradient id="f" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0" stop-color="#e7f4ec"/><stop offset="1" stop-color="#f3ede2"/>' +
+      '</linearGradient></defs>' +
+      '<rect width="400" height="300" fill="url(#f)"/>' +
+      '<circle cx="232" cy="112" r="16" fill="#f28c28" opacity=".85"/>' +
+      '<g fill="none" stroke="#137a4b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M200 205v-62"/>' +
+      '<path d="M200 158c0-24-17-40-44-40 0 24 17 40 44 40Z" fill="#137a4b" fill-opacity=".14"/>' +
+      '<path d="M200 176c0-19 14-32 35-32 0 19-14 32-35 32Z" fill="#137a4b" fill-opacity=".14"/>' +
+      '</g>' +
+      '<text x="200" y="245" font-family="system-ui, sans-serif" font-size="15" font-weight="600" ' +
+      'text-anchor="middle" fill="#4b5a50">Image indisponible</text>' +
       '</svg>',
   );
 
@@ -172,6 +182,23 @@ interface ProduitDemo {
   joursCreation: number;
 }
 
+/**
+ * Illustrations des premières versions du jeu de démonstration (images distantes,
+ * dont certaines ne sont plus servies). Elles sont remplacées par les images
+ * locales de `public/images/produits/` lors de l'amorçage — voir
+ * `migrerIllustrationsDemo`.
+ */
+export const ILLUSTRATIONS_HISTORIQUES: Readonly<Record<string, string>> = {
+  prd_riz: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=640&q=60',
+  prd_tomate: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=640&q=60',
+  prd_igname: 'https://images.unsplash.com/photo-1596124729356-1c4c2f2a1a7a?w=640&q=60',
+  prd_haricot: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=640&q=60',
+  prd_mangue: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=640&q=60',
+  prd_mais: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=640&q=60',
+  prd_huile: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=640&q=60',
+  prd_gombo: 'https://images.unsplash.com/photo-1587334207440-f1a1b9f0c0e8?w=640&q=60',
+};
+
 const PRODUITS_DEMO: readonly ProduitDemo[] = [
   {
     id: 'prd_riz',
@@ -184,7 +211,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'SAC',
     quantiteDisponible: 195,
     localisation: 'Abidjan',
-    imageUrl: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=640&q=60',
+    imageUrl: '/images/produits/riz.webp',
     actif: true,
     joursCreation: -25,
   },
@@ -198,7 +225,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'KG',
     quantiteDisponible: 70,
     localisation: 'Abidjan',
-    imageUrl: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=640&q=60',
+    imageUrl: '/images/produits/tomate.webp',
     actif: true,
     joursCreation: -22,
   },
@@ -212,7 +239,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'KG',
     quantiteDisponible: 120,
     localisation: 'Abidjan',
-    imageUrl: 'https://images.unsplash.com/photo-1596124729356-1c4c2f2a1a7a?w=640&q=60',
+    imageUrl: '/images/produits/igname.webp',
     actif: true,
     joursCreation: -18,
   },
@@ -226,7 +253,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'KG',
     quantiteDisponible: 60,
     localisation: 'Abidjan',
-    imageUrl: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=640&q=60',
+    imageUrl: '/images/produits/niebe.webp',
     actif: false,
     joursCreation: -15,
   },
@@ -240,7 +267,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'KG',
     quantiteDisponible: 130,
     localisation: 'Bouaké',
-    imageUrl: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=640&q=60',
+    imageUrl: '/images/produits/mangue.webp',
     actif: true,
     joursCreation: -12,
   },
@@ -254,7 +281,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'KG',
     quantiteDisponible: 250,
     localisation: 'Bouaké',
-    imageUrl: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=640&q=60',
+    imageUrl: '/images/produits/mais.webp',
     actif: true,
     joursCreation: -10,
   },
@@ -268,7 +295,7 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'LITRE',
     quantiteDisponible: 90,
     localisation: 'Bouaké',
-    imageUrl: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=640&q=60',
+    imageUrl: '/images/produits/huile-palme.webp',
     actif: true,
     joursCreation: -8,
   },
@@ -282,11 +309,23 @@ const PRODUITS_DEMO: readonly ProduitDemo[] = [
     unite: 'KG',
     quantiteDisponible: 0,
     localisation: 'Bouaké',
-    imageUrl: 'https://images.unsplash.com/photo-1587334207440-f1a1b9f0c0e8?w=640&q=60',
+    imageUrl: '/images/produits/gombo.webp',
     actif: true,
     joursCreation: -5,
   },
 ];
+
+/**
+ * Illustration locale actuelle d'un produit de démonstration dont l'image est
+ * encore une illustration historique non modifiée ; `null` sinon (produit créé
+ * par un utilisateur, ou image déjà personnalisée).
+ */
+export function illustrationAMigrer(produit: Pick<Produit, 'id' | 'imageUrl'>): string | null {
+  if (ILLUSTRATIONS_HISTORIQUES[produit.id] !== produit.imageUrl) {
+    return null;
+  }
+  return PRODUITS_DEMO.find((demo) => demo.id === produit.id)?.imageUrl ?? null;
+}
 
 function creerProduits(maintenant: Date, producteurs: Utilisateur[]): Produit[] {
   return PRODUITS_DEMO.map((produit) => {

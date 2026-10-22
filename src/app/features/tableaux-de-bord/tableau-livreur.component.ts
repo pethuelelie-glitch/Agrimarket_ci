@@ -3,15 +3,16 @@ import { RouterLink } from '@angular/router';
 import { CHEMINS } from '../../core/navigation';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { CarteIndicateurComponent } from '../../shared/carte-indicateur.component';
+import { EnteteTableauComponent } from '../../shared/entete-tableau.component';
 import { EtatVideComponent } from '../../shared/etat-vide.component';
 
 /** Tableau de bord livreur (task 9.5), limité à ses livraisons attribuées. */
 @Component({
   selector: 'app-tableau-livreur',
-  imports: [RouterLink, CarteIndicateurComponent, EtatVideComponent],
+  imports: [RouterLink, CarteIndicateurComponent, EnteteTableauComponent, EtatVideComponent],
   template: `
-    <section class="tableau">
-      <h1>Tableau de bord — livreur</h1>
+    <section class="tdb apparition">
+      <app-entete-tableau titre="Mes livraisons" />
 
       @if (estVide()) {
         <app-etat-vide
@@ -23,11 +24,28 @@ import { EtatVideComponent } from '../../shared/etat-vide.component';
       <div class="grille">
         <app-carte-indicateur
           libelle="Missions attribuées"
+          icone="camion"
+          ton="bleu"
           [valeur]="indicateurs().missionsAttribuees"
         />
-        <app-carte-indicateur libelle="En cours" [valeur]="indicateurs().enCours" />
-        <app-carte-indicateur libelle="Terminées" [valeur]="indicateurs().terminees" />
-        <app-carte-indicateur libelle="En échec" [valeur]="indicateurs().enEchec" />
+        <app-carte-indicateur
+          libelle="En cours"
+          icone="horloge"
+          ton="violet"
+          [valeur]="indicateurs().enCours"
+        />
+        <app-carte-indicateur
+          libelle="Terminées"
+          icone="coche"
+          ton="vert"
+          [valeur]="indicateurs().terminees"
+        />
+        <app-carte-indicateur
+          libelle="En échec"
+          icone="alerte"
+          ton="rouge"
+          [valeur]="indicateurs().enEchec"
+        />
       </div>
 
       <section class="panneau tableau__acces">
@@ -39,14 +57,12 @@ import { EtatVideComponent } from '../../shared/etat-vide.component';
   `,
   styles: [
     `
-      .tableau {
+      .tdb {
         display: grid;
         gap: clamp(1.25rem, 2.5vw, 1.75rem);
       }
-      .tableau h1 {
-        margin: 0;
-        font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.7rem);
-        color: var(--vert-fonce);
+      .grille {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 10.5rem), 1fr));
       }
       .tableau__acces {
         display: grid;

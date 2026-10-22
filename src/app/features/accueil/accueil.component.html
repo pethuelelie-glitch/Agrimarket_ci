@@ -1,38 +1,150 @@
-<section class="hero">
+<section class="hero apparition">
   <div class="hero__texte">
-    <h1>Le marché agricole ivoirien, en ligne</h1>
-    <p>
+    <p class="hero__puce">
+      <span class="hero__drapeau" aria-hidden="true"><i></i><i></i><i></i></span>
+      La marketplace agricole de Côte d'Ivoire
+    </p>
+    <h1>
+      Du champ à votre table,
+      <em>directement</em> auprès des producteurs.
+    </h1>
+    <p class="hero__intro">
       AgriMarket CI met en relation les <strong>producteurs</strong>, les
       <strong>acheteurs</strong> et les <strong>livreurs</strong> de Côte d'Ivoire. Les producteurs
       publient leurs récoltes, les acheteurs commandent en quelques clics, et les livreurs assurent
       la livraison jusqu'au client.
     </p>
 
+    <form class="hero__recherche" role="search" (submit)="rechercher($event)">
+      <label for="accueil-recherche" class="visuellement-cache">Rechercher un produit</label>
+      <app-icone nom="recherche" [taille]="20" />
+      <input
+        id="accueil-recherche"
+        type="search"
+        name="q"
+        placeholder="Riz, igname, mangues…"
+        autocomplete="off"
+        [value]="recherche()"
+        (input)="recherche.set($any($event.target).value)"
+      />
+      <input type="submit" class="bouton" value="Rechercher" />
+    </form>
+
     @if (utilisateurCourant()) {
       <div class="hero__actions">
-        <a class="bouton" [routerLink]="chemins.catalogue">Parcourir le catalogue</a>
-        <a class="bouton bouton--discret" [routerLink]="cheminTableauDeBordCourant">
+        <a class="bouton bouton--grand" [routerLink]="chemins.catalogue">
+          Parcourir le catalogue
+        </a>
+        <a class="bouton bouton--grand bouton--discret" [routerLink]="cheminTableauDeBordCourant">
           Mon tableau de bord
         </a>
       </div>
     } @else {
       <div class="hero__actions">
-        <a class="bouton" [routerLink]="chemins.catalogue">Catalogue</a>
-        <a class="bouton bouton--discret" [routerLink]="chemins.connexion">Connexion</a>
-        <a class="bouton bouton--discret" [routerLink]="chemins.inscription">Inscription</a>
+        <a class="bouton bouton--grand" [routerLink]="chemins.catalogue">Catalogue</a>
+        <a class="bouton bouton--grand bouton--discret" [routerLink]="chemins.connexion"
+          >Connexion</a
+        >
+        <a class="bouton bouton--grand bouton--ghost" [routerLink]="chemins.inscription"
+          >Inscription</a
+        >
       </div>
     }
   </div>
 
+  <div class="hero__visuel">
+    <img
+      class="hero__photo"
+      src="/images/marche-ivoirien.webp"
+      alt="Vendeuses de légumes dans un marché ivoirien, devant un étal de piments et de tomates"
+      width="1600"
+      height="988"
+      fetchpriority="high"
+    />
+    @if (dernierProduit(); as produit) {
+      <a class="hero__flottant hero__flottant--produit" [routerLink]="['/catalogue', produit.id]">
+        <img [src]="produit.imageUrl" alt="" width="48" height="48" />
+        <span>
+          <small>Nouveau au marché</small>
+          <strong>{{ produit.nom }}</strong>
+          <span class="hero__flottant-prix">{{ produit.prix | montantFcfa }}</span>
+        </span>
+      </a>
+    }
+    <div class="hero__flottant hero__flottant--livraison" aria-hidden="true">
+      <span class="hero__flottant-icone"><app-icone nom="camion" [taille]="20" /></span>
+      <span>
+        <small>Livraison suivie</small>
+        <strong>Du producteur au client</strong>
+      </span>
+    </div>
+  </div>
+
   <ul class="hero__ronds" aria-label="Les trois métiers d'AgriMarket CI">
-    <li><span aria-hidden="true">🌱</span> Producteurs</li>
-    <li><span aria-hidden="true">🧺</span> Acheteurs</li>
-    <li><span aria-hidden="true">🚚</span> Livreurs</li>
+    <li><app-icone nom="pousse" [taille]="18" /> Producteurs</li>
+    <li><app-icone nom="panier" [taille]="18" /> Acheteurs</li>
+    <li><app-icone nom="camion" [taille]="18" /> Livreurs</li>
   </ul>
 </section>
 
-<section class="mise-en-avant" aria-labelledby="titre-mise-en-avant">
-  <h2 id="titre-mise-en-avant">Produits récemment ajoutés</h2>
+<section class="chiffres" aria-label="AgriMarket CI en chiffres">
+  <dl>
+    <div>
+      <dt>Produits disponibles</dt>
+      <dd>{{ statistiques().produits }}</dd>
+    </div>
+    <div>
+      <dt>Producteurs</dt>
+      <dd>{{ statistiques().producteurs }}</dd>
+    </div>
+    <div>
+      <dt>Villes représentées</dt>
+      <dd>{{ statistiques().villes }}</dd>
+    </div>
+    <div>
+      <dt>Catégories</dt>
+      <dd>{{ statistiques().categories }}</dd>
+    </div>
+  </dl>
+</section>
+
+<section class="bloc" aria-labelledby="titre-categories">
+  <header class="bloc__entete">
+    <div>
+      <p class="surtitre">Explorer</p>
+      <h2 id="titre-categories">Les rayons du marché</h2>
+    </div>
+  </header>
+  <ul class="categories">
+    @for (rayon of rayons(); track rayon.categorie) {
+      <li>
+        <a
+          class="categorie"
+          [routerLink]="chemins.catalogue"
+          [queryParams]="{ categorie: rayon.categorie }"
+          [style.--teinte]="rayon.teinte"
+        >
+          <span class="categorie__icone"><app-icone [nom]="rayon.icone" [taille]="26" /></span>
+          <span class="categorie__nom">{{ rayon.libelle }}</span>
+          <span class="categorie__compte">
+            {{ rayon.nombre }} produit{{ rayon.nombre > 1 ? 's' : '' }}
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="bloc mise-en-avant" aria-labelledby="titre-mise-en-avant">
+  <header class="bloc__entete">
+    <div>
+      <p class="surtitre">Fraîchement publiés</p>
+      <h2 id="titre-mise-en-avant">Produits récemment ajoutés</h2>
+    </div>
+    <a class="bloc__lien" [routerLink]="chemins.catalogue">
+      Tout le catalogue <app-icone nom="fleche" [taille]="18" />
+    </a>
+  </header>
 
   @if (erreurChargement(); as erreur) {
     <div class="panneau etat">
@@ -71,4 +183,66 @@
       ancien.
     </p>
   }
+</section>
+
+<section class="bloc" aria-labelledby="titre-fonctionnement">
+  <header class="bloc__entete bloc__entete--centre">
+    <div>
+      <p class="surtitre">Comment ça marche</p>
+      <h2 id="titre-fonctionnement">Trois métiers, un seul marché</h2>
+    </div>
+  </header>
+  <ol class="etapes">
+    <li class="etape">
+      <span class="etape__numero">1</span>
+      <span class="etape__icone"><app-icone nom="pousse" [taille]="26" /></span>
+      <h3>Le producteur publie</h3>
+      <p>
+        Il met en ligne ses récoltes avec prix, stock et localisation, puis confirme et prépare les
+        commandes reçues.
+      </p>
+    </li>
+    <li class="etape">
+      <span class="etape__numero">2</span>
+      <span class="etape__icone"><app-icone nom="panier" [taille]="26" /></span>
+      <h3>L'acheteur commande</h3>
+      <p>
+        Il compare les offres, remplit son panier — même auprès de plusieurs producteurs — et suit
+        chaque commande.
+      </p>
+    </li>
+    <li class="etape">
+      <span class="etape__numero">3</span>
+      <span class="etape__icone"><app-icone nom="camion" [taille]="26" /></span>
+      <h3>Le livreur achemine</h3>
+      <p>
+        Une mission lui est attribuée : il prend en charge la commande et confirme la livraison
+        jusqu'au client.
+      </p>
+    </li>
+  </ol>
+</section>
+
+<section class="appel" aria-labelledby="titre-appel">
+  <div class="appel__contenu">
+    <p class="surtitre">Producteurs, acheteurs, livreurs</p>
+    <h2 id="titre-appel">Rejoignez le marché agricole ivoirien en ligne.</h2>
+    <p>
+      Créez un compte en une minute, ou essayez immédiatement l'un des comptes de démonstration.
+    </p>
+    <div class="appel__actions">
+      @if (utilisateurCourant()) {
+        <a class="bouton bouton--grand bouton--accent" [routerLink]="cheminTableauDeBordCourant">
+          Accéder à mon espace <app-icone nom="fleche" [taille]="18" />
+        </a>
+      } @else {
+        <a class="bouton bouton--grand bouton--accent" [routerLink]="chemins.inscription">
+          Créer mon compte <app-icone nom="fleche" [taille]="18" />
+        </a>
+        <a class="bouton bouton--grand appel__secondaire" [routerLink]="chemins.connexion">
+          Essayer un compte de démo
+        </a>
+      }
+    </div>
+  </div>
 </section>

@@ -24,57 +24,59 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       @if (produits().length === 0) {
         <p class="vide" role="status">Aucun produit sur la plateforme.</p>
       } @else {
-        <table class="liste">
-          <caption class="sr-only">
-            Tous les produits
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Produit</th>
-              <th scope="col">Producteur</th>
-              <th scope="col">Prix</th>
-              <th scope="col">Unité</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Statut</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (produit of produits(); track produit.id) {
-              <tr [class.inactif]="!produit.actif">
-                <td>{{ produit.nom }}</td>
-                <td>{{ nomProducteur(produit.producteurId) }}</td>
-                <!-- Prix, unité et stock : lecture seule pour l'administrateur. -->
-                <td>{{ produit.prix | montantFcfa }}</td>
-                <td>{{ libelleUnite(produit) }}</td>
-                <td>{{ produit.quantiteDisponible }}</td>
-                <td>
-                  <span
-                    class="badge-statut"
-                    [attr.data-statut]="produit.actif ? 'LIVREE' : 'ANNULEE'"
-                  >
-                    {{ produit.actif ? 'Actif' : 'Inactif' }}
-                  </span>
-                  @if (produit.moderation; as moderation) {
-                    <span class="motif" [title]="moderation.motif"
-                      >motif : {{ moderation.motif }}</span
-                    >
-                  }
-                </td>
-                <td class="actions-cellule">
-                  @if (produit.actif) {
-                    <button type="button" class="secondaire" (click)="ouvrirModeration(produit)">
-                      Désactiver
-                    </button>
-                  }
-                  <button type="button" class="danger" (click)="demanderSuppression(produit)">
-                    Supprimer
-                  </button>
-                </td>
+        <div class="tableau-conteneur panneau">
+          <table class="liste">
+            <caption class="sr-only">
+              Tous les produits
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Produit</th>
+                <th scope="col">Producteur</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Unité</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Actions</th>
               </tr>
-            }
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              @for (produit of produits(); track produit.id) {
+                <tr [class.inactif]="!produit.actif">
+                  <td>{{ produit.nom }}</td>
+                  <td>{{ nomProducteur(produit.producteurId) }}</td>
+                  <!-- Prix, unité et stock : lecture seule pour l'administrateur. -->
+                  <td>{{ produit.prix | montantFcfa }}</td>
+                  <td>{{ libelleUnite(produit) }}</td>
+                  <td>{{ produit.quantiteDisponible }}</td>
+                  <td>
+                    <span
+                      class="badge-statut"
+                      [attr.data-statut]="produit.actif ? 'LIVREE' : 'ANNULEE'"
+                    >
+                      {{ produit.actif ? 'Actif' : 'Inactif' }}
+                    </span>
+                    @if (produit.moderation; as moderation) {
+                      <span class="motif" [title]="moderation.motif"
+                        >motif : {{ moderation.motif }}</span
+                      >
+                    }
+                  </td>
+                  <td class="actions-cellule">
+                    @if (produit.actif) {
+                      <button type="button" class="secondaire" (click)="ouvrirModeration(produit)">
+                        Désactiver
+                      </button>
+                    }
+                    <button type="button" class="danger" (click)="demanderSuppression(produit)">
+                      Supprimer
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       }
 
       @if (produitAModerer(); as produit) {
@@ -120,25 +122,8 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
         display: grid;
         gap: 1rem;
       }
-      h1 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: var(--vert-fonce);
-      }
-      .liste {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .liste th,
-      .liste td {
-        text-align: left;
-        padding: 0.5rem;
-        border-bottom: 1px solid #e2e7db;
-        font-size: 0.9rem;
-        vertical-align: top;
-      }
       .inactif {
-        background: #faf3f2;
+        background: var(--rouge-fond);
       }
       .motif {
         display: block;
@@ -163,24 +148,10 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       label {
         font-weight: 600;
       }
-      input {
-        padding: 0.5rem;
-        border: 1px solid #b9c2ae;
-        border-radius: 0.4rem;
-        font: inherit;
-      }
       .actions {
         display: flex;
         gap: 0.5rem;
         flex-wrap: wrap;
-      }
-      button.danger {
-        background: #b3261e;
-        color: #fff;
-        border: none;
-        padding: 0.4rem 0.7rem;
-        border-radius: 0.4rem;
-        cursor: pointer;
       }
       .message {
         margin: 0;
@@ -190,18 +161,6 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       .vide {
         margin: 0;
         color: var(--texte-doux);
-      }
-      .erreur-champ {
-        margin: 0;
-        color: #b3261e;
-        font-size: 0.88rem;
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
       }
     `,
   ],

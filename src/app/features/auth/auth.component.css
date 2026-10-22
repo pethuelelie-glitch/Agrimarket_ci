@@ -1,154 +1,313 @@
+/* Mise en page partagée par la connexion et l'inscription. */
+
 .page-auth {
-  max-width: 38rem;
-  margin: 0 auto;
   display: grid;
-  gap: 1.25rem;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
 }
 
-.page-auth h1 {
+/* ------------------------------------------------------------ Panneau visuel */
+
+.auth-visuel {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 34rem;
+  border-radius: var(--rayon-3xl);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgb(8 33 22 / 0.1) 0%, rgb(8 33 22 / 0.88) 75%),
+    url('/images/paniers-legumes.webp') center / cover no-repeat;
+  box-shadow: var(--ombre-lift);
+  color: #e6f1ea;
+}
+
+.auth-visuel--inscription {
+  background:
+    linear-gradient(180deg, rgb(8 33 22 / 0.1) 0%, rgb(8 33 22 / 0.88) 75%),
+    url('/images/vendeuse-yamoussoukro.webp') 70% center / cover no-repeat;
+}
+
+.auth-visuel__contenu {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.auth-visuel__marque {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffb466;
+}
+
+.auth-visuel__titre {
+  margin: 0 0 1.25rem;
+  font-family: var(--police-titre);
+  font-size: clamp(1.7rem, 1.3rem + 1.5vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.12;
+  color: #fff;
+}
+
+.auth-visuel ul {
+  display: grid;
+  gap: 0.6rem;
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.auth-visuel li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 550;
+}
+
+.auth-visuel li app-icone {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.14);
+  color: #ffb466;
+}
+
+/* -------------------------------------------------------------- Formulaire */
+
+.auth-colonne {
+  display: grid;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 34rem;
+  justify-self: center;
+}
+
+.auth-entete h1 {
+  margin: 0 0 0.35rem;
+}
+
+.auth-entete p {
+  margin: 0;
+  color: var(--texte-doux);
 }
 
 form {
   display: grid;
-  gap: 0.95rem;
-  background: var(--blanc);
+  gap: 0.25rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--rayon-2xl);
+  background: var(--surface);
   border: 1px solid var(--bord-doux);
-  border-radius: var(--rayon-xl);
-  box-shadow: var(--ombre);
-  padding: clamp(1.1rem, 2vw, 1.5rem);
-}
-
-.champ {
-  display: grid;
-  gap: 0.4rem;
-}
-
-label {
-  font-weight: 600;
-  color: var(--vert-fonce);
-}
-
-input,
-select {
-  padding: 0.7rem 0.85rem;
-  border: 1px solid var(--bord);
-  border-radius: calc(var(--rayon) - 2px);
-  font: inherit;
-  transition: border-color var(--transition), box-shadow var(--transition);
-  background: var(--blanc);
-  width: 100%;
-}
-
-input:focus-visible,
-select:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--vert-clair) 35%, transparent);
-  outline-offset: 1px;
-  border-color: var(--vert);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vert-clair) 12%, transparent);
-}
-
-button[type='submit'] {
-  padding: 0.8rem 1.2rem;
-  border-radius: var(--rayon);
-  border: none;
-  background: linear-gradient(180deg, var(--vert-clair) 0%, var(--vert) 100%);
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--ombre);
-  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
-}
-
-button[type='submit']:hover:not(:disabled) {
-  background: linear-gradient(180deg, var(--vert) 0%, var(--vert-fonce) 100%);
   box-shadow: var(--ombre-md);
-  transform: translateY(-1px);
 }
 
-button[type='submit']:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+form .bouton {
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
-button.secondaire {
-  background: transparent;
-  color: var(--vert);
-  border: 1px solid var(--vert);
-  padding: 0.45rem 0.8rem;
-  border-radius: var(--rayon);
-  font-weight: 500;
-  transition: background var(--transition), color var(--transition);
+.champ-duo {
+  display: grid;
+  gap: 0 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
 }
 
-button.secondaire:hover {
+.champ-secret {
+  position: relative;
+  display: flex;
+}
+
+.champ-secret input {
+  padding-inline-end: 5.5rem;
+}
+
+.champ-secret__bascule {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  translate: 0 -50%;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.champ-secret__bascule:hover {
   background: var(--vert-pale);
-  color: var(--vert-fonce);
-}
-
-.erreur-champ,
-.erreur-globale {
-  color: var(--rouge);
-  margin: 0;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: var(--vert);
 }
 
 .mention-simulation {
-  background: var(--jaune-fond);
-  border-left: 4px solid #f9a825;
-  border-radius: 0 calc(var(--rayon) - 2px) calc(var(--rayon) - 2px) 0;
-  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
   margin: 0;
-  font-weight: 500;
-  color: #7a4a00;
+  padding: 0.8rem 1rem;
+  border-radius: var(--rayon-xl);
+  background: var(--jaune-fond);
+  border: 1px solid color-mix(in srgb, var(--jaune) 30%, transparent);
+  color: var(--jaune-texte);
+  font-size: 0.88rem;
+  font-weight: 550;
+  line-height: 1.5;
 }
 
+.mention-simulation app-icone {
+  margin-top: 0.1rem;
+}
+
+.auth-bascule {
+  margin: 0;
+  text-align: center;
+  color: var(--texte-doux);
+}
+
+.auth-bascule a {
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------ Comptes de démo */
+
 .comptes-demo {
-  background: var(--blanc);
-  border: 1px solid var(--bord-doux);
-  border-radius: var(--rayon-xl);
-  box-shadow: var(--ombre);
-  padding: clamp(1rem, 2vw, 1.25rem);
   display: grid;
-  gap: 0.9rem;
+  gap: 0.5rem;
 }
 
 .comptes-demo h2 {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
+}
+
+.comptes-demo__aide {
+  margin: 0 0 0.25rem;
+  font-size: 0.88rem;
+  color: var(--texte-doux);
 }
 
 .comptes-demo ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: grid;
-  gap: 0.55rem;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.comptes-demo li {
+.compte {
+  --teinte: var(--vert);
   display: flex;
-  gap: 0.85rem;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 0.7rem 0.8rem;
+  gap: 0.75rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem;
   border: 1px solid var(--bord-doux);
+  border-radius: var(--rayon-xl);
+  background: var(--surface);
+  color: var(--texte);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.compte[data-role='ADMIN'] {
+  --teinte: #6941c6;
+}
+
+.compte[data-role='ACHETEUR'] {
+  --teinte: #d9650b;
+}
+
+.compte[data-role='LIVREUR'] {
+  --teinte: #1d5fbf;
+}
+
+.compte:hover {
+  border-color: color-mix(in srgb, var(--teinte) 45%, var(--bord-doux));
+  box-shadow: var(--ombre-md);
+  transform: translateY(-2px);
+}
+
+.compte:focus-visible {
+  outline: none;
+  box-shadow: var(--anneau);
+}
+
+.compte__icone {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: var(--rayon);
-  background: color-mix(in srgb, var(--blanc) 98%, var(--vert-pale));
+  background: color-mix(in srgb, var(--teinte) 14%, var(--surface));
+  color: var(--teinte);
 }
 
 .details-compte {
-  font-size: 0.875rem;
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
   color: var(--texte-doux);
-  line-height: 1.5;
+}
+
+.details-compte strong {
+  font-size: 0.92rem;
+  color: var(--titre);
+}
+
+.details-compte span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compte__mdp {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.76rem;
+}
+
+.compte__action {
+  font-size: 0.78rem;
+  font-weight: 750;
+  color: var(--teinte);
 }
 
 .lien-aide {
-  font-size: 0.875rem;
   margin: 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------- Réactivité */
+
+@media screen and (min-width: 960px) {
+  .page-auth {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  }
+
+  .auth-visuel {
+    position: sticky;
+    top: 6rem;
+    min-height: min(calc(100dvh - 9rem), 44rem);
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .auth-visuel {
+    display: none;
+  }
 }

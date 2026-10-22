@@ -1,112 +1,144 @@
-<header class="entete">
-  <a class="entete__marque" [routerLink]="chemins.accueil" (click)="fermerMenu()">
-    <span class="entete__logo" aria-hidden="true">🌾</span>
-    <span class="entete__nom">AgriMarket CI</span>
-  </a>
+<a class="evitement" href="#contenu-principal">Aller au contenu</a>
 
-  <button
-    type="button"
-    class="entete__bascule"
-    (click)="basculerMenu()"
-    [attr.aria-expanded]="menuOuvert()"
-    aria-controls="navigation-principale"
-  >
-    <span class="visuellement-cache">Afficher le menu</span>
-    <span aria-hidden="true">{{ menuOuvert() ? '✕' : '☰' }}</span>
-  </button>
+<header class="entete" [class.entete--ouverte]="menuOuvert()">
+  <div class="entete__barre">
+    <a
+      class="entete__marque"
+      [routerLink]="chemins.accueil"
+      (click)="fermerMenu()"
+      aria-label="AgriMarket CI — accueil"
+    >
+      <app-logo class="entete__logo" />
+      <span class="entete__nom">AgriMarket <span class="entete__ci">CI</span></span>
+    </a>
 
-  <nav
-    id="navigation-principale"
-    class="navigation"
-    [class.navigation--ouverte]="menuOuvert()"
-    aria-label="Navigation principale"
-  >
-    <ul class="navigation__liste">
-      @for (lien of liensCommuns; track lien.chemin) {
-        <li>
-          <a
-            class="navigation__lien"
-            [routerLink]="lien.chemin"
-            routerLinkActive="actif"
-            [routerLinkActiveOptions]="{ exact: lien.chemin === '/' }"
-            (click)="fermerMenu()"
-          >
-            {{ lien.libelle }}
-          </a>
-        </li>
-      }
-
-      @if (utilisateurCourant()) {
-        <li>
-          <a
-            class="navigation__lien"
-            [routerLink]="cheminTableauDeBordCourant"
-            routerLinkActive="actif"
-            (click)="fermerMenu()"
-          >
-            Mon tableau de bord
-          </a>
-        </li>
-        @for (lien of liensDuRole(); track lien.chemin) {
+    <nav
+      id="navigation-principale"
+      class="navigation"
+      [class.navigation--ouverte]="menuOuvert()"
+      aria-label="Navigation principale"
+    >
+      <ul class="navigation__liste">
+        @for (lien of liensCommuns; track lien.chemin) {
           <li>
             <a
               class="navigation__lien"
               [routerLink]="lien.chemin"
               routerLinkActive="actif"
+              [routerLinkActiveOptions]="{ exact: lien.chemin === '/' }"
               (click)="fermerMenu()"
             >
+              <app-icone [nom]="lien.icone" [taille]="18" />
               {{ lien.libelle }}
-              @if (lien.chemin === chemins.panier && nombreArticles() > 0) {
-                <span class="navigation__badge" aria-hidden="true">{{ nombreArticles() }}</span>
-                <span class="visuellement-cache">
-                  ({{ nombreArticles() }} article{{ nombreArticles() > 1 ? 's' : '' }})
-                </span>
-              }
             </a>
           </li>
         }
-      }
-    </ul>
 
-    <div class="navigation__compte">
-      @if (utilisateurCourant(); as utilisateur) {
-        <span class="navigation__identite">
-          <span class="navigation__nom">{{ utilisateur.nom }}</span>
-          <span class="badge">{{ libelleRole() }}</span>
-        </span>
-        <app-deconnexion-bouton />
-      } @else {
-        <a
-          class="bouton bouton--discret navigation__lien-action"
-          [routerLink]="chemins.connexion"
-          (click)="fermerMenu()"
-        >
-          Connexion
-        </a>
-        <a
-          class="bouton navigation__lien-action"
-          [routerLink]="chemins.inscription"
-          (click)="fermerMenu()"
-        >
-          Inscription
-        </a>
-      }
+        @if (utilisateurCourant()) {
+          <li>
+            <a
+              class="navigation__lien"
+              [routerLink]="cheminTableauDeBordCourant"
+              routerLinkActive="actif"
+              (click)="fermerMenu()"
+            >
+              <app-icone nom="tableau" [taille]="18" />
+              Mon tableau de bord
+            </a>
+          </li>
+          @for (lien of liensDuRole(); track lien.chemin) {
+            <li>
+              <a
+                class="navigation__lien"
+                [routerLink]="lien.chemin"
+                routerLinkActive="actif"
+                (click)="fermerMenu()"
+              >
+                <app-icone [nom]="lien.icone" [taille]="18" />
+                {{ lien.libelle }}
+                @if (lien.chemin === chemins.panier && nombreArticles() > 0) {
+                  <span class="navigation__badge" aria-hidden="true">{{ nombreArticles() }}</span>
+                  <span class="visuellement-cache">
+                    ({{ nombreArticles() }} article{{ nombreArticles() > 1 ? 's' : '' }})
+                  </span>
+                }
+              </a>
+            </li>
+          }
+        }
+      </ul>
+
+      <div class="navigation__compte">
+        @if (utilisateurCourant(); as utilisateur) {
+          <span class="navigation__identite">
+            <span class="navigation__avatar" aria-hidden="true">{{ initiales() }}</span>
+            <span class="navigation__qui">
+              <span class="navigation__nom">{{ utilisateur.nom }}</span>
+              <span class="navigation__role">{{ libelleRole() }}</span>
+            </span>
+          </span>
+          <app-deconnexion-bouton />
+        } @else {
+          <a
+            class="bouton bouton--ghost navigation__lien-action"
+            [routerLink]="chemins.connexion"
+            (click)="fermerMenu()"
+          >
+            Connexion
+          </a>
+          <a
+            class="bouton navigation__lien-action"
+            [routerLink]="chemins.inscription"
+            (click)="fermerMenu()"
+          >
+            Inscription
+          </a>
+        }
+      </div>
+    </nav>
+
+    <div class="entete__outils">
+      <button
+        type="button"
+        class="entete__theme"
+        (click)="basculerTheme()"
+        [attr.aria-label]="sombre() ? 'Activer le thème clair' : 'Activer le thème sombre'"
+        [attr.title]="sombre() ? 'Thème clair' : 'Thème sombre'"
+      >
+        <app-icone [nom]="sombre() ? 'soleil' : 'lune'" [taille]="19" />
+      </button>
+
+      <button
+        type="button"
+        class="entete__bascule"
+        (click)="basculerMenu()"
+        [attr.aria-expanded]="menuOuvert()"
+        aria-controls="navigation-principale"
+      >
+        <span class="visuellement-cache">Afficher le menu</span>
+        <app-icone [nom]="menuOuvert() ? 'croix' : 'menu'" [taille]="22" />
+      </button>
     </div>
-  </nav>
+  </div>
 </header>
 
-@if (message(); as texte) {
-  <div class="annonce" role="status">
-    <p class="annonce__texte">{{ texte }}</p>
-    <button type="button" class="annonce__fermer" (click)="effacerMessage()">
-      <span class="visuellement-cache">Fermer le message</span>
-      <span aria-hidden="true">✕</span>
-    </button>
-  </div>
+@if (menuOuvert()) {
+  <div class="voile" (click)="fermerMenu()" aria-hidden="true"></div>
 }
 
-<main class="contenu">
+<main id="contenu-principal" class="contenu" tabindex="-1">
   <router-outlet />
 </main>
 
 <app-pied-de-page />
+
+@if (message(); as texte) {
+  <div class="annonce" role="status" aria-live="polite">
+    <span class="annonce__icone" aria-hidden="true"><app-icone nom="info" [taille]="18" /></span>
+    <p class="annonce__texte">{{ texte }}</p>
+    <button type="button" class="annonce__fermer" (click)="effacerMessage()">
+      <span class="visuellement-cache">Fermer le message</span>
+      <app-icone nom="croix" [taille]="16" />
+    </button>
+  </div>
+}

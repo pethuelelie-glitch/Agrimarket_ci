@@ -5,6 +5,7 @@ import { CHEMINS, cheminTableauDeBord } from '../../core/navigation';
 import { LIBELLES_ROLE, ROLES_INSCRIPTION, Role, estRole } from '../../core/models';
 import { LONGUEUR_MIN_MOT_DE_PASSE } from '../../core/services/hachage';
 import { AuthService } from '../../core/services/auth.service';
+import { IconeComponent } from '../../shared/icone.component';
 
 type ChampInscription = 'nom' | 'email' | 'motDePasse' | 'role' | 'localisation';
 
@@ -13,90 +14,125 @@ type ChampInscription = 'nom' | 'email' | 'motDePasse' | 'role' | 'localisation'
  */
 @Component({
   selector: 'app-inscription',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, IconeComponent],
   template: `
-    <section class="page-auth">
-      <h1>Créer un compte</h1>
-      <p class="mention-simulation" role="note">
-        Authentification locale simulée, non sécurisée pour la production. N’utilisez pas de mot de
-        passe réel.
-      </p>
-
-      <form [formGroup]="formulaire" (ngSubmit)="soumettre()" novalidate>
-        <div class="champ">
-          <label for="nom">Nom complet</label>
-          <input id="nom" type="text" formControlName="nom" autocomplete="name" />
-          @if (afficherErreur('nom')) {
-            <p class="erreur-champ" role="alert">Le nom est obligatoire (2 caractères minimum).</p>
-          }
+    <section class="page-auth apparition">
+      <aside class="auth-visuel auth-visuel--inscription" aria-hidden="true">
+        <div class="auth-visuel__contenu">
+          <p class="auth-visuel__marque">AgriMarket CI</p>
+          <p class="auth-visuel__titre">Vendez, achetez, livrez : rejoignez le marché.</p>
+          <ul>
+            <li><app-icone nom="pousse" [taille]="18" /> Producteur : publiez vos récoltes</li>
+            <li><app-icone nom="panier" [taille]="18" /> Acheteur : commandez en direct</li>
+            <li><app-icone nom="camion" [taille]="18" /> Livreur : prenez des missions</li>
+          </ul>
         </div>
+      </aside>
 
-        <div class="champ">
-          <label for="email">Adresse e-mail</label>
-          <input id="email" type="email" formControlName="email" autocomplete="username" />
-          @if (erreurChamp('email'); as erreurEmail) {
-            <p class="erreur-champ" role="alert">{{ erreurEmail }}</p>
-          } @else if (afficherErreur('email')) {
-            <p class="erreur-champ" role="alert">Saisissez une adresse e-mail valide.</p>
-          }
-        </div>
+      <div class="auth-colonne">
+        <header class="auth-entete">
+          <h1>Créer un compte</h1>
+          <p>Quelques informations suffisent pour ouvrir votre espace.</p>
+        </header>
+        <p class="mention-simulation" role="note">
+          <app-icone nom="alerte" [taille]="18" />
+          <span>
+            Authentification locale simulée, non sécurisée pour la production. N’utilisez pas de mot
+            de passe réel.
+          </span>
+        </p>
 
-        <div class="champ">
-          <label for="motDePasse">Mot de passe</label>
-          <input
-            id="motDePasse"
-            type="password"
-            formControlName="motDePasse"
-            autocomplete="new-password"
-          />
-          @if (afficherErreur('motDePasse')) {
-            <p class="erreur-champ" role="alert">
-              Le mot de passe doit contenir au moins {{ longueurMin }} caractères.
-            </p>
-          }
-        </div>
-
-        <div class="champ">
-          <label for="role">Rôle</label>
-          <select id="role" formControlName="role">
-            @for (role of rolesInscription; track role) {
-              <option [value]="role">{{ libellesRole[role] }}</option>
+        <form [formGroup]="formulaire" (ngSubmit)="soumettre()" novalidate>
+          <div class="champ">
+            <label for="nom">Nom complet</label>
+            <input id="nom" type="text" formControlName="nom" autocomplete="name" />
+            @if (afficherErreur('nom')) {
+              <p class="erreur-champ" role="alert">
+                Le nom est obligatoire (2 caractères minimum).
+              </p>
             }
-          </select>
-          @if (afficherErreur('role')) {
-            <p class="erreur-champ" role="alert">Choisissez un rôle autorisé.</p>
+          </div>
+
+          <div class="champ">
+            <label for="email">Adresse e-mail</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              autocomplete="username"
+              placeholder="vous@exemple.ci"
+            />
+            @if (erreurChamp('email'); as erreurEmail) {
+              <p class="erreur-champ" role="alert">{{ erreurEmail }}</p>
+            } @else if (afficherErreur('email')) {
+              <p class="erreur-champ" role="alert">Saisissez une adresse e-mail valide.</p>
+            }
+          </div>
+
+          <div class="champ">
+            <label for="motDePasse">Mot de passe</label>
+            <input
+              id="motDePasse"
+              type="password"
+              formControlName="motDePasse"
+              autocomplete="new-password"
+            />
+            @if (afficherErreur('motDePasse')) {
+              <p class="erreur-champ" role="alert">
+                Le mot de passe doit contenir au moins {{ longueurMin }} caractères.
+              </p>
+            }
+          </div>
+
+          <div class="champ-duo">
+            <div class="champ">
+              <label for="role">Je suis</label>
+              <select id="role" formControlName="role">
+                @for (role of rolesInscription; track role) {
+                  <option [value]="role">{{ libellesRole[role] }}</option>
+                }
+              </select>
+              @if (afficherErreur('role')) {
+                <p class="erreur-champ" role="alert">Choisissez un rôle autorisé.</p>
+              }
+            </div>
+
+            <div class="champ">
+              <label for="localisation">Localisation</label>
+              <input
+                id="localisation"
+                type="text"
+                formControlName="localisation"
+                placeholder="Abidjan, Bouaké…"
+              />
+              @if (afficherErreur('localisation')) {
+                <p class="erreur-champ" role="alert">La localisation est obligatoire.</p>
+              }
+            </div>
+          </div>
+
+          <div class="champ">
+            <label for="telephone">Téléphone (optionnel)</label>
+            <input id="telephone" type="tel" formControlName="telephone" autocomplete="tel" />
+          </div>
+
+          @if (messageErreur()) {
+            <p class="erreur-globale" role="alert">{{ messageErreur() }}</p>
           }
-        </div>
 
-        <div class="champ">
-          <label for="localisation">Localisation</label>
-          <input id="localisation" type="text" formControlName="localisation" />
-          @if (afficherErreur('localisation')) {
-            <p class="erreur-champ" role="alert">La localisation est obligatoire.</p>
-          }
-        </div>
+          <button type="submit" class="bouton bouton--grand" [disabled]="enCours()">
+            {{ enCours() ? 'Création…' : 'Créer mon compte' }}
+          </button>
+        </form>
 
-        <div class="champ">
-          <label for="telephone">Téléphone (optionnel)</label>
-          <input id="telephone" type="tel" formControlName="telephone" autocomplete="tel" />
-        </div>
-
-        @if (messageErreur()) {
-          <p class="erreur-globale" role="alert">{{ messageErreur() }}</p>
-        }
-
-        <button type="submit" [disabled]="enCours()">Créer mon compte</button>
-      </form>
-
-      <p>Déjà inscrit ? <a [routerLink]="chemins.connexion">Se connecter</a></p>
-      <p class="lien-aide"><a [routerLink]="chemins.aide">En savoir plus sur les limites</a></p>
+        <p class="auth-bascule">
+          Déjà inscrit ? <a [routerLink]="chemins.connexion">Se connecter</a>
+        </p>
+        <p class="lien-aide"><a [routerLink]="chemins.aide">En savoir plus sur les limites</a></p>
+      </div>
     </section>
   `,
-  styles: [
-    `
-      @import './auth.component.css';
-    `,
-  ],
+  styleUrl: './auth.component.css',
 })
 export class InscriptionComponent {
   private readonly auth = inject(AuthService);

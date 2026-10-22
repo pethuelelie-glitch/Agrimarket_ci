@@ -1,30 +1,195 @@
 .catalogue {
   display: grid;
-  gap: clamp(1.1rem, 2vw, 1.5rem);
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
-.catalogue__entete p {
+.catalogue__entete h1 {
+  margin-bottom: 0.4rem;
+}
+
+.catalogue__entete p:last-child {
   color: var(--texte-doux);
   margin: 0;
-  font-size: clamp(0.98rem, 0.9rem + 0.2vw, 1.05rem);
+  font-size: clamp(1rem, 0.94rem + 0.2vw, 1.08rem);
 }
+
+/* ----------------------------------------------------------------- Filtres */
 
 .filtres {
   display: grid;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
-.filtres__grille {
+.filtres__barre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filtres__recherche {
+  flex: 1 1 18rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline-start: 1rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--bord);
+  box-shadow: var(--ombre-xs);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.filtres__recherche:focus-within {
+  border-color: var(--vert);
+  box-shadow: var(--anneau);
+}
+
+.filtres__recherche app-icone {
+  color: var(--texte-tres-doux);
+}
+
+.filtres__recherche input {
+  flex: 1;
+  min-width: 0;
+  min-height: 3rem;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  font-size: 1rem;
+}
+
+.filtres__recherche input:focus-visible {
+  box-shadow: none;
+}
+
+.filtres__tri {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filtres__tri label {
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: var(--texte-doux);
+  white-space: nowrap;
+}
+
+.filtres__tri select {
+  min-height: 3rem;
+  border-radius: 999px;
+  padding-inline-start: 1rem;
+}
+
+.filtres__bascule {
+  min-height: 3rem;
+}
+
+.filtres__bascule[aria-expanded='true'] {
+  background: var(--vert-pale);
+  border-color: color-mix(in srgb, var(--vert) 40%, var(--bord));
+  color: var(--vert);
+}
+
+.filtres__avances {
+  display: none;
+  gap: 0 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  padding-bottom: 0.25rem;
+}
+
+.filtres__avances--ouverts {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  animation: apparition 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ------------------------------------------------------------------- Puces */
+
+.puces {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.15rem 0.1rem 0.4rem;
+  scrollbar-width: thin;
+}
+
+.puce {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.6rem 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--bord);
+  background: var(--surface);
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition);
+}
+
+.puce:hover {
+  border-color: color-mix(in srgb, var(--vert) 40%, var(--bord));
+  color: var(--titre);
+}
+
+.puce[aria-pressed='true'] {
+  background: var(--primaire);
+  border-color: var(--primaire);
+  color: var(--sur-primaire);
+}
+
+.puce:focus-visible {
+  outline: none;
+  box-shadow: var(--anneau);
+}
+
+.puce__compte {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--texte-doux);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.puce[aria-pressed='true'] .puce__compte {
+  background: rgb(255 255 255 / 0.22);
+  color: inherit;
+}
+
+/* --------------------------------------------------------------- Résultats */
+
+.catalogue__resultats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.25rem;
 }
 
 .catalogue__compte {
   margin: 0;
   color: var(--texte-doux);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+.catalogue__compte strong {
+  color: var(--titre);
 }
 
 .produits {

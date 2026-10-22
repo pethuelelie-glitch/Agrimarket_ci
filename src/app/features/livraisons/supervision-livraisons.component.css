@@ -62,11 +62,11 @@
 .supervision__message {
   margin: 0;
   padding: 0.75rem 1rem;
-  border: 1px solid #e2b93b;
-  border-left: 4px solid #e2b93b;
+  border: 1px solid var(--jaune);
+  border-left: 4px solid var(--jaune);
   border-radius: var(--rayon);
-  background: #fdf6e3;
-  color: #7a5b00;
+  background: var(--jaune-fond);
+  color: var(--jaune-texte);
 }
 
 .supervision__attributions {

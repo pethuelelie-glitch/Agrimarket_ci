@@ -1,48 +1,180 @@
 /*
- * Styles globaux d'AgriMarket CI.
- * Thème sobre « marché agricole ivoirien » : verts doux, sable, typographie moderne.
- * Règle responsive : jamais de défilement horizontal.
+ * Système de design d'AgriMarket CI.
+ *
+ * Direction : « marché ivoirien » — vert forêt (la terre, les cultures), orange
+ * mangue (le soleil, le drapeau), fonds sable chauds. Typographie : Fraunces
+ * pour les titres éditoriaux, Plus Jakarta Sans pour l'interface.
+ *
+ * Les jetons sont redéfinis pour le thème sombre (préférence système ou choix
+ * explicite via l'attribut `data-theme` posé sur <html> par ThemeService).
+ * Règle responsive : jamais de défilement horizontal de la page.
  */
 
-:root {
-  /* Couleurs principales */
-  --vert-fonce: #1b3a1f;
-  --vert: #2e7d32;
-  --vert-clair: #4caf50;
-  --vert-pale: #f1f8f4;
-  --vert-tres-pale: #f8fcf9;
-  --sable: #f7f9f4;
-  --fond: #f9fbf6;
-  --blanc: #ffffff;
+/* ================================================================ Jetons */
 
-  /* Textes & bordures */
-  --texte: #1f2a18;
-  --texte-doux: #4f5d42;
-  --texte-tres-doux: #6b7a59;
-  --bord: #e2e7d9;
-  --bord-doux: #f0f3ea;
+:root {
+  color-scheme: light;
+
+  /* Vert — couleur primaire */
+  --vert-fonce: #0e3b29;
+  --vert: #137a4b;
+  --vert-clair: #1f9d63;
+  --vert-pale: #e7f4ec;
+  --vert-tres-pale: #f3faf5;
+
+  /* Orange mangue — accent */
+  --orange: #d9650b;
+  --orange-vif: #f28c28;
+  --orange-fond: #fff0e0;
+  --orange-texte: #8f3f00;
+
+  /* Fonds et surfaces */
+  --fond: #faf7f1;
+  --sable: #f3ede2;
+  --blanc: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #fbf9f5;
+  --surface-3: #f4f1ea;
+
+  /* Textes et bordures */
+  --texte: #17241c;
+  --texte-doux: #4b5a50;
+  --texte-tres-doux: #6e7b72;
+  --bord: #e4ded2;
+  --bord-doux: #eee9df;
+
+  /* Titres et primaire (distincts pour le thème sombre) */
+  --titre: #0e3b29;
+  --primaire: #137a4b;
+  --primaire-survol: #0e6039;
+  --sur-primaire: #ffffff;
 
   /* États */
-  --rouge: #b3261e;
-  --rouge-fond: #fef2f1;
-  --orange: #ef6c00;
-  --orange-fond: #fff3e6;
-  --jaune-fond: #fff8e1;
+  --rouge: #b42318;
+  --rouge-fond: #fdeceb;
+  --jaune: #b98900;
+  --jaune-fond: #fff6d9;
+  --jaune-texte: #6f4d00;
+  --bleu: #1d5fbf;
+  --bleu-fond: #e8f0fc;
+  --violet: #6941c6;
+  --violet-fond: #f1ecfc;
+  --sarcelle: #0e7a73;
+  --sarcelle-fond: #e2f5f3;
 
   /* Effets */
-  --rayon: 0.875rem;
-  --rayon-xl: 1.25rem;
+  --rayon-sm: 0.5rem;
+  --rayon: 0.75rem;
+  --rayon-xl: 1.125rem;
   --rayon-2xl: 1.5rem;
-  --ombre: 0 1px 2px rgb(27 58 31 / 0.02), 0 4px 10px rgb(27 58 31 / 0.05);
-  --ombre-md: 0 8px 30px rgb(27 58 31 / 0.08);
-  --ombre-lift: 0 10px 40px -12px rgb(27 58 31 / 0.25);
-  --transition: 150ms ease;
-  --transition-lente: 200ms ease;
+  --rayon-3xl: 2rem;
+  --ombre-xs: 0 1px 2px rgb(23 36 28 / 0.06);
+  --ombre: 0 1px 2px rgb(23 36 28 / 0.04), 0 4px 14px -4px rgb(23 36 28 / 0.08);
+  --ombre-md: 0 2px 4px rgb(23 36 28 / 0.04), 0 12px 32px -8px rgb(23 36 28 / 0.14);
+  --ombre-lift: 0 4px 8px rgb(23 36 28 / 0.04), 0 24px 48px -16px rgb(23 36 28 / 0.22);
+  --anneau: 0 0 0 4px color-mix(in srgb, var(--vert-clair) 22%, transparent);
+  --transition: 160ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  --transition-lente: 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Typographie */
+  --police-titre: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --police: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 
   /* Mise en page */
-  --max: 76rem;
-  --gutter: clamp(1rem, 2vw, 1.5rem);
+  --max: 78rem;
+  --gutter: clamp(1rem, 2.4vw, 1.5rem);
 }
+
+/* Thème sombre : jetons partagés par la préférence système et le choix explicite. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --vert-fonce: #cfeedd;
+    --vert: #3ec487;
+    --vert-clair: #5fd9a1;
+    --vert-pale: #16291f;
+    --vert-tres-pale: #111d17;
+    --orange: #f59a45;
+    --orange-vif: #ffad5c;
+    --orange-fond: #3a2412;
+    --orange-texte: #ffc68f;
+    --fond: #0c120e;
+    --sable: #101812;
+    --blanc: #141c17;
+    --surface: #141c17;
+    --surface-2: #18221c;
+    --surface-3: #1d2922;
+    --texte: #e6eee8;
+    --texte-doux: #aab8ae;
+    --texte-tres-doux: #869489;
+    --bord: #29362e;
+    --bord-doux: #212c25;
+    --titre: #eaf5ee;
+    --primaire: #2fa86f;
+    --primaire-survol: #3cc285;
+    --sur-primaire: #06120b;
+    --rouge: #ff8a80;
+    --rouge-fond: #3a1714;
+    --jaune: #f1c84b;
+    --jaune-fond: #33290f;
+    --jaune-texte: #f6d77a;
+    --bleu: #8db8ff;
+    --bleu-fond: #142238;
+    --violet: #c3a9ff;
+    --violet-fond: #231a3a;
+    --sarcelle: #6ed6cc;
+    --sarcelle-fond: #10302d;
+    --ombre-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+    --ombre: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 14px -4px rgb(0 0 0 / 0.45);
+    --ombre-md: 0 2px 4px rgb(0 0 0 / 0.3), 0 12px 32px -8px rgb(0 0 0 / 0.55);
+    --ombre-lift: 0 4px 8px rgb(0 0 0 / 0.3), 0 24px 48px -16px rgb(0 0 0 / 0.7);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --vert-fonce: #cfeedd;
+  --vert: #3ec487;
+  --vert-clair: #5fd9a1;
+  --vert-pale: #16291f;
+  --vert-tres-pale: #111d17;
+  --orange: #f59a45;
+  --orange-vif: #ffad5c;
+  --orange-fond: #3a2412;
+  --orange-texte: #ffc68f;
+  --fond: #0c120e;
+  --sable: #101812;
+  --blanc: #141c17;
+  --surface: #141c17;
+  --surface-2: #18221c;
+  --surface-3: #1d2922;
+  --texte: #e6eee8;
+  --texte-doux: #aab8ae;
+  --texte-tres-doux: #869489;
+  --bord: #29362e;
+  --bord-doux: #212c25;
+  --titre: #eaf5ee;
+  --primaire: #2fa86f;
+  --primaire-survol: #3cc285;
+  --sur-primaire: #06120b;
+  --rouge: #ff8a80;
+  --rouge-fond: #3a1714;
+  --jaune: #f1c84b;
+  --jaune-fond: #33290f;
+  --jaune-texte: #f6d77a;
+  --bleu: #8db8ff;
+  --bleu-fond: #142238;
+  --violet: #c3a9ff;
+  --violet-fond: #231a3a;
+  --sarcelle: #6ed6cc;
+  --sarcelle-fond: #10302d;
+  --ombre-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --ombre: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 14px -4px rgb(0 0 0 / 0.45);
+  --ombre-md: 0 2px 4px rgb(0 0 0 / 0.3), 0 12px 32px -8px rgb(0 0 0 / 0.55);
+  --ombre-lift: 0 4px 8px rgb(0 0 0 / 0.3), 0 24px 48px -16px rgb(0 0 0 / 0.7);
+}
+
+/* ================================================================== Base */
 
 *,
 *::before,
@@ -52,28 +184,25 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   margin: 0;
-  background: radial-gradient(1200px 800px at 50% 0, var(--vert-tres-pale) 0%, var(--fond) 55%, var(--sable) 100%);
+  background: var(--fond);
   color: var(--texte);
-  font-family:
-    'Inter',
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: var(--police);
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.65;
   overflow-x: hidden;
-  font-feature-settings: 'ss02', 'ss01', 'cv05';
+}
+
+::selection {
+  background: color-mix(in srgb, var(--vert-clair) 28%, transparent);
 }
 
 img,
@@ -85,15 +214,18 @@ video {
   display: block;
 }
 
-a {
+/* `:where()` : les liens stylés en bouton gardent la couleur de leur variante. */
+:where(a) {
   color: var(--vert);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.2em;
-  transition: color var(--transition), text-decoration-color var(--transition);
+  transition:
+    color var(--transition),
+    text-decoration-color var(--transition);
 }
 
-a:hover {
-  color: var(--vert-fonce);
+:where(a):hover {
+  color: var(--primaire-survol);
 }
 
 h1,
@@ -101,33 +233,42 @@ h2,
 h3,
 h4 {
   line-height: 1.15;
-  color: var(--vert-fonce);
+  color: var(--titre);
   margin: 0 0 0.75rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1,
+h2 {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-optical-sizing: auto;
 }
 
 h1 {
-  font-size: clamp(1.8rem, 1.2rem + 2.2vw, 2.8rem);
+  font-size: clamp(1.9rem, 1.3rem + 2.2vw, 2.75rem);
   margin-bottom: 1rem;
+  letter-spacing: -0.025em;
 }
 
 h2 {
-  font-size: clamp(1.35rem, 1.05rem + 1.1vw, 1.8rem);
-  margin-bottom: 0.75rem;
+  font-size: clamp(1.35rem, 1.1rem + 1vw, 1.8rem);
 }
 
 h3 {
-  font-size: clamp(1.1rem, 0.95rem + 0.5vw, 1.35rem);
+  font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 p {
   margin: 0 0 0.9rem;
-  color: var(--texte);
+  text-wrap: pretty;
 }
 
 strong {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 small {
@@ -135,71 +276,106 @@ small {
   color: var(--texte-doux);
 }
 
-/* ---------------------------------------------------------------- Boutons */
+hr {
+  border: 0;
+  border-top: 1px solid var(--bord);
+  margin: 1.5rem 0;
+}
 
-.bouton,
-button.bouton,
-input.bouton {
+/* Petit sur-titre en capitales utilisé au-dessus des titres de section. */
+.surtitre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.texte-doux {
+  color: var(--texte-doux);
+}
+
+/* ============================================================== Boutons */
+
+/*
+ * `:where()` garde une spécificité minimale : les variantes (.bouton--discret,
+ * .bouton--danger…) l'emportent toujours sur la base, quel que soit l'élément.
+ */
+:where(.bouton) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.25rem;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.15rem;
   border: 1px solid transparent;
-  border-radius: var(--rayon);
-  background: linear-gradient(180deg, var(--vert-clair) 0%, var(--vert) 100%);
-  color: var(--blanc);
+  border-radius: 999px;
+  background: var(--primaire);
+  color: var(--sur-primaire);
   font: inherit;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: var(--ombre);
-  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), opacity var(--transition);
+  box-shadow:
+    var(--ombre-xs),
+    inset 0 1px 0 rgb(255 255 255 / 0.12);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    opacity var(--transition);
   white-space: nowrap;
 }
 
-.bouton:hover:not(:disabled) {
-  background: linear-gradient(180deg, var(--vert) 0%, var(--vert-fonce) 100%);
+:where(.bouton):hover:not(:disabled) {
+  background: var(--primaire-survol);
+  color: var(--sur-primaire);
   box-shadow: var(--ombre-md);
   transform: translateY(-1px);
 }
 
-.bouton:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: var(--ombre);
+:where(.bouton):active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--ombre-xs);
 }
 
-.bouton:focus-visible,
-button.bouton:focus-visible,
-input.bouton:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--vert-clair) 40%, transparent);
-  outline-offset: 2px;
+:where(.bouton):focus-visible {
+  outline: none;
+  box-shadow: var(--anneau);
 }
 
-.bouton:disabled {
-  opacity: 0.5;
+:where(.bouton):disabled {
+  opacity: 0.45;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.bouton--discret {
-  background: var(--blanc);
+.bouton--discret,
+.bouton--discret:hover:not(:disabled) {
+  background: var(--surface);
   border-color: var(--bord);
   color: var(--texte);
-  box-shadow: none;
 }
 
 .bouton--discret:hover:not(:disabled) {
-  background: var(--vert-pale);
-  box-shadow: var(--ombre);
-  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--vert) 35%, var(--bord));
+  background: var(--vert-tres-pale);
+  color: var(--titre);
 }
 
-.bouton--ghost {
+.bouton--ghost,
+.bouton--ghost:hover:not(:disabled) {
   background: transparent;
   color: var(--texte);
-  border-color: transparent;
   box-shadow: none;
 }
 
@@ -207,15 +383,113 @@ input.bouton:focus-visible {
   background: var(--vert-pale);
 }
 
+.bouton--accent {
+  background: var(--orange-vif);
+  color: #1f1206;
+}
+
+.bouton--accent:hover:not(:disabled) {
+  background: var(--orange);
+  color: #fff;
+}
+
 .bouton--danger {
-  background: linear-gradient(180deg, #d32f2f 0%, var(--rouge) 100%);
+  background: var(--rouge-fond);
+  border-color: color-mix(in srgb, var(--rouge) 30%, transparent);
+  color: var(--rouge);
+  box-shadow: none;
 }
 
 .bouton--danger:hover:not(:disabled) {
-  background: linear-gradient(180deg, var(--rouge) 0%, #8e0000 100%);
+  background: var(--rouge);
+  color: var(--surface);
 }
 
-/* --------------------------------------------------------------- Formulaires */
+.bouton--grand {
+  min-height: 3.25rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.02rem;
+}
+
+.bouton--petit {
+  min-height: 2.15rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.bouton svg {
+  flex: none;
+}
+
+/*
+ * Boutons « nus » des écrans d'administration et des formulaires : un style
+ * cohérent sans imposer de classe. Les composants qui stylent leurs propres
+ * boutons (classe dédiée) ne sont pas concernés.
+ */
+:where(button:not([class]), button.secondaire, button.danger, button.principal) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--primaire);
+  color: var(--sur-primaire);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+:where(button:not([class]), button.principal):hover:not(:disabled) {
+  background: var(--primaire-survol);
+  transform: translateY(-1px);
+  box-shadow: var(--ombre);
+}
+
+:where(button.secondaire) {
+  background: var(--surface);
+  color: var(--texte);
+  border-color: var(--bord);
+}
+
+:where(button.secondaire):hover:not(:disabled) {
+  background: var(--vert-tres-pale);
+  border-color: color-mix(in srgb, var(--vert) 35%, var(--bord));
+  color: var(--titre);
+}
+
+:where(button.danger) {
+  background: var(--rouge-fond);
+  color: var(--rouge);
+  border-color: color-mix(in srgb, var(--rouge) 25%, transparent);
+}
+
+:where(button.danger):hover:not(:disabled) {
+  background: var(--rouge);
+  color: var(--surface);
+}
+
+:where(button:not([class]), button.secondaire, button.danger, button.principal):focus-visible {
+  outline: none;
+  box-shadow: var(--anneau);
+}
+
+:where(button:not([class]), button.secondaire, button.danger, button.principal):disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ========================================================== Formulaires */
 
 form,
 fieldset {
@@ -230,56 +504,81 @@ fieldset {
   margin-bottom: 1rem;
 }
 
-.champ label {
-  font-weight: 600;
+.champ label,
+.champ > span {
+  font-weight: 650;
   font-size: 0.875rem;
-  color: var(--vert-fonce);
+  color: var(--titre);
 }
 
-.champ input,
-.champ select,
-.champ textarea {
-  padding: 0.65rem 0.8rem;
+:where(
+  input:not([type='checkbox'], [type='radio'], [type='range'], [type='submit'], [type='button']),
+  select,
+  textarea
+) {
+  min-height: 2.75rem;
+  padding: 0.6rem 0.85rem;
   border: 1px solid var(--bord);
-  border-radius: calc(var(--rayon) - 2px);
-  background: var(--blanc);
+  border-radius: var(--rayon);
+  background: var(--surface);
   font: inherit;
-  color: inherit;
-  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  font-size: 0.95rem;
+  color: var(--texte);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+  max-width: 100%;
+}
+
+.champ :where(input, select, textarea) {
   width: 100%;
 }
 
-.champ textarea {
+:where(select) {
+  appearance: none;
+  padding-inline-end: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23879489' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  cursor: pointer;
+}
+
+:where(textarea) {
   resize: vertical;
   min-height: 6rem;
   line-height: 1.6;
 }
 
-.champ input::placeholder,
-.champ textarea::placeholder {
+::placeholder {
   color: var(--texte-tres-doux);
+  opacity: 1;
 }
 
-.champ input:hover,
-.champ select:hover,
-.champ textarea:hover {
-  border-color: color-mix(in srgb, var(--vert) 25%, var(--bord));
+:where(input:not([type='submit']), select, textarea):hover:not(:disabled, [readonly]) {
+  border-color: color-mix(in srgb, var(--vert) 30%, var(--bord));
 }
 
-.champ input:focus-visible,
-.champ select:focus-visible,
-.champ textarea:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--vert-clair) 35%, transparent);
-  outline-offset: 1px;
+:where(input, select, textarea):focus-visible {
+  outline: none;
   border-color: var(--vert);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vert-clair) 12%, transparent);
+  box-shadow: var(--anneau);
 }
 
-.champ--erreur input,
-.champ--erreur select,
-.champ--erreur textarea {
+:where(input[readonly], input:disabled, select:disabled, textarea:disabled) {
+  background: var(--surface-3);
+  color: var(--texte-doux);
+}
+
+:where(input[type='checkbox'], input[type='radio']) {
+  accent-color: var(--primaire);
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.champ--erreur :where(input, select, textarea) {
   border-color: var(--rouge);
-  background: var(--rouge-fond);
+  background: color-mix(in srgb, var(--rouge-fond) 60%, var(--surface));
 }
 
 .champ__erreur,
@@ -287,17 +586,17 @@ fieldset {
 .erreur-champ,
 .erreur-globale {
   color: var(--rouge);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   margin: 0;
-  font-weight: 500;
+  font-weight: 550;
 }
 
-/* ------------------------------------------------------------- Dispositions */
+/* ========================================================= Dispositions */
 
 .grille {
   display: grid;
   gap: var(--gutter);
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -305,125 +604,161 @@ fieldset {
 
 .grille--compact {
   gap: 0.875rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
 }
 
 .panneau {
-  background: linear-gradient(180deg, var(--blanc) 0%, color-mix(in srgb, var(--blanc) 98%, var(--vert-pale)) 100%);
+  background: var(--surface);
   border: 1px solid var(--bord-doux);
   border-radius: var(--rayon-xl);
   box-shadow: var(--ombre);
-  padding: clamp(1rem, 2vw, 1.5rem);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  padding: clamp(1rem, 2.2vw, 1.5rem);
 }
 
 .panneau--clair {
-  background: var(--blanc);
+  background: var(--surface);
 }
 
 .panneau--dense {
   padding: 1rem 1.25rem;
 }
 
-/* ----------------------------------------------------------------- Badges */
+/* En-tête de page standard : titre, sous-titre et actions. */
+.entete-page {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
 
-.badge {
-  display: inline-block;
-  padding: 0.15rem 0.6rem;
+.entete-page h1 {
+  margin: 0;
+}
+
+.entete-page p {
+  margin: 0.35rem 0 0;
+  color: var(--texte-doux);
+}
+
+/* =============================================================== Badges */
+
+.badge,
+.badge-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.65rem;
   border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
   background: var(--vert-pale);
-  color: var(--vert-fonce);
+  color: var(--vert);
   white-space: nowrap;
+  width: fit-content;
 }
 
 .badge--alerte {
   background: var(--orange-fond);
-  color: #8a4a00;
-  border-color: color-mix(in srgb, var(--orange) 20%, transparent);
+  color: var(--orange-texte);
 }
 
 .badge--danger {
   background: var(--rouge-fond);
   color: var(--rouge);
-  border-color: color-mix(in srgb, var(--rouge) 15%, transparent);
 }
 
-/* Cartes d'indicateurs des tableaux de bord (Module H). */
+.badge--neutre {
+  background: var(--surface-3);
+  color: var(--texte-doux);
+}
+
+/* Pastille colorée devant chaque statut. */
+.badge-statut::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge-statut[data-statut='EN_ATTENTE'] {
+  background: var(--orange-fond);
+  color: var(--orange-texte);
+}
+
+.badge-statut[data-statut='CONFIRMEE'],
+.badge-statut[data-statut='ASSIGNEE'] {
+  background: var(--bleu-fond);
+  color: var(--bleu);
+}
+
+.badge-statut[data-statut='EN_PREPARATION'],
+.badge-statut[data-statut='EN_COURS'] {
+  background: var(--violet-fond);
+  color: var(--violet);
+}
+
+.badge-statut[data-statut='PRETE'] {
+  background: var(--sarcelle-fond);
+  color: var(--sarcelle);
+}
+
+.badge-statut[data-statut='EN_LIVRAISON'] {
+  background: var(--bleu-fond);
+  color: var(--bleu);
+}
+
+.badge-statut[data-statut='LIVREE'] {
+  background: var(--vert-pale);
+  color: var(--vert);
+}
+
+.badge-statut[data-statut='ANNULEE'],
+.badge-statut[data-statut='ECHEC'] {
+  background: var(--rouge-fond);
+  color: var(--rouge);
+}
+
+/* ============================================ Indicateurs (tableaux de bord) */
+
 .kpi {
   display: grid;
   gap: 0.25rem;
 }
 
 .kpi__valeur {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--vert-fonce);
+  font-family: var(--police-titre);
+  font-size: clamp(1.7rem, 1.4rem + 1vw, 2.1rem);
+  font-weight: 600;
+  color: var(--titre);
   line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .kpi__libelle {
   color: var(--texte-doux);
   font-size: 0.9rem;
+  font-weight: 550;
 }
 
-/* Badges de statut de commande et de livraison (Modules F et G). */
-.badge-statut {
-  display: inline-block;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  white-space: nowrap;
-  background: var(--vert-pale);
-  color: var(--vert-fonce);
-}
-
-.badge-statut[data-statut='EN_ATTENTE'] {
-  background: #fff3e0;
-  color: var(--orange);
-}
-
-.badge-statut[data-statut='CONFIRMEE'],
-.badge-statut[data-statut='ASSIGNEE'] {
-  background: #e3f2fd;
-  color: #1565c0;
-}
-
-.badge-statut[data-statut='EN_PREPARATION'],
-.badge-statut[data-statut='EN_COURS'] {
-  background: #ede7f6;
-  color: #5e35b1;
-}
-
-.badge-statut[data-statut='PRETE'] {
-  background: #e0f2f1;
-  color: #00695c;
-}
-
-.badge-statut[data-statut='EN_LIVRAISON'] {
-  background: #e8eaf6;
-  color: #283593;
-}
-
-.badge-statut[data-statut='LIVREE'] {
-  background: #e8f5e9;
-  color: var(--vert);
-}
-
-.badge-statut[data-statut='ANNULEE'],
-.badge-statut[data-statut='ECHEC'] {
-  background: #ffebee;
-  color: var(--rouge);
-}
-
-/* --------------------------------------------------- Commandes et livraisons */
+/* ============================================== Commandes et livraisons */
 
 .commande-carte {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.commande-carte:hover {
+  border-color: color-mix(in srgb, var(--vert) 25%, var(--bord-doux));
+  box-shadow: var(--ombre-md);
 }
 
 .commande-carte__entete {
@@ -435,43 +770,83 @@ fieldset {
 }
 
 .commande-carte__reference {
-  font-weight: 700;
-  color: var(--vert-fonce);
+  font-weight: 750;
+  color: var(--titre);
   text-decoration: none;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
 }
 
 .commande-carte__reference:hover {
+  color: var(--vert);
   text-decoration: underline;
 }
 
 .commande-carte__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.4rem 1rem;
   margin: 0;
   color: var(--texte-doux);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .commande-carte__montant {
   margin: 0;
-  font-weight: 700;
+  font-weight: 750;
+  font-size: 1.05rem;
+  color: var(--titre);
+  font-variant-numeric: tabular-nums;
 }
 
-/* ------------------------------------------------------------------ Tables */
+/* =============================================================== Tables */
 
-.tableau {
+.tableau,
+table.liste {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.92rem;
 }
 
-.tableau th,
-.tableau td {
-  border-bottom: 1px solid var(--bord);
-  padding: 0.6rem 0.5rem;
+:is(.tableau, table.liste) th {
+  padding: 0.7rem 0.75rem;
   text-align: left;
-  vertical-align: top;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texte-tres-doux);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--bord);
+  white-space: nowrap;
+}
+
+:is(.tableau, table.liste) th:first-child {
+  border-top-left-radius: var(--rayon);
+}
+
+:is(.tableau, table.liste) th:last-child {
+  border-top-right-radius: var(--rayon);
+}
+
+:is(.tableau, table.liste) td {
+  padding: 0.8rem 0.75rem;
+  border-bottom: 1px solid var(--bord-doux);
+  text-align: left;
+  vertical-align: middle;
+}
+
+:is(.tableau, table.liste) tbody tr {
+  transition: background var(--transition);
+}
+
+:is(.tableau, table.liste) tbody tr:hover {
+  background: var(--vert-tres-pale);
+}
+
+:is(.tableau, table.liste) tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 /* Sur mobile, la table défile dans son conteneur, pas la page. */
@@ -480,9 +855,14 @@ fieldset {
   max-width: 100%;
 }
 
-/* ------------------------------------------------------------- Utilitaires */
+.tableau-conteneur.panneau {
+  padding: 0.35rem;
+}
 
-.visuellement-cache {
+/* ============================================================ Utilitaires */
+
+.visuellement-cache,
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -494,15 +874,42 @@ fieldset {
 }
 
 :focus-visible {
-  outline: 3px solid var(--vert-clair);
+  outline: 3px solid color-mix(in srgb, var(--vert-clair) 55%, transparent);
   outline-offset: 2px;
 }
 
+/* Apparition douce des pages (désactivée si l'utilisateur réduit les animations). */
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.apparition {
+  animation: apparition 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Transitions de vue entre les routes (navigateurs compatibles). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
 }

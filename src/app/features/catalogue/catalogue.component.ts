@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   CRITERES_PAR_DEFAUT,
   CriteresCatalogue,
@@ -9,10 +10,17 @@ import {
   appliquerCriteres,
   filtresActifs,
 } from '../../core/catalogue/filtres';
-import { CATEGORIES, Categorie, LIBELLES_CATEGORIE, Produit } from '../../core/models';
+import {
+  CATEGORIES,
+  Categorie,
+  LIBELLES_CATEGORIE,
+  Produit,
+  estCategorie,
+} from '../../core/models';
 import { AjoutPanierService } from '../../core/panier/ajout-panier.service';
 import { PersistenceService } from '../../core/persistence/persistence.service';
 import { EtatVideComponent } from '../../shared/etat-vide.component';
+import { IconeComponent } from '../../shared/icone.component';
 import { ProduitCarteComponent } from '../../shared/produit-carte.component';
 
 /**
@@ -20,10 +28,12 @@ import { ProduitCarteComponent } from '../../shared/produit-carte.component';
  *
  * Le catalogue public n'expose que les produits **actifs** ; la recherche, les
  * filtres combinables et le tri sont appliqués en mémoire sur ce sous-ensemble.
+ * Les paramètres d'URL `q` (recherche) et `categorie` pré-remplissent les filtres
+ * (liens de l'accueil et du pied de page).
  */
 @Component({
   selector: 'app-catalogue',
-  imports: [EtatVideComponent, ProduitCarteComponent],
+  imports: [EtatVideComponent, IconeComponent, ProduitCarteComponent],
   templateUrl: './catalogue.component.html',
   styleUrl: './catalogue.component.css',
 })
@@ -64,6 +74,37 @@ export class CatalogueComponent {
   readonly catalogueVide = computed(() => this.base().length === 0);
   readonly aucunResultat = computed(() => !this.catalogueVide() && this.resultats().length === 0);
   readonly aDesFiltresActifs = computed(() => filtresActifs(this.criteres()));
+
+  readonly comptesTotal = computed(() => this.base().length);
+
+  /** Nombre de produits actifs par catégorie, affiché sur les puces. */
+  readonly comptesParCategorie = computed(() => {
+    const comptes = new Map<Categorie, number>();
+    for (const produit of this.base()) {
+      comptes.set(produit.categorie, (comptes.get(produit.categorie) ?? 0) + 1);
+    }
+    return comptes;
+  });
+
+  /** Panneau des filtres avancés (prix, disponibilité, localisation) déplié. */
+  readonly filtresOuverts = signal(false);
+
+  constructor() {
+    const parametres = inject(ActivatedRoute).snapshot.queryParamMap;
+    const recherche = parametres.get('q');
+    const categorie = parametres.get('categorie');
+    if (recherche) {
+      this.recherche.set(recherche);
+    }
+    if (estCategorie(categorie)) {
+      this.categorie.set(categorie);
+    }
+  }
+
+  /** Sélectionne un rayon depuis les puces (« Tous » pour lever le filtre). */
+  choisirCategorie(categorie: Categorie | 'TOUTES'): void {
+    this.categorie.set(categorie);
+  }
 
   /** Convertit la saisie d'un champ numérique en nombre, ou `null` si vide. */
   nombreOuNull(evenement: Event): number | null {

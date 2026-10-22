@@ -30,19 +30,18 @@ import { RouterLink } from '@angular/router';
   styles: [
     `
       .etat-vide {
-        border: 1px dashed color-mix(in srgb, var(--vert) 25%, var(--bord));
-        border-radius: var(--rayon-xl);
-        background: linear-gradient(180deg, color-mix(in srgb, var(--blanc) 60%, var(--vert-pale)) 0%, var(--blanc) 100%);
-        padding: clamp(1.25rem, 2vw, 1.75rem);
+        border: 1.5px dashed color-mix(in srgb, var(--vert) 30%, var(--bord));
+        border-radius: var(--rayon-2xl);
+        background: var(--surface);
+        padding: clamp(1.5rem, 3vw, 2.25rem);
         display: grid;
         gap: 0.6rem;
         justify-items: start;
-        box-shadow: var(--ombre);
       }
       .etat-vide h3 {
         margin: 0;
-        font-size: 1.15rem;
-        color: var(--vert-fonce);
+        font-size: 1.2rem;
+        color: var(--titre);
       }
       .etat-vide p {
         margin: 0;
@@ -54,23 +53,32 @@ import { RouterLink } from '@angular/router';
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        margin-top: 0.4rem;
-        padding: 0.65rem 1.15rem;
+        margin-top: 0.5rem;
+        min-height: 2.75rem;
+        padding: 0.6rem 1.2rem;
         border: 1px solid transparent;
-        border-radius: var(--rayon);
-        background: linear-gradient(180deg, var(--vert-clair) 0%, var(--vert) 100%);
-        color: var(--blanc);
+        border-radius: 999px;
+        background: var(--primaire);
+        color: var(--sur-primaire);
         font: inherit;
-        font-weight: 600;
+        font-weight: 650;
         text-decoration: none;
         cursor: pointer;
-        box-shadow: var(--ombre);
-        transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+        box-shadow: var(--ombre-xs);
+        transition:
+          transform var(--transition),
+          box-shadow var(--transition),
+          background var(--transition);
       }
       .etat-vide__action:hover {
-        background: linear-gradient(180deg, var(--vert) 0%, var(--vert-fonce) 100%);
+        background: var(--primaire-survol);
+        color: var(--sur-primaire);
         box-shadow: var(--ombre-md);
         transform: translateY(-1px);
+      }
+      .etat-vide__action:focus-visible {
+        outline: none;
+        box-shadow: var(--anneau);
       }
     `,
   ],

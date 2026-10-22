@@ -34,42 +34,46 @@ import { AdminService } from '../../core/services/admin.service';
       @if (resultats().length === 0) {
         <p class="vide" role="status">Aucun compte ne correspond à cette recherche.</p>
       } @else {
-        <table class="liste">
-          <caption class="sr-only">
-            Liste des comptes
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Nom</th>
-              <th scope="col">E-mail</th>
-              <th scope="col">Rôle</th>
-              <th scope="col">Statut</th>
-              <th scope="col">Créé le</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (compte of resultats(); track compte.id) {
-              <tr [class.inactif]="!compte.actif">
-                <td>{{ compte.nom }}</td>
-                <td>{{ compte.email }}</td>
-                <td>{{ libelleRole(compte.role) }}</td>
-                <td>
-                  <span
-                    class="badge-statut"
-                    [attr.data-statut]="compte.actif ? 'LIVREE' : 'ANNULEE'"
-                  >
-                    {{ compte.actif ? 'Actif' : 'Désactivé' }}
-                  </span>
-                </td>
-                <td>{{ formaterDate(compte.dateCreation) }}</td>
-                <td>
-                  <button type="button" class="secondaire" (click)="ouvrir(compte)">Détail</button>
-                </td>
+        <div class="tableau-conteneur panneau">
+          <table class="liste">
+            <caption class="sr-only">
+              Liste des comptes
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Rôle</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Créé le</th>
+                <th scope="col">Action</th>
               </tr>
-            }
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              @for (compte of resultats(); track compte.id) {
+                <tr [class.inactif]="!compte.actif">
+                  <td>{{ compte.nom }}</td>
+                  <td>{{ compte.email }}</td>
+                  <td>{{ libelleRole(compte.role) }}</td>
+                  <td>
+                    <span
+                      class="badge-statut"
+                      [attr.data-statut]="compte.actif ? 'LIVREE' : 'ANNULEE'"
+                    >
+                      {{ compte.actif ? 'Actif' : 'Désactivé' }}
+                    </span>
+                  </td>
+                  <td>{{ formaterDate(compte.dateCreation) }}</td>
+                  <td>
+                    <button type="button" class="secondaire" (click)="ouvrir(compte)">
+                      Détail
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       }
 
       @if (selection(); as compte) {
@@ -154,40 +158,12 @@ import { AdminService } from '../../core/services/admin.service';
         display: grid;
         gap: 1rem;
       }
-      h1 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: var(--vert-fonce);
-      }
       .champ {
         display: grid;
         gap: 0.25rem;
       }
-      input,
-      select {
-        padding: 0.5rem;
-        border: 1px solid #b9c2ae;
-        border-radius: 0.4rem;
-        font: inherit;
-        max-width: 32rem;
-      }
-      input[readonly] {
-        background: #f2f4ef;
-        color: var(--texte-doux);
-      }
-      .liste {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .liste th,
-      .liste td {
-        text-align: left;
-        padding: 0.5rem;
-        border-bottom: 1px solid #e2e7db;
-        font-size: 0.92rem;
-      }
       .inactif {
-        background: #faf3f2;
+        background: var(--rouge-fond);
       }
       .detail {
         display: grid;
@@ -219,18 +195,6 @@ import { AdminService } from '../../core/services/admin.service';
       .vide {
         margin: 0;
         color: var(--texte-doux);
-      }
-      .erreur-champ {
-        margin: 0;
-        color: #b3261e;
-        font-size: 0.88rem;
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
       }
     `,
   ],

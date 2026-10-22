@@ -1,48 +1,91 @@
 @if (produit(); as article) {
-  <article class="fiche">
+  <nav class="fil" aria-label="Fil d'Ariane">
+    <a class="fil__retour" [routerLink]="chemins.catalogue">
+      <app-icone nom="retour" [taille]="16" /> Retour au catalogue
+    </a>
+    <span aria-hidden="true">/</span>
+    <span>{{ libelleCategorie() }}</span>
+  </nav>
+
+  <article class="fiche apparition">
     <div class="fiche__media">
       <img [src]="imageAffichee()" [alt]="article.nom" (error)="basculerSurSecours()" />
+      @if (!article.actif) {
+        <span class="fiche__ruban badge badge--danger">Produit inactif</span>
+      }
     </div>
 
     <div class="fiche__corps">
-      <a class="fiche__retour" [routerLink]="chemins.catalogue">← Retour au catalogue</a>
-
       <span class="badge">{{ libelleCategorie() }}</span>
       <h1>{{ article.nom }}</h1>
       <p class="fiche__description">{{ article.description }}</p>
 
-      <p class="fiche__prix">
-        {{ article.prix | montantFcfa }}<span class="fiche__unite"> / {{ libelleUnite() }}</span>
-      </p>
-
-      @if (!article.actif) {
-        <p class="badge badge--danger">Produit inactif</p>
-      }
+      <div class="fiche__achat">
+        <p class="fiche__prix">
+          {{ article.prix | montantFcfa }}<span class="fiche__unite"> / {{ libelleUnite() }}</span>
+        </p>
+        <p class="fiche__dispo" [class.fiche__dispo--vide]="!enStock()">
+          <span class="fiche__point" aria-hidden="true"></span>
+          {{ enStock() ? 'En stock' : 'Épuisé' }}
+        </p>
+        <div class="fiche__action">
+          <app-bouton-ajout-panier [produit]="article" (ajouter)="ajouterAuPanier()" />
+        </div>
+      </div>
 
       <dl class="fiche__infos">
         <div>
-          <dt>Quantité disponible</dt>
+          <dt><app-icone nom="stock" [taille]="16" /> Quantité disponible</dt>
           <dd>{{ article.quantiteDisponible }} {{ libelleUnite() }}</dd>
         </div>
         <div>
-          <dt>Localisation</dt>
+          <dt><app-icone nom="epingle" [taille]="16" /> Localisation</dt>
           <dd>{{ article.localisation }}</dd>
         </div>
         <div>
-          <dt>Mise en ligne</dt>
+          <dt><app-icone nom="calendrier" [taille]="16" /> Mise en ligne</dt>
           <dd>{{ dateMiseEnLigne() }}</dd>
         </div>
         <div>
-          <dt>Producteur</dt>
+          <dt><app-icone nom="utilisateur" [taille]="16" /> Producteur</dt>
           <dd>{{ producteur()?.nom ?? 'Producteur inconnu' }}</dd>
         </div>
       </dl>
 
-      <div class="fiche__action">
-        <app-bouton-ajout-panier [produit]="article" (ajouter)="ajouterAuPanier()" />
-      </div>
+      @if (producteur(); as vendeur) {
+        <aside class="producteur" aria-label="Producteur">
+          <span class="producteur__avatar" aria-hidden="true">{{ initialesProducteur() }}</span>
+          <div>
+            <p class="producteur__nom">{{ vendeur.nom }}</p>
+            <p class="producteur__lieu">Producteur · {{ vendeur.localisation }}</p>
+          </div>
+          <span class="producteur__verifie" title="Compte producteur">
+            <app-icone nom="bouclier" [taille]="20" />
+          </span>
+        </aside>
+      }
     </div>
   </article>
+
+  @if (autresProduits().length > 0) {
+    <section class="autres" aria-labelledby="titre-autres">
+      <h2 id="titre-autres">Du même producteur</h2>
+      <ul>
+        @for (autre of autresProduits(); track autre.id) {
+          <li>
+            <a [routerLink]="cheminDe(autre)">
+              <img [src]="autre.imageUrl" [alt]="autre.nom" loading="lazy" />
+              <span>
+                <strong>{{ autre.nom }}</strong>
+                <span>{{ autre.prix | montantFcfa }}</span>
+              </span>
+              <app-icone nom="fleche" [taille]="18" />
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+  }
 } @else {
   <app-etat-vide
     titre="Produit introuvable"

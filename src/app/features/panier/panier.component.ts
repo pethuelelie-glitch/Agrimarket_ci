@@ -1,7 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LIBELLES_UNITE } from '../../core/models';
+import { IMAGE_SECOURS } from '../../core/data/seed';
 import { CHEMINS } from '../../core/navigation';
+import { PersistenceService } from '../../core/persistence/persistence.service';
 import { GroupeProducteur, LignePanier } from '../../core/panier/resume';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
@@ -34,6 +36,7 @@ export class PanierComponent {
   private readonly auth = inject(AuthService);
   private readonly notifications = inject(NotificationsService);
   private readonly router = inject(Router);
+  private readonly persistence = inject(PersistenceService);
 
   readonly resume = this.cart.resume;
   readonly problemes = this.cart.problemes;
@@ -45,6 +48,12 @@ export class PanierComponent {
   constructor() {
     // Répare un éventuel panier local illisible (task 6.6).
     this.cart.assainirPanier();
+  }
+
+  /** Vignette d'un article (image de secours si le produit a disparu). */
+  imageDe(produitId: string): string {
+    const produit = this.persistence.etat().products.find((p) => p.id === produitId);
+    return produit?.imageUrl || IMAGE_SECOURS;
   }
 
   /** Vrai si le panier ne contient aucun article. */

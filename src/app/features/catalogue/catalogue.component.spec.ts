@@ -1,6 +1,6 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
 import { configurerTestBedAmorce } from '../../testing/environnement';
 import { CatalogueComponent } from './catalogue.component';
 
@@ -138,5 +138,52 @@ describe('CatalogueComponent (tasks 5.5 / 5.6)', () => {
     fixture.detectChanges();
 
     expect(cartes(fixture)).toBe(7);
+  });
+
+  describe('paramètres d’URL et rayons', () => {
+    async function preparerAvec(parametres: Record<string, string>) {
+      await configurerTestBedAmorce({
+        imports: [CatalogueComponent],
+        providers: [
+          provideRouter(ROUTES_TEST),
+          {
+            provide: ActivatedRoute,
+            useValue: { snapshot: { queryParamMap: convertToParamMap(parametres) } },
+          },
+        ],
+      });
+      return rendre();
+    }
+
+    it('pré-remplit la recherche depuis le paramètre q', async () => {
+      const fixture = await preparerAvec({ q: 'riz' });
+
+      expect(fixture.componentInstance.recherche()).toBe('riz');
+      expect(cartes(fixture)).toBe(1);
+    });
+
+    it('pré-sélectionne une catégorie valide et ignore une valeur inconnue', async () => {
+      const fixture = await preparerAvec({ categorie: 'LEGUMES' });
+      expect(fixture.componentInstance.categorie()).toBe('LEGUMES');
+      expect(cartes(fixture)).toBe(2);
+
+      TestBed.resetTestingModule();
+      const autre = await preparerAvec({ categorie: 'INCONNUE' });
+      expect(autre.componentInstance.categorie()).toBe('TOUTES');
+    });
+
+    it('filtre par rayon depuis les puces', async () => {
+      const fixture = await preparer();
+      const puce = Array.from(racine(fixture).querySelectorAll<HTMLButtonElement>('.puce')).find(
+        (bouton) => bouton.textContent?.includes('Fruits'),
+      );
+
+      puce?.click();
+      fixture.detectChanges();
+
+      expect(puce?.getAttribute('aria-pressed')).toBe('true');
+      expect(cartes(fixture)).toBe(1);
+      expect(texte(fixture)).toContain('Mangues Kent');
+    });
   });
 });

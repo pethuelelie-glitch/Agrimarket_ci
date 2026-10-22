@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { IconeComponent } from '../../shared/icone.component';
 import { CHEMINS } from '../../core/navigation';
 import { AdminService } from '../../core/services/admin.service';
 
@@ -10,29 +11,40 @@ import { AdminService } from '../../core/services/admin.service';
  */
 @Component({
   selector: 'app-administration',
-  imports: [RouterLink],
+  imports: [RouterLink, IconeComponent],
   template: `
     <section class="admin-page">
-      <h1>Administration</h1>
+      <header class="entete-page">
+        <div>
+          <p class="surtitre">Espace administrateur</p>
+          <h1>Administration</h1>
+          <p>Supervisez les comptes, le catalogue, les commandes et les livraisons.</p>
+        </div>
+      </header>
 
       <nav class="liens" aria-label="Écrans d’administration">
         <a class="carte" [routerLink]="chemins.tableauDeBord + '/administrateur'">
+          <span class="carte__icone"><app-icone nom="graphique" [taille]="22" /></span>
           <strong>Tableau de bord global</strong>
           <span>Indicateurs de la plateforme</span>
         </a>
         <a class="carte" [routerLink]="chemins.adminUtilisateurs">
+          <span class="carte__icone"><app-icone nom="utilisateurs" [taille]="22" /></span>
           <strong>Comptes</strong>
           <span>Consulter et modérer les utilisateurs</span>
         </a>
         <a class="carte" [routerLink]="chemins.adminProduits">
+          <span class="carte__icone"><app-icone nom="pousse" [taille]="22" /></span>
           <strong>Produits</strong>
           <span>Modérer les produits du catalogue</span>
         </a>
         <a class="carte" [routerLink]="chemins.adminCommandes">
+          <span class="carte__icone"><app-icone nom="colis" [taille]="22" /></span>
           <strong>Commandes</strong>
           <span>Superviser et annuler les commandes</span>
         </a>
         <a class="carte" [routerLink]="chemins.adminLivraisons">
+          <span class="carte__icone"><app-icone nom="camion" [taille]="22" /></span>
           <strong>Livraisons</strong>
           <span>Créer et attribuer les livraisons</span>
         </a>
@@ -50,7 +62,9 @@ import { AdminService } from '../../core/services/admin.service';
         }
 
         @if (!confirmationOuverte()) {
-          <button type="button" (click)="ouvrirConfirmation()">Réinitialiser les données</button>
+          <button type="button" class="danger" (click)="ouvrirConfirmation()">
+            Réinitialiser les données
+          </button>
         } @else {
           <div
             class="confirmation"
@@ -77,11 +91,6 @@ import { AdminService } from '../../core/services/admin.service';
         display: grid;
         gap: 1.5rem;
       }
-      h1 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: var(--vert-fonce);
-      }
       .liens {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
@@ -90,15 +99,33 @@ import { AdminService } from '../../core/services/admin.service';
       .carte {
         display: grid;
         gap: 0.25rem;
-        padding: 1rem;
-        border: 1px solid #e2e7db;
-        border-radius: 0.6rem;
-        background: #fff;
+        padding: 1.25rem;
+        border: 1px solid var(--bord-doux);
+        border-radius: var(--rayon-xl);
+        background: var(--surface);
+        box-shadow: var(--ombre-xs);
         text-decoration: none;
         color: inherit;
+        transition:
+          transform var(--transition-lente),
+          box-shadow var(--transition-lente),
+          border-color var(--transition);
       }
       .carte:hover {
-        border-color: var(--vert);
+        color: inherit;
+        transform: translateY(-3px);
+        box-shadow: var(--ombre-md);
+        border-color: color-mix(in srgb, var(--vert) 35%, var(--bord-doux));
+      }
+      .carte__icone {
+        display: grid;
+        place-items: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-bottom: 0.6rem;
+        border-radius: var(--rayon);
+        background: var(--vert-pale);
+        color: var(--vert);
       }
       .carte strong {
         color: var(--vert-fonce);
@@ -112,10 +139,12 @@ import { AdminService } from '../../core/services/admin.service';
         gap: 0.6rem;
         max-width: 40rem;
       }
+      .reinitialisation {
+        border-color: color-mix(in srgb, var(--rouge) 25%, var(--bord-doux));
+      }
       .reinitialisation h2 {
         margin: 0;
-        font-size: 1.1rem;
-        color: var(--vert-fonce);
+        font-size: 1.25rem;
       }
       .reinitialisation p {
         margin: 0;
@@ -136,18 +165,6 @@ import { AdminService } from '../../core/services/admin.service';
       }
       button {
         justify-self: start;
-      }
-      button.danger {
-        background: #b3261e;
-        color: #fff;
-        border: none;
-        padding: 0.5rem 0.9rem;
-        border-radius: 0.4rem;
-        cursor: pointer;
-      }
-      button:disabled {
-        opacity: 0.6;
-        cursor: progress;
       }
     `,
   ],

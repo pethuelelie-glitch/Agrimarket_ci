@@ -1,5 +1,5 @@
 import { PersistenceService } from '../persistence/persistence.service';
-import { creerEtatDemo } from './seed';
+import { creerEtatDemo, illustrationAMigrer } from './seed';
 
 export interface OptionsAmorcage {
   /** Force la reconstruction des données même si elles sont déjà initialisées. */
@@ -24,10 +24,36 @@ export async function amorcerDonneesDemo(
   const { forcer = false, maintenant = new Date() } = options;
 
   if (!forcer && persistence.etat().meta.initialized) {
+    migrerIllustrationsDemo(persistence);
     return false;
   }
 
   const etat = await creerEtatDemo(maintenant);
   persistence.remplacer(etat);
   return true;
+}
+
+/**
+ * Remplace, dans des données déjà amorcées, les illustrations historiques des
+ * produits de démonstration (images distantes) par les images locales.
+ * N'écrit rien — et ne change donc pas la révision — s'il n'y a rien à migrer.
+ *
+ * @returns le nombre de produits mis à jour.
+ */
+export function migrerIllustrationsDemo(persistence: PersistenceService): number {
+  const aMigrer = persistence
+    .etat()
+    .products.filter((produit) => illustrationAMigrer(produit) !== null);
+  if (aMigrer.length === 0) {
+    return 0;
+  }
+  persistence.transaction((brouillon) => {
+    for (const produit of brouillon.products) {
+      const nouvelle = illustrationAMigrer(produit);
+      if (nouvelle) {
+        produit.imageUrl = nouvelle;
+      }
+    }
+  });
+  return aMigrer.length;
 }

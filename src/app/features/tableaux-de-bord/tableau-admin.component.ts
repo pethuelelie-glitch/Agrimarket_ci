@@ -3,6 +3,7 @@ import { LIBELLES_STATUT_COMMANDE, STATUTS_COMMANDE } from '../../core/models';
 import { CHEMINS } from '../../core/navigation';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { CarteIndicateurComponent } from '../../shared/carte-indicateur.component';
+import { EnteteTableauComponent } from '../../shared/entete-tableau.component';
 import { EtatVideComponent } from '../../shared/etat-vide.component';
 import {
   ElementBarre,
@@ -12,10 +13,15 @@ import {
 /** Tableau de bord administrateur (task 9.5). */
 @Component({
   selector: 'app-tableau-admin',
-  imports: [CarteIndicateurComponent, EtatVideComponent, RepartitionBarresComponent],
+  imports: [
+    CarteIndicateurComponent,
+    EnteteTableauComponent,
+    EtatVideComponent,
+    RepartitionBarresComponent,
+  ],
   template: `
-    <section class="tableau">
-      <h1>Tableau de bord — administrateur</h1>
+    <section class="tdb apparition">
+      <app-entete-tableau titre="Administration du marché" />
 
       @if (estVide()) {
         <app-etat-vide
@@ -27,47 +33,78 @@ import {
       }
 
       <div class="grille">
-        <app-carte-indicateur libelle="Utilisateurs" [valeur]="indicateurs().utilisateurs" />
-        <app-carte-indicateur libelle="Producteurs" [valeur]="indicateurs().producteurs" />
-        <app-carte-indicateur libelle="Produits actifs" [valeur]="indicateurs().produitsActifs" />
-        <app-carte-indicateur libelle="Commandes" [valeur]="indicateurs().commandesTotal" />
+        <app-carte-indicateur
+          libelle="Utilisateurs"
+          icone="utilisateurs"
+          ton="vert"
+          [valeur]="indicateurs().utilisateurs"
+        />
+        <app-carte-indicateur
+          libelle="Producteurs"
+          icone="pousse"
+          ton="orange"
+          [valeur]="indicateurs().producteurs"
+        />
+        <app-carte-indicateur
+          libelle="Produits actifs"
+          icone="boutique"
+          ton="sarcelle"
+          [valeur]="indicateurs().produitsActifs"
+        />
+        <app-carte-indicateur
+          libelle="Commandes"
+          icone="colis"
+          ton="bleu"
+          [valeur]="indicateurs().commandesTotal"
+        />
         <app-carte-indicateur
           libelle="Livraisons en cours"
+          icone="camion"
+          ton="violet"
           [valeur]="indicateurs().livraisonsEnCours"
         />
         <app-carte-indicateur
           libelle="Livraisons terminées"
+          icone="coche"
+          ton="vert"
           [valeur]="indicateurs().livraisonsTerminees"
         />
       </div>
 
-      <section class="panneau">
-        <app-repartition-barres
-          titre="Commandes par statut"
-          [elements]="repartitionStatuts()"
-          messageVide="Aucune commande enregistrée."
-        />
-      </section>
+      <div class="graphiques">
+        <section class="panneau">
+          <app-repartition-barres
+            titre="Commandes par statut"
+            [elements]="repartitionStatuts()"
+            messageVide="Aucune commande enregistrée."
+          />
+        </section>
 
-      <section class="panneau">
-        <app-repartition-barres
-          titre="Évolution des commandes (14 derniers jours)"
-          [elements]="evolution()"
-          messageVide="Aucune commande sur la période."
-        />
-      </section>
+        <section class="panneau">
+          <app-repartition-barres
+            titre="Évolution des commandes (14 derniers jours)"
+            [elements]="evolution()"
+            mode="colonnes"
+            messageVide="Aucune commande sur la période."
+          />
+        </section>
+      </div>
     </section>
   `,
   styles: [
     `
-      .tableau {
+      .tdb {
         display: grid;
         gap: clamp(1.25rem, 2.5vw, 1.75rem);
       }
-      .tableau h1 {
-        margin: 0;
-        font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.7rem);
-        color: var(--vert-fonce);
+      .grille {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 10.5rem), 1fr));
+      }
+      .graphiques {
+        display: grid;
+        gap: clamp(1.25rem, 2.5vw, 1.75rem);
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+        align-items: start;
       }
     `,
   ],
@@ -87,6 +124,7 @@ export class TableauAdminComponent {
     STATUTS_COMMANDE.map((statut) => ({
       libelle: LIBELLES_STATUT_COMMANDE[statut],
       valeur: this.indicateurs().commandesParStatut[statut],
+      statut,
     })),
   );
 

@@ -1,6 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { estDisponible, messageIndisponibilite } from '../core/catalogue/disponibilite';
 import { Produit } from '../core/models';
+import { IconeComponent } from './icone.component';
 
 /**
  * Bouton « Ajouter au panier » partagé (task 5.9).
@@ -11,6 +12,7 @@ import { Produit } from '../core/models';
  */
 @Component({
   selector: 'app-bouton-ajout-panier',
+  imports: [IconeComponent],
   template: `
     <button
       type="button"
@@ -18,6 +20,7 @@ import { Produit } from '../core/models';
       [disabled]="!disponible()"
       (click)="ajouter.emit()"
     >
+      <app-icone nom="panier" [taille]="18" />
       Ajouter au panier
     </button>
     @if (message(); as texte) {
@@ -32,13 +35,18 @@ import { Produit } from '../core/models';
       }
       .bouton--panier {
         width: 100%;
-        padding-block: 0.7rem;
+      }
+      .bouton--panier:disabled {
+        background: var(--surface-3);
+        color: var(--texte-tres-doux);
+        opacity: 1;
       }
       .rupture {
         margin: 0;
         color: var(--rouge);
-        font-size: 0.875rem;
-        font-weight: 500;
+        font-size: 0.82rem;
+        font-weight: 550;
+        text-align: center;
       }
     `,
   ],

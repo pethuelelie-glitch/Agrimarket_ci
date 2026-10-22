@@ -1,0 +1,43 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+
+/**
+ * Emblème d'AgriMarket CI : une pousse sous un soleil orange, sur fond vert.
+ * Même dessin que `public/favicon.svg`.
+ */
+@Component({
+  selector: 'app-logo',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 64 64"
+      [attr.width]="taille()"
+      [attr.height]="taille()"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id="logo-degrade" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1f9d63" />
+          <stop offset="1" stop-color="#0e3b29" />
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="16" fill="url(#logo-degrade)" />
+      <circle cx="44" cy="19" r="7" fill="#f28c28" />
+      <path d="M32 52V31" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+      <path d="M32 36c0-9-6-15-16-15 0 9 6 15 16 15Z" fill="#fff" />
+      <path d="M32 42c0-7 5-12 13-12 0 7-5 12-13 12Z" fill="#cfeedd" />
+    </svg>
+  `,
+  styles: [
+    `
+      :host {
+        display: inline-flex;
+        line-height: 0;
+      }
+    `,
+  ],
+})
+export class LogoComponent {
+  readonly taille = input(36);
+}

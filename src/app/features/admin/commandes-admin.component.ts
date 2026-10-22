@@ -64,49 +64,51 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       @if (commandesFiltrees().length === 0) {
         <p class="vide" role="status">Aucune commande ne correspond à ces filtres.</p>
       } @else {
-        <table class="liste">
-          <caption class="sr-only">
-            Toutes les commandes
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Référence</th>
-              <th scope="col">Acheteur</th>
-              <th scope="col">Producteur</th>
-              <th scope="col">Total</th>
-              <th scope="col">Statut</th>
-              <th scope="col">Livraison</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (commande of commandesFiltrees(); track commande.id) {
+        <div class="tableau-conteneur panneau">
+          <table class="liste">
+            <caption class="sr-only">
+              Toutes les commandes
+            </caption>
+            <thead>
               <tr>
-                <td>
-                  <a [routerLink]="chemin(commande)">{{ commande.reference }}</a>
-                </td>
-                <td>{{ nomUtilisateur(commande.acheteurId) }}</td>
-                <td>{{ nomUtilisateur(commande.producteurId) }}</td>
-                <td>{{ commande.montantTotal | montantFcfa }}</td>
-                <td>
-                  <span class="badge-statut" [attr.data-statut]="commande.statut">
-                    {{ libelleStatut(commande.statut) }}
-                  </span>
-                </td>
-                <td>{{ statutLivraison(commande) }}</td>
-                <td>
-                  @if (annulable(commande)) {
-                    <button type="button" class="danger" (click)="annuler(commande)">
-                      Annuler
-                    </button>
-                  } @else {
-                    <span class="texte-doux">—</span>
-                  }
-                </td>
+                <th scope="col">Référence</th>
+                <th scope="col">Acheteur</th>
+                <th scope="col">Producteur</th>
+                <th scope="col">Total</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Livraison</th>
+                <th scope="col">Actions</th>
               </tr>
-            }
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              @for (commande of commandesFiltrees(); track commande.id) {
+                <tr>
+                  <td>
+                    <a [routerLink]="chemin(commande)">{{ commande.reference }}</a>
+                  </td>
+                  <td>{{ nomUtilisateur(commande.acheteurId) }}</td>
+                  <td>{{ nomUtilisateur(commande.producteurId) }}</td>
+                  <td>{{ commande.montantTotal | montantFcfa }}</td>
+                  <td>
+                    <span class="badge-statut" [attr.data-statut]="commande.statut">
+                      {{ libelleStatut(commande.statut) }}
+                    </span>
+                  </td>
+                  <td>{{ statutLivraison(commande) }}</td>
+                  <td>
+                    @if (annulable(commande)) {
+                      <button type="button" class="danger" (click)="annuler(commande)">
+                        Annuler
+                      </button>
+                    } @else {
+                      <span class="texte-doux">—</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       }
     </section>
   `,
@@ -115,11 +117,6 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       .admin-page {
         display: grid;
         gap: 1rem;
-      }
-      h1 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: var(--vert-fonce);
       }
       .filtres {
         display: flex;
@@ -133,24 +130,6 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       label {
         font-weight: 600;
       }
-      select {
-        padding: 0.5rem;
-        border: 1px solid #b9c2ae;
-        border-radius: 0.4rem;
-        font: inherit;
-        min-width: 12rem;
-      }
-      .liste {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .liste th,
-      .liste td {
-        text-align: left;
-        padding: 0.5rem;
-        border-bottom: 1px solid #e2e7db;
-        font-size: 0.9rem;
-      }
       .message {
         margin: 0;
         color: var(--vert-fonce);
@@ -160,21 +139,6 @@ import { MontantFcfaPipe } from '../../shared/montant-fcfa.pipe';
       .texte-doux {
         margin: 0;
         color: var(--texte-doux);
-      }
-      button.danger {
-        background: #b3261e;
-        color: #fff;
-        border: none;
-        padding: 0.4rem 0.7rem;
-        border-radius: 0.4rem;
-        cursor: pointer;
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
       }
     `,
   ],

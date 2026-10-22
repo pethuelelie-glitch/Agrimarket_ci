@@ -36,7 +36,7 @@
 
 .panier__alerte p {
   margin: 0;
-  color: #7a4a00;
+  color: var(--orange-texte);
   font-weight: 500;
 }
 
@@ -69,7 +69,7 @@
 
 .badge--alerte {
   background: var(--orange-fond);
-  color: #7a4a00;
+  color: var(--orange-texte);
   border: 1px solid color-mix(in srgb, var(--orange) 35%, transparent);
 }
 
@@ -83,14 +83,16 @@
 
 .panier__ligne {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   gap: 1rem;
   align-items: center;
   padding: 0.85rem 0.9rem;
   border: 1px solid var(--bord-doux);
   border-radius: var(--rayon);
   background: var(--blanc);
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
 .panier__ligne:hover {
@@ -100,7 +102,7 @@
 
 .panier__ligne--probleme {
   border-color: color-mix(in srgb, var(--orange) 40%, transparent);
-  background: #fffdf6;
+  background: var(--orange-fond);
 }
 
 .panier__ligne-nom {
@@ -143,7 +145,11 @@
   line-height: 1;
   cursor: pointer;
   color: var(--texte);
-  transition: border-color var(--transition), color var(--transition), background var(--transition), transform var(--transition);
+  transition:
+    border-color var(--transition),
+    color var(--transition),
+    background var(--transition),
+    transform var(--transition);
 }
 
 .panier__pas:hover {
@@ -164,7 +170,9 @@
   border-radius: calc(var(--rayon) - 2px);
   font: inherit;
   font-weight: 600;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
 .panier__champ-quantite:focus-visible {
@@ -272,7 +280,9 @@
   border: 1px solid var(--bord);
   border-radius: calc(var(--rayon) - 2px);
   font: inherit;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
 }
 
 .panier__adresse input:focus-visible {
@@ -296,11 +306,45 @@
 
 @media (max-width: 640px) {
   .panier__ligne {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     gap: 0.75rem;
+  }
+
+  .panier__ligne-quantite,
+  .panier__ligne-total {
+    grid-column: 1 / -1;
   }
 
   .panier__ligne-total {
     justify-items: start;
+  }
+}
+
+/* ------------------------------------------- Mise en page en deux colonnes */
+
+.panier__mise-en-page,
+.panier__colonne {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  align-items: start;
+}
+
+.panier__vignette {
+  width: 4rem;
+  height: 4rem;
+  flex: none;
+  border-radius: var(--rayon);
+  object-fit: cover;
+  background: var(--vert-pale);
+}
+
+@media screen and (min-width: 1024px) {
+  .panier__mise-en-page {
+    grid-template-columns: minmax(0, 1fr) minmax(19rem, 24rem);
+  }
+
+  .panier__recapitulatif {
+    position: sticky;
+    top: 6rem;
   }
 }

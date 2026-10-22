@@ -2,7 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { InMemoryAdapter } from '../persistence/in-memory-adapter';
 import { PersistenceService } from '../persistence/persistence.service';
 import { STORAGE_ADAPTER } from '../persistence/storage-adapter';
-import { amorcerDonneesDemo } from './initialisation';
+import { amorcerDonneesDemo, migrerIllustrationsDemo } from './initialisation';
+import { ILLUSTRATIONS_HISTORIQUES } from './seed';
 
 function creerPersistence(adaptateur: InMemoryAdapter): PersistenceService {
   TestBed.configureTestingModule({
@@ -79,5 +80,50 @@ describe('amorcerDonneesDemo', () => {
     expect(cree).toBe(true);
     expect(persistence.etat().meta.initialized).toBe(true);
     expect(persistence.etat().users).toHaveLength(7);
+  });
+
+  describe('migration des illustrations de démonstration', () => {
+    it('remplace les anciennes images distantes par les images locales', async () => {
+      const persistence = creerPersistence(new InMemoryAdapter(null));
+      await amorcerDonneesDemo(persistence);
+      // Simule des données amorcées par une version antérieure.
+      persistence.transaction((brouillon) => {
+        for (const produit of brouillon.products) {
+          produit.imageUrl = ILLUSTRATIONS_HISTORIQUES[produit.id] ?? produit.imageUrl;
+        }
+      });
+
+      const cree = await amorcerDonneesDemo(persistence);
+
+      expect(cree).toBe(false);
+      for (const produit of persistence.etat().products) {
+        expect(produit.imageUrl).toMatch(/^\/images\/produits\/.+\.webp$/);
+      }
+    });
+
+    it('conserve une image personnalisée par le producteur', async () => {
+      const persistence = creerPersistence(new InMemoryAdapter(null));
+      await amorcerDonneesDemo(persistence);
+      persistence.transaction((brouillon) => {
+        const riz = brouillon.products.find((produit) => produit.id === 'prd_riz');
+        if (riz) {
+          riz.imageUrl = 'https://exemple.ci/mon-riz.jpg';
+        }
+      });
+
+      expect(migrerIllustrationsDemo(persistence)).toBe(0);
+      expect(persistence.etat().products.find((p) => p.id === 'prd_riz')?.imageUrl).toBe(
+        'https://exemple.ci/mon-riz.jpg',
+      );
+    });
+
+    it('n’écrit rien quand il n’y a rien à migrer', async () => {
+      const persistence = creerPersistence(new InMemoryAdapter(null));
+      await amorcerDonneesDemo(persistence);
+      const revision = persistence.etat().meta.revision;
+
+      expect(migrerIllustrationsDemo(persistence)).toBe(0);
+      expect(persistence.etat().meta.revision).toBe(revision);
+    });
   });
 });

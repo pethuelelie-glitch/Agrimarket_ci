@@ -88,6 +88,17 @@ Le projet met en relation **producteurs agricoles**, **acheteurs** et **livreurs
 - **Persistance robuste** : document racine versionné, amorçage unique des données de démonstration, gestion des données corrompues / schéma inconnu / quota dépassé / session illisible **sans écran blanc**.
 - **Formatage** : montants en FCFA (`MontantFcfaPipe`, séparateur de milliers, sans décimales) et dates au format `fr-FR`.
 
+### 🎨 Interface et expérience
+
+- **Système de design** (`src/styles.css`) : jetons de couleur « marché ivoirien » (vert forêt, orange mangue, fonds sable), typographie **Fraunces** (titres) + **Plus Jakarta Sans** (interface), composants de base cohérents (boutons, champs, badges de statut, tables).
+- **Thème clair / sombre** : suit la préférence du système, avec une bascule dans l'en-tête mémorisée par navigateur (`ThemeService`, clé `agrimarket.theme`, distincte des données métier) et appliquée avant le premier rendu (pas de flash).
+- **Accueil** : bandeau avec recherche rapide, chiffres clés et **rayons par catégorie** calculés à partir des données locales, étapes « Comment ça marche », appel à l'inscription.
+- **Catalogue** : puces de catégories avec compteurs, filtres avancés repliables, liens profonds `?q=` et `?categorie=` (utilisés par l'accueil et le pied de page).
+- **Fiche produit** : bloc d'achat, carte du producteur et suggestions « Du même producteur ».
+- **Panier** en deux colonnes (récapitulatif fixe) avec vignettes ; **tableaux de bord** avec salutation, indicateurs illustrés et histogramme sur 14 jours.
+- **Navigation** : icônes SVG embarquées (`IconeComponent`, aucune dépendance), avatar et rôle de l'utilisateur, menu mobile avec voile, lien d'évitement clavier, notifications éphémères (fermeture automatique après 6 s), transitions de vue entre les pages.
+- **Images locales** (`public/images/`, WebP optimisé) : l'application ne dépend plus d'images distantes ; les données déjà amorcées sont migrées automatiquement (`migrerIllustrationsDemo`). Crédits et licences : [`public/images/CREDITS.md`](public/images/CREDITS.md).
+
 ---
 
 ## 3. Comment on en est arrivé là
@@ -142,7 +153,7 @@ agrimarket-ci/
 │  │  │  ├─ accueil/  auth/  catalogue/  panier/  produits/
 │  │  │  ├─ commandes/  livraisons/  tableaux-de-bord/  admin/
 │  │  │  └─ aide/  pas-trouve/
-│  │  ├─ shared/               # Composants et pipes réutilisables (produit-carte, carte-indicateur, état vide, montant FCFA…)
+│  │  ├─ shared/               # Composants et pipes réutilisables (icône, logo, produit-carte, carte-indicateur, état vide, montant FCFA…)
 │  │  ├─ testing/              # Helpers de test (configurerTestBed, InMemoryAdapter…)
 │  │  ├─ integration/          # Tests de parcours de bout en bout (parcours.spec.ts)
 │  │  ├─ app.ts / app.html / app.css   # Coquille (en-tête, navigation, pied de page)
@@ -158,7 +169,7 @@ agrimarket-ci/
 │     └─ add-agrimarket-marketplace-v1/
 │        ├─ proposal.md  design.md  tasks.md  revue.md
 │        └─ specs/**/spec.md   # Delta specs (10 capacités)
-├─ public/                     # Ressources statiques (favicon)
+├─ public/                     # Ressources statiques (favicon, images WebP et leurs crédits)
 ├─ angular.json  package.json  tsconfig*.json
 └─ README.md
 ```

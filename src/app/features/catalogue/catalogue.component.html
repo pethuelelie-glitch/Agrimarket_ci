@@ -1,22 +1,72 @@
-<section class="catalogue">
+<section class="catalogue apparition">
   <header class="catalogue__entete">
+    <p class="surtitre">Le marché</p>
     <h1>Catalogue des produits agricoles</h1>
     <p>Découvrez les récoltes proposées par les producteurs ivoiriens.</p>
   </header>
 
-  <form class="filtres panneau" role="search" (submit)="$event.preventDefault()">
-    <div class="champ">
-      <label for="catalogue-recherche">Rechercher un produit</label>
-      <input
-        id="catalogue-recherche"
-        type="search"
-        placeholder="Riz, tomate, igname…"
-        [value]="recherche()"
-        (input)="recherche.set($any($event.target).value)"
-      />
+  <form class="filtres" role="search" (submit)="$event.preventDefault()">
+    <div class="filtres__barre">
+      <div class="filtres__recherche">
+        <label for="catalogue-recherche" class="visuellement-cache">Rechercher un produit</label>
+        <app-icone nom="recherche" [taille]="20" />
+        <input
+          id="catalogue-recherche"
+          type="search"
+          placeholder="Rechercher : riz, tomate, igname…"
+          [value]="recherche()"
+          (input)="recherche.set($any($event.target).value)"
+        />
+      </div>
+
+      <div class="filtres__tri">
+        <label for="catalogue-tri">Trier par</label>
+        <select id="catalogue-tri" [value]="tri()" (change)="tri.set($any($event.target).value)">
+          @for (option of tris; track option) {
+            <option [value]="option">{{ libellesTri[option] }}</option>
+          }
+        </select>
+      </div>
+
+      <button
+        type="button"
+        class="bouton bouton--discret filtres__bascule"
+        [attr.aria-expanded]="filtresOuverts()"
+        aria-controls="filtres-avances"
+        (click)="filtresOuverts.set(!filtresOuverts())"
+      >
+        <app-icone nom="filtre" [taille]="18" />
+        Filtres
+      </button>
     </div>
 
-    <div class="filtres__grille">
+    <div class="puces" role="group" aria-label="Filtrer par catégorie">
+      <button
+        type="button"
+        class="puce"
+        [attr.aria-pressed]="categorie() === 'TOUTES'"
+        (click)="choisirCategorie('TOUTES')"
+      >
+        Tous <span class="puce__compte">{{ comptesTotal() }}</span>
+      </button>
+      @for (option of categories; track option) {
+        <button
+          type="button"
+          class="puce"
+          [attr.aria-pressed]="categorie() === option"
+          (click)="choisirCategorie(option)"
+        >
+          {{ libellesCategorie[option] }}
+          <span class="puce__compte">{{ comptesParCategorie().get(option) ?? 0 }}</span>
+        </button>
+      }
+    </div>
+
+    <div
+      id="filtres-avances"
+      class="filtres__avances panneau"
+      [class.filtres__avances--ouverts]="filtresOuverts()"
+    >
       <div class="champ">
         <label for="catalogue-categorie">Catégorie</label>
         <select
@@ -38,6 +88,7 @@
           type="number"
           min="0"
           inputmode="numeric"
+          placeholder="0"
           [value]="prixMin() ?? ''"
           (input)="prixMin.set(nombreOuNull($event))"
         />
@@ -50,6 +101,7 @@
           type="number"
           min="0"
           inputmode="numeric"
+          placeholder="Illimité"
           [value]="prixMax() ?? ''"
           (input)="prixMax.set(nombreOuNull($event))"
         />
@@ -78,22 +130,7 @@
           (input)="localisation.set($any($event.target).value)"
         />
       </div>
-
-      <div class="champ">
-        <label for="catalogue-tri">Trier par</label>
-        <select id="catalogue-tri" [value]="tri()" (change)="tri.set($any($event.target).value)">
-          @for (option of tris; track option) {
-            <option [value]="option">{{ libellesTri[option] }}</option>
-          }
-        </select>
-      </div>
     </div>
-
-    @if (aDesFiltresActifs()) {
-      <button type="button" class="bouton bouton--discret" (click)="reinitialiser()">
-        Réinitialiser les filtres
-      </button>
-    }
   </form>
 
   @if (catalogueVide()) {
@@ -109,11 +146,20 @@
       (action)="reinitialiser()"
     />
   } @else {
-    <p class="catalogue__compte" role="status">
-      {{ resultats().length }} produit{{ resultats().length > 1 ? 's' : '' }} affiché{{
-        resultats().length > 1 ? 's' : ''
-      }}
-    </p>
+    <div class="catalogue__resultats">
+      <p class="catalogue__compte" role="status">
+        <strong>{{ resultats().length }}</strong> produit{{
+          resultats().length > 1 ? 's' : ''
+        }}
+        affiché{{ resultats().length > 1 ? 's' : '' }}
+      </p>
+      @if (aDesFiltresActifs()) {
+        <button type="button" class="bouton bouton--ghost bouton--petit" (click)="reinitialiser()">
+          <app-icone nom="croix" [taille]="16" />
+          Réinitialiser les filtres
+        </button>
+      }
+    </div>
     <ul class="grille produits">
       @for (produit of resultats(); track produit.id) {
         <li><app-produit-carte [produit]="produit" (ajouter)="ajouterAuPanier(produit)" /></li>
